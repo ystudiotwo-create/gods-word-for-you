@@ -69,7 +69,7 @@ h1 em { font-style: normal; display: inline-block; line-height: 1.18; background
 .hero-r { padding: 24px; background: var(--paper-2); min-width: 0; }
 form { background: var(--paper); border: var(--rule) solid var(--ink); box-shadow: var(--shadow); display: flex; flex-direction: column; }
 .field { padding: 14px 16px; border-bottom: 2px solid var(--ink); display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-.label { font-size: 12px; font-weight: 800; letter-spacing: .14em; display: flex; justify-content: space-between; gap: 8px; }
+.label { font-size: 12px; font-weight: 800; letter-spacing: .14em; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 8px; }
 .label span { font-weight: 400; letter-spacing: .04em; color: var(--muted); }
 textarea { width: 100%; min-height: 128px; resize: vertical; border: 2px solid var(--ink); background: #fff; padding: 12px; font-family: var(--display); font-weight: 500; font-size: 18px; line-height: 1.55; border-radius: 0; }
 .seg { display: flex; flex-wrap: wrap; gap: 0; border: 2px solid var(--ink); width: fit-content; max-width: 100%; }
@@ -202,6 +202,20 @@ footer { padding: 14px 0; font-size: 11.5px; letter-spacing: .06em; display: fle
   .notes dd { margin-bottom: 6px; }
   .bar nav a { padding: 10px 12px; }
   .go { font-size: 20px; }
+  /* phone: logo on its own row, nav links share the next row evenly */
+  .logo { flex: 1 1 100%; border-right: 0; border-bottom: var(--rule) solid var(--ink); }
+  .bar nav { flex: 1 1 100%; margin-left: 0; }
+  .bar nav a { flex: 1 1 0; justify-content: center; padding: 10px 4px; letter-spacing: .06em; white-space: nowrap; }
+  .bar nav a:first-child { border-left: 0; }
+  /* segmented choices stay on one row and fill the width instead of wrapping */
+  .seg { width: 100%; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
+  .seg span { padding: 8px 4px; text-align: center; white-space: nowrap; }
+  /* result header: title and tags on the first row, the question on its own row */
+  .res-head { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; }
+  .res-head h2 { grid-area: 1 / 1; }
+  .res-head .tag.cat { grid-area: 1 / 3; }
+  .res-head .tag.demo { grid-area: 1 / 4; }
+  .res-head .q { grid-area: 2 / 1 / 3 / -1; border-top: 2px solid var(--ink); }
 }
 
 /* ---- static edition ---- */
