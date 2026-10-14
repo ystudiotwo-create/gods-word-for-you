@@ -1,5 +1,5 @@
 <title>God's word for you</title>
-<meta name="description" content="寫下你或朋友的處境，從和合本找到合適的經文，附上下文說明、祝福、禱告與版畫插畫。">
+<meta name="description" content="選擇你或朋友的處境，從和合本找到合適的經文，附上下文說明、祝福、禱告與版畫插畫。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Noto+Sans+TC:wght@500;900&family=Noto+Serif+TC:wght@500;700&display=swap">
@@ -23,6 +23,18 @@
 .col button { width: 100%; text-align: left; border: 2px solid var(--ink); background: var(--paper); padding: 7px 10px; font-size: 14px; cursor: pointer; border-radius: 0; display: flex; justify-content: space-between; gap: 8px; }
 .col button:hover, .col button[aria-current=true] { background: var(--ink); color: var(--paper); }
 .col button small { font-family: var(--mono); font-size: 11px; opacity: .75; }
+.sits { display: flex; flex-wrap: wrap; gap: 6px; }
+.sits label { cursor: pointer; }
+.sits input { position: absolute; opacity: 0; pointer-events: none; }
+.sits span { display: block; border: 2px solid var(--ink); background: var(--paper); padding: 6px 10px 6px 14px; font-size: 14px; position: relative; }
+.sits span::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; }
+.sits label[data-c=comfort] span::before { background: var(--sky); }
+.sits label[data-c=encourage] span::before { background: var(--sun); }
+.sits label[data-c=edify] span::before { background: var(--mint); }
+.sits label[data-c=exhort] span::before { background: var(--peach); }
+.sits span:hover { background: var(--paper-2); }
+.sits input:checked + span { background: var(--ink); color: var(--paper); }
+.sits input:focus-visible + span { outline: 3px solid var(--coral); outline-offset: 2px; }
 .match-note { font-size: 12.5px; padding: 10px 16px; border: var(--rule) solid var(--ink); border-top: 0; background: var(--paper-2); }
 @media (max-width: 900px) {
   .cols { grid-template-columns: 1fr 1fr; }
@@ -62,18 +74,21 @@
     <div class="hero-r">
       <form id="form" autocomplete="off">
         <div class="field">
-          <label class="label" for="situation">現在的狀況 <span id="count">0 / 300</span></label>
-          <textarea id="situation" maxlength="300" placeholder="例：下週要開刀，很害怕，怕醒不過來。"></textarea>
-          <div class="examples" aria-label="範例">
-            <button type="button" class="chip">朋友的爸爸上週過世，她一直自責</button>
-            <button type="button" class="chip">失業三個月，存款快用完了</button>
-            <button type="button" class="chip">和先生一直為小事吵架</button>
-            <button type="button" class="chip">明天國考，緊張到睡不著</button>
-            <button type="button" class="chip">帶小組好累，覺得沒有果效</button>
+          <span class="label" id="catLabel">1　你需要的是 <span>選一類，下面的狀況會跟著篩選</span></span>
+          <div class="seg" role="radiogroup" aria-labelledby="catLabel">
+            <label><input type="radio" name="cat" id="catAll" value="" checked><span>全部</span></label>
+            <label><input type="radio" name="cat" id="catComfort" value="comfort"><span>安慰</span></label>
+            <label><input type="radio" name="cat" id="catEncourage" value="encourage"><span>鼓勵</span></label>
+            <label><input type="radio" name="cat" id="catEdify" value="edify"><span>造就</span></label>
+            <label><input type="radio" name="cat" id="catExhort" value="exhort"><span>勸勉</span></label>
           </div>
         </div>
         <div class="field">
-          <span class="label" id="whoLabel">為誰禱告</span>
+          <span class="label" id="sitLabel">2　最接近的狀況 <span id="sitCount"></span></span>
+          <div class="sits" id="sits" role="radiogroup" aria-labelledby="sitLabel"></div>
+        </div>
+        <div class="field">
+          <span class="label" id="whoLabel">3　為誰禱告</span>
           <div class="row">
             <div class="seg" role="radiogroup" aria-labelledby="whoLabel">
               <label><input type="radio" name="who" id="whoSelf" value="self" checked><span>為自己</span></label>
@@ -82,18 +97,8 @@
             <input type="text" id="name" placeholder="稱呼（選填），如：小美" maxlength="12" hidden aria-label="對方的稱呼">
           </div>
         </div>
-        <div class="field">
-          <span class="label" id="catLabel">用途 <span>未選則自動判斷</span></span>
-          <div class="seg" role="radiogroup" aria-labelledby="catLabel">
-            <label><input type="radio" name="cat" id="catAuto" value="" checked><span>自動</span></label>
-            <label><input type="radio" name="cat" id="catComfort" value="comfort"><span>安慰</span></label>
-            <label><input type="radio" name="cat" id="catEncourage" value="encourage"><span>鼓勵</span></label>
-            <label><input type="radio" name="cat" id="catEdify" value="edify"><span>造就</span></label>
-            <label><input type="radio" name="cat" id="catExhort" value="exhort"><span>勸勉</span></label>
-          </div>
-        </div>
         <button class="go" id="go" type="submit"><span>找經文</span><small>立即 →</small></button>
-        <p class="note">輸入的內容只在你的瀏覽器裡比對，不會傳到任何伺服器。也可以直接從下方「主題索引」挑選。</p>
+        <p class="note">選一個最接近的狀況就好，不需要打字，也不會傳出任何資料。</p>
       </form>
     </div>
   </section>
@@ -170,8 +175,7 @@ const HELPLINES = [
   { name: "保護專線（家暴、性侵）", number: "113", note: "24 小時" },
   { name: "緊急求助", number: "110 / 119", note: "有立即危險時" },
 ];
-const SELF_HARM = /自殺|輕生|尋死|想死|死掉算了|乾脆死|不如死|去死|消失就好|不想活|活不下去|活著沒意思|結束(自己的)?生命|了結|跳樓|跳下去|燒炭|割腕|上吊|吞藥|安眠藥.{0,6}(很多|一堆|全部)|自殘|自傷|傷害自己|割自己|劃自己/;
-const VIOLENCE = /家暴|被打|打我|毆打|施暴|虐待|性侵|強暴|性騷擾|被摸|威脅要殺|想殺/;
+const CRISIS_TOPICS = new Set(["hope", "refuge"]);   // 低潮與盼望、危險中的投靠：一併顯示求助專線
 const DEFAULT_NAME = "這位朋友";
 
 const $ = (s) => document.querySelector(s);
@@ -180,25 +184,20 @@ const inArtifact = !!window.claude;
 const TOPICS = DATA.topics, BY_KEY = Object.fromEntries(TOPICS.map((t) => [t.key, t]));
 let current = null;
 
-/* ---------- matching (runs entirely in the browser) ---------- */
-function match(text, cat) {
-  const t = text.replace(/\s+/g, "");
-  const scored = TOPICS.map((tp, i) => {
-    let s = 0;
-    for (const raw of tp.keywords) {
-      const strong = raw[0] === "*", k = strong ? raw.slice(1) : raw;   // * = 很能代表這個主題的詞，加倍計分
-      if (t.includes(k)) s += (k.length === 1 ? 0.6 : k.length) * (strong ? 2 : 1);
-    }
-    if (s > 0 && cat && tp.cat === cat) s += 1.5;
-    return { tp, s, i };
-  }).sort((a, b) => b.s - a.s || a.i - b.i);
-  let crisis = null;
-  if (VIOLENCE.test(t)) crisis = "refuge";
-  else if (SELF_HARM.test(t)) crisis = "hope";
-  if (crisis) {
-    const k = crisis; scored.sort((a, b) => (b.tp.key === k) - (a.tp.key === k) || b.s - a.s);
-  }
-  return { list: scored, crisis: !!crisis, matched: scored[0].s > 0 || !!crisis };
+/* ---------- situation picker ---------- */
+const relatedOf = (t) => TOPICS.filter((x) => x.cat === t.cat && x.key !== t.key).slice(0, 3);
+function renderSits() {
+  const cat = document.querySelector("input[name=cat]:checked").value;
+  const picked = document.querySelector("input[name=topic]:checked")?.value;
+  const list = cat ? TOPICS.filter((t) => t.cat === cat) : TOPICS;
+  $("#sits").innerHTML = list.map((t) => `<label data-c="${t.cat}"><input type="radio" name="topic" value="${t.key}"${t.key === picked ? " checked" : ""}><span>${escH(t.name)}</span></label>`).join("");
+  $("#sitCount").textContent = `${list.length} 項`;
+}
+function pick(key) {
+  const t = BY_KEY[key], cat = document.querySelector("input[name=cat]:checked").value;
+  if (cat && cat !== t.cat) $("#catAll").checked = true;
+  renderSits();
+  const r = document.querySelector(`input[name=topic][value="${key}"]`); if (r) r.checked = true;
 }
 
 /* ---------- build result ---------- */
@@ -253,8 +252,8 @@ function render(res, { fresh = false, related = [] } = {}) {
   document.querySelectorAll("#cols button").forEach((b) => b.setAttribute("aria-current", String(b.dataset.k === res.topic.key)));
   const rel = $("#related");
   rel.hidden = !related.length;
-  rel.innerHTML = related.length ? `<b>其他可能相關</b>` + related.map((t) => `<button type="button" class="chip" data-k="${t.key}">${escH(t.name)}</button>`).join("") : "";
-  rel.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => showTopic(b.dataset.k, { keepText: true })));
+  rel.innerHTML = related.length ? `<b>同類的其他主題</b>` + related.map((t) => `<button type="button" class="chip" data-k="${t.key}">${escH(t.name)}</button>`).join("") : "";
+  rel.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => showTopic(b.dataset.k)));
 }
 
 function showCrisis(on) {
@@ -267,16 +266,14 @@ const scrollToResult = () => $("#result").scrollIntoView({ behavior: matchMedia(
 const formState = () => ({
   forWhom: $("#whoOther").checked ? "other" : "self",
   name: $("#name").value.trim(),
-  cat: document.querySelector('input[name=cat]:checked').value,
 });
 
-function showTopic(key, { keepText = false } = {}) {
+function showTopic(key) {
   const t = BY_KEY[key]; if (!t) return;
-  const f = formState();
-  const situation = keepText ? $("#situation").value.trim() : "";
-  if (!keepText) showCrisis(false);
+  pick(key);
+  showCrisis(CRISIS_TOPICS.has(key));
   say("");
-  render(build(t, { ...f, situation }), { fresh: true });
+  render(build(t, formState()), { fresh: true, related: relatedOf(t) });
   scrollToResult();
 }
 
@@ -342,10 +339,8 @@ $("#cols").innerHTML = Object.entries(CATEGORIES).map(([c, zh]) => `<div class="
 }</ul></div>`).join("");
 document.querySelectorAll("#cols button").forEach((b) => b.addEventListener("click", () => showTopic(b.dataset.k)));
 
-const ta = $("#situation");
-const updateCount = () => ($("#count").textContent = `${ta.value.length} / 300`);
-ta.addEventListener("input", updateCount);
-document.querySelectorAll(".examples .chip").forEach((b) => b.addEventListener("click", () => { ta.value = b.textContent; updateCount(); ta.focus(); }));
+renderSits();
+document.querySelectorAll("input[name=cat]").forEach((r) => r.addEventListener("change", renderSits));
 document.querySelectorAll("input[name=who]").forEach((r) => r.addEventListener("change", () => {
   $("#name").hidden = $("#whoSelf").checked;
   if (current) render(build(current.topic, { ...formState(), situation: current.situation, seed: current.seed }));
@@ -354,23 +349,9 @@ $("#name").addEventListener("input", () => { if (current?.forWhom === "other") r
 
 $("#form").addEventListener("submit", (e) => {
   e.preventDefault();
-  const situation = ta.value.trim();
-  const f = formState();
-  if (situation.length < 2) {
-    if (f.cat) { const t = TOPICS.find((x) => x.cat === f.cat); render(build(t, f), { fresh: true }); say(`沒有輸入狀況，先顯示「${CATEGORIES[f.cat]}」的第一個主題。也可以從主題索引挑選。`); scrollToResult(); return; }
-    say("請寫下現在的狀況，或從下方主題索引直接挑一個主題。", true); ta.focus(); return;
-  }
-  const m = match(situation, f.cat);
-  showCrisis(m.crisis);
-  if (!m.matched) {
-    say("沒有找到很貼近的主題，先為你顯示「平安」。也可以從下方主題索引挑一個更合適的。");
-    render(build(BY_KEY.peace, { ...f, situation }), { fresh: true });
-  } else {
-    say("");
-    const related = m.list.slice(1).filter((x) => x.s > 0).slice(0, 3).map((x) => x.tp);
-    render(build(m.list[0].tp, { ...f, situation }), { fresh: true, related });
-  }
-  scrollToResult();
+  const key = document.querySelector("input[name=topic]:checked")?.value;
+  if (!key) { say("請先選一個最接近的狀況。", true); document.querySelector("input[name=topic]")?.focus(); return; }
+  showTopic(key);
   $("#result").focus({ preventScroll: true });
 });
 
@@ -405,12 +386,12 @@ $("#download").addEventListener("click", async (e) => {
   if (t) {
     const other = q.get("w") === "o";
     if (other) { $("#whoOther").checked = true; $("#name").hidden = false; $("#name").value = q.get("n") || ""; }
+    pick(t.key); showCrisis(CRISIS_TOPICS.has(t.key));
     render(build(t, { forWhom: other ? "other" : "self", name: q.get("n") || "", seed: Number(q.get("s")) || undefined }));
     return;
   }
-  const sample = "下週要開刀，很害怕，怕醒不過來。";
-  const m = match(sample, "");
-  render(build(m.list[0].tp, { situation: sample, seed: 23 }), { related: m.list.slice(1).filter((x) => x.s > 0).slice(0, 3).map((x) => x.tp) });
-  $("#q").textContent = `範例：「${sample}」`;
+  const sample = BY_KEY.fear;
+  render(build(sample, { seed: 23 }), { related: relatedOf(sample) });
+  $("#q").textContent = `範例：「${sample.name}」`;
 })();
 </script>
