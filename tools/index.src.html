@@ -35,6 +35,7 @@
 .sits span:hover { background: var(--paper-2); }
 .sits input:checked + span { background: var(--ink); color: var(--paper); }
 .sits input:focus-visible + span { outline: 3px solid var(--coral); outline-offset: 2px; }
+#blessRef { font-size: 11px; font-weight: 700; letter-spacing: .08em; }
 .card-pick { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 6px; }
 .card-pick .label { font-size: 12px; }
 #cardPick { width: 100%; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
@@ -132,7 +133,7 @@
           <div class="tools">
             <button class="btn" id="reroll" type="button">重新刻一張</button>
             <button class="btn" id="copyAll" type="button">複製全文</button>
-            <div class="card-pick"><span class="label" id="cardLabel">圖卡經文 <span>選一處放在圖卡上</span></span><div class="seg" id="cardPick" role="radiogroup" aria-labelledby="cardLabel"></div></div>
+            <div class="card-pick"><span class="label" id="cardLabel">祝福與圖卡經文 <span>選一處，祝福和圖卡會跟著換</span></span><div class="seg" id="cardPick" role="radiogroup" aria-labelledby="cardLabel"></div></div>
             <button class="btn wide" id="download" type="button">下載分享圖卡 1080×1350</button>
             <button class="btn wide" id="shareLink" type="button" hidden>複製分享連結</button>
           </div>
@@ -141,7 +142,7 @@
       <div class="texts" id="texts"></div>
     </div>
     <div class="words">
-      <section class="word blessing"><h3>祝福 <button class="copy" type="button" data-copy="blessing">複製</button></h3><p id="blessing"></p></section>
+      <section class="word blessing"><h3><span>祝福 <small id="blessRef"></small></span> <button class="copy" type="button" data-copy="blessing">複製</button></h3><p id="blessing"></p></section>
       <section class="word prayer"><h3>禱告 <button class="copy" type="button" data-copy="prayer">複製</button></h3><p id="prayer"></p></section>
     </div>
   </div>
@@ -207,19 +208,21 @@ function pick(key) {
 }
 
 /* ---------- build result ---------- */
+const blessingFor = (topic, who, name, i) => topic.blessings[i][who].replaceAll("{name}", (name || "").trim() || DEFAULT_NAME);
 function build(topic, { forWhom = "self", name = "", situation = "", seed, cardIdx = 0 } = {}) {
   const who = forWhom === "other" ? "other" : "self";
   const nm = (name || "").trim() || DEFAULT_NAME;
   const fill = (s) => s.replaceAll("{name}", nm);
+  const ci = Math.min(Math.max(cardIdx | 0, 0), topic.passages.length - 1);
   return {
     topic, situation, forWhom: who, name: (name || "").trim(),
     category: topic.cat,
     passages: topic.passages.map(([ref, app]) => ({ ref, app, ...DATA.passages[ref] })),
-    blessing: fill(topic[who].blessing),
+    blessing: blessingFor(topic, who, name, ci),   // 祝福跟著選定的經文
     prayer: fill(topic[who].prayer),
     motif: topic.motif, seal: topic.seal,
     seed: seed ?? Math.floor(Math.random() * 1e6),
-    cardIdx: Math.min(Math.max(cardIdx | 0, 0), topic.passages.length - 1),
+    cardIdx: ci,
   };
 }
 
@@ -254,6 +257,7 @@ function render(res, { fresh = false, related = [] } = {}) {
   $("#topicTag").textContent = res.topic.name;
   $("#texts").innerHTML = res.passages.map(passageHTML).join("");
   $("#blessing").textContent = res.blessing;
+  $("#blessRef").textContent = `・${res.passages[res.cardIdx].label.abbr}`;
   $("#prayer").textContent = res.prayer;
   renderPrint(res, fresh);
   $("#cardPick").innerHTML = res.passages.map((p, i) => `<label><input type="radio" name="cardp" value="${i}"${i === res.cardIdx ? " checked" : ""}><span title="${escH(p.label.zh)}">${escH(p.label.abbr)}</span></label>`).join("");
@@ -404,6 +408,9 @@ document.querySelectorAll("#cols button").forEach((b) => b.addEventListener("cli
 $("#cardPick").addEventListener("change", (e) => {
   if (!current || e.target.name !== "cardp") return;
   current.cardIdx = +e.target.value;
+  current.blessing = blessingFor(current.topic, current.forWhom, current.name, current.cardIdx);
+  $("#blessing").textContent = current.blessing;
+  $("#blessRef").textContent = `・${current.passages[current.cardIdx].label.abbr}`;
   if (IOS) prepareCard(current).catch(() => {});
 });
 renderSits();
