@@ -35,6 +35,10 @@
 .sits span:hover { background: var(--paper-2); }
 .sits input:checked + span { background: var(--ink); color: var(--paper); }
 .sits input:focus-visible + span { outline: 3px solid var(--coral); outline-offset: 2px; }
+.card-pick { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 6px; }
+.card-pick .label { font-size: 12px; }
+#cardPick { width: 100%; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
+#cardPick span { text-align: center; white-space: nowrap; padding: 7px 4px; font-size: 13px; overflow: hidden; text-overflow: ellipsis; }
 .match-note { font-size: 12.5px; padding: 10px 16px; border: var(--rule) solid var(--ink); border-top: 0; background: var(--paper-2); }
 @media (max-width: 900px) {
   .cols { grid-template-columns: 1fr 1fr; }
@@ -128,6 +132,7 @@
           <div class="tools">
             <button class="btn" id="reroll" type="button">重新刻一張</button>
             <button class="btn" id="copyAll" type="button">複製全文</button>
+            <div class="card-pick"><span class="label" id="cardLabel">圖卡經文 <span>選一處放在圖卡上</span></span><div class="seg" id="cardPick" role="radiogroup" aria-labelledby="cardLabel"></div></div>
             <button class="btn wide" id="download" type="button">下載分享圖卡 1080×1350</button>
             <button class="btn wide" id="shareLink" type="button" hidden>複製分享連結</button>
           </div>
@@ -202,7 +207,7 @@ function pick(key) {
 }
 
 /* ---------- build result ---------- */
-function build(topic, { forWhom = "self", name = "", situation = "", seed } = {}) {
+function build(topic, { forWhom = "self", name = "", situation = "", seed, cardIdx = 0 } = {}) {
   const who = forWhom === "other" ? "other" : "self";
   const nm = (name || "").trim() || DEFAULT_NAME;
   const fill = (s) => s.replaceAll("{name}", nm);
@@ -214,6 +219,7 @@ function build(topic, { forWhom = "self", name = "", situation = "", seed } = {}
     prayer: fill(topic[who].prayer),
     motif: topic.motif, seal: topic.seal,
     seed: seed ?? Math.floor(Math.random() * 1e6),
+    cardIdx: Math.min(Math.max(cardIdx | 0, 0), topic.passages.length - 1),
   };
 }
 
@@ -250,6 +256,7 @@ function render(res, { fresh = false, related = [] } = {}) {
   $("#blessing").textContent = res.blessing;
   $("#prayer").textContent = res.prayer;
   renderPrint(res, fresh);
+  $("#cardPick").innerHTML = res.passages.map((p, i) => `<label><input type="radio" name="cardp" value="${i}"${i === res.cardIdx ? " checked" : ""}><span title="${escH(p.label.zh)}">${escH(p.label.abbr)}</span></label>`).join("");
   if (IOS) setTimeout(() => current === res && prepareCard(res).catch(() => {}), 300);
   document.querySelectorAll("#cols button").forEach((b) => b.setAttribute("aria-current", String(b.dataset.k === res.topic.key)));
   const rel = $("#related");
@@ -311,25 +318,41 @@ async function makeCard(res) {
   const INK = "#1F2A36";
   x.fillStyle = "#FFFBF1"; x.fillRect(0, 0, 1080, 1350);
   x.lineWidth = 8; x.strokeStyle = INK; x.strokeRect(36, 36, 1008, 1278);
-  const p0 = res.passages[0];
+  const p0 = res.passages[res.cardIdx || 0];
   const img = await svgToImage(renderLinocut({ motif: res.motif, seed: res.seed, seal: res.seal, caption: p0.label.en, uid: "card" }));
-  x.drawImage(img, 60, 60, 480, 600);
-  x.fillStyle = "#A9DFC0"; x.fillRect(560, 60, 460, 74);
-  x.fillStyle = INK; x.font = '900 36px "Noto Sans TC", sans-serif'; x.fillText("God's word for you", 584, 110);
-  x.fillStyle = "#FFD25A"; x.fillRect(560, 160, 460, 60);
-  x.fillStyle = INK; x.font = '900 30px "Noto Sans TC", sans-serif'; x.fillText(p0.label.zh, 580, 201);
-  // scripture: fit beside the print (y 240–660)
-  const vf = fitBlocks(x, [p0.verses.map((v) => v.text).join("")], { font: (n) => `500 ${n}px "Noto Serif TC", serif`, maxW: 440, maxH: 420, max: 30, min: 20 });
-  let y = 240 + vf.size; for (const l of vf.wrapped[0]) { x.fillText(l, 570, y); y += vf.lh; }
-  x.fillRect(60, 690, 960, 6);
-  // blessing + prayer share the lower half (y 718–1262); shrink together until both fit
-  const LABEL = 46, GAP = 30;
-  const bf = fitBlocks(x, [res.blessing, res.prayer], { font: (n) => `500 ${n}px "Noto Sans TC", sans-serif`, maxW: 940, maxH: 544, max: 30, min: 18, extra: LABEL * 2 + GAP });
-  y = 718;
+  x.drawImage(img, 60, 60, 380, 475);
+  x.fillStyle = "#A9DFC0"; x.fillRect(470, 60, 550, 74);
+  x.fillStyle = INK; x.font = '900 36px "Noto Sans TC", sans-serif'; x.fillText("God's word for you", 494, 110);
+  x.fillStyle = "#FFD25A"; x.fillRect(470, 158, 550, 66);
+  x.fillStyle = INK; x.font = '900 34px "Noto Sans TC", sans-serif'; x.fillText(p0.label.zh, 490, 204);
+  // Scripture starts beside the print and, if long, continues full width beneath it; the blessing and
+  // prayer take what is left. Try the largest scripture size first and step down until the blessing and
+  // prayer can stay at a readable size (or the scripture reaches its floor).
+  const SERIF = (n) => `500 ${n}px "Noto Serif TC", serif`, SANS = (n) => `500 ${n}px "Noto Sans TC", sans-serif`;
+  const verse = p0.verses.map((v) => v.text).join("");
+  const LABEL = 50, GAP = 32, BOTTOM = 1262, COL_TOP = 246, COL_BOTTOM = 540;
+  let plan;
+  for (let vs = 40; vs >= 26; vs--) {
+    x.font = SERIF(vs);
+    const lh = Math.round(vs * 1.62), fit = Math.max(1, Math.floor((COL_BOTTOM - COL_TOP) / lh));
+    const col = wrapText(x, verse, 520), side = col.slice(0, fit);
+    const below = col.length > fit ? wrapText(x, col.slice(fit).join(""), 940) : [];
+    const end = below.length ? Math.max(COL_TOP + fit * lh, 548) + below.length * lh : COL_TOP + side.length * lh;
+    const rule = Math.max(565, end + 22);
+    const bf = fitBlocks(x, [res.blessing, res.prayer], { font: SANS, maxW: 940, maxH: BOTTOM - (rule + 28), max: 38, min: 22, extra: LABEL * 2 + GAP });
+    plan = { vs, lh, side, below, rule, bf };
+    if (bf.size >= 28) break;
+  }
+  const { vs, lh, side, below, rule, bf } = plan;
+  x.font = SERIF(vs);
+  let y = COL_TOP + vs; for (const l of side) { x.fillText(l, 476, y); y += lh; }
+  if (below.length) { y = Math.max(y - vs, 548) + vs; for (const l of below) { x.fillText(l, 60, y); y += lh; } }
+  x.fillRect(60, rule, 960, 6);
+  y = rule + 28;
   [["BLESSING  祝福", bf.wrapped[0]], ["PRAYER  禱告", bf.wrapped[1]]].forEach(([label, lines], i) => {
     if (i) y += GAP;
-    x.font = '800 18px "JetBrains Mono", monospace'; x.fillText(label, 60, y + 22); y += LABEL;
-    x.font = `500 ${bf.size}px "Noto Sans TC", sans-serif`;
+    x.font = '800 20px "JetBrains Mono", monospace'; x.fillText(label, 60, y + 26); y += LABEL;
+    x.font = SANS(bf.size);
     for (const l of lines) { x.fillText(l, 60, y + bf.size); y += bf.lh; }
   });
   x.font = '700 16px "JetBrains Mono", monospace'; x.fillStyle = "#4D5A66";
@@ -347,6 +370,7 @@ function shareURL(res) {
   u.searchParams.set("t", res.topic.key);
   if (res.forWhom === "other") { u.searchParams.set("w", "o"); if (res.name) u.searchParams.set("n", res.name); }
   u.searchParams.set("s", res.seed);
+  if (res.cardIdx) u.searchParams.set("c", res.cardIdx);
   return u.toString();
 }
 async function copy(text, btn) {
@@ -363,13 +387,18 @@ $("#cols").innerHTML = Object.entries(CATEGORIES).map(([c, zh]) => `<div class="
 }</ul></div>`).join("");
 document.querySelectorAll("#cols button").forEach((b) => b.addEventListener("click", () => showTopic(b.dataset.k)));
 
+$("#cardPick").addEventListener("change", (e) => {
+  if (!current || e.target.name !== "cardp") return;
+  current.cardIdx = +e.target.value;
+  if (IOS) prepareCard(current).catch(() => {});
+});
 renderSits();
 document.querySelectorAll("input[name=cat]").forEach((r) => r.addEventListener("change", renderSits));
 document.querySelectorAll("input[name=who]").forEach((r) => r.addEventListener("change", () => {
   $("#name").hidden = $("#whoSelf").checked;
-  if (current) render(build(current.topic, { ...formState(), situation: current.situation, seed: current.seed }));
+  if (current) render(build(current.topic, { ...formState(), situation: current.situation, seed: current.seed, cardIdx: current.cardIdx }));
 }));
-$("#name").addEventListener("input", () => { if (current?.forWhom === "other") render(build(current.topic, { ...formState(), situation: current.situation, seed: current.seed })); });
+$("#name").addEventListener("input", () => { if (current?.forWhom === "other") render(build(current.topic, { ...formState(), situation: current.situation, seed: current.seed, cardIdx: current.cardIdx })); });
 
 $("#form").addEventListener("submit", (e) => {
   e.preventDefault();
@@ -392,8 +421,8 @@ if (!inArtifact) { $("#shareLink").hidden = false; $("#shareLink").addEventListe
 
 /* iPhone / iPad: a plain download lands in the Files app, so hand the image to the share sheet,
    whose 「儲存影像」 saves it to Photos. Elsewhere, download the file. */
-const cardName = (res) => `GodsWordForYou-${res.passages[0].label.abbr.replace(/[\s:–]/g, "_")}.png`;
-const cardKey = (res) => [res.topic.key, res.forWhom, res.name, res.seed, res.motif].join("|");
+const cardName = (res) => `GodsWordForYou-${res.passages[res.cardIdx].label.abbr.replace(/[\s:–]/g, "_")}.png`;
+const cardKey = (res) => [res.topic.key, res.forWhom, res.name, res.seed, res.motif, res.cardIdx].join("|");
 let card = { key: "", blob: null, job: null };
 function prepareCard(res) {   // build ahead of the tap: the share sheet must open right after the user's tap
   const key = cardKey(res);
@@ -439,7 +468,7 @@ $("#download").addEventListener("click", async (e) => {
     const other = q.get("w") === "o";
     if (other) { $("#whoOther").checked = true; $("#name").hidden = false; $("#name").value = q.get("n") || ""; }
     pick(t.key); showCrisis(CRISIS_TOPICS.has(t.key));
-    render(build(t, { forWhom: other ? "other" : "self", name: q.get("n") || "", seed: Number(q.get("s")) || undefined }));
+    render(build(t, { forWhom: other ? "other" : "self", name: q.get("n") || "", seed: Number(q.get("s")) || undefined, cardIdx: Number(q.get("c")) || 0 }));
     return;
   }
   const sample = BY_KEY.fear;
