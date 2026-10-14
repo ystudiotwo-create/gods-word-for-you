@@ -291,12 +291,17 @@ async function svgToImage(svg) {
   const url = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
   try { const img = new Image(); img.src = url; await img.decode(); return img; } finally { setTimeout(() => URL.revokeObjectURL(url), 2000); }
 }
-const NO_LINE_START = "，。、；：！？）」』》〉,.;:!?)";   // 標點不放在行首，掛在上一行行尾
+// 行首不放句讀與後括號、行尾不放前括號；需要時把前一個字一起移到下一行，所有文字都留在 maxW 以內
+const NO_LINE_START = "，。、；：！？）」』》〉,.;:!?)", NO_LINE_END = "（「『《〈(";
 function wrapText(ctx, text, maxW) {
   const lines = []; let line = "";
   for (const ch of text) {
-    if (ctx.measureText(line + ch).width > maxW && line && !NO_LINE_START.includes(ch)) { lines.push(line); line = ch; }
-    else line += ch;
+    if (!line || ctx.measureText(line + ch).width <= maxW) { line += ch; continue; }
+    let carry = "";
+    if (NO_LINE_START.includes(ch))
+      while (line.length > 1) { const last = line.at(-1); carry = last + carry; line = line.slice(0, -1); if (!NO_LINE_START.includes(last)) break; }
+    while (line.length > 1 && NO_LINE_END.includes(line.at(-1))) { carry = line.at(-1) + carry; line = line.slice(0, -1); }
+    lines.push(line); line = carry + ch;
   }
   if (line) lines.push(line); return lines;
 }
@@ -332,14 +337,14 @@ async function makeCard(res) {
   const verse = p0.verses.map((v) => v.text).join("");
   const LABEL = 50, GAP = 32, BOTTOM = 1262, COL_TOP = 246, COL_BOTTOM = 540;
   let plan;
-  for (let vs = 40; vs >= 26; vs--) {
+  for (let vs = 34; vs >= 24; vs--) {
     x.font = SERIF(vs);
     const lh = Math.round(vs * 1.62), fit = Math.max(1, Math.floor((COL_BOTTOM - COL_TOP) / lh));
-    const col = wrapText(x, verse, 520), side = col.slice(0, fit);
-    const below = col.length > fit ? wrapText(x, col.slice(fit).join(""), 940) : [];
+    const col = wrapText(x, verse, 538), side = col.slice(0, fit);
+    const below = col.length > fit ? wrapText(x, col.slice(fit).join(""), 960) : [];
     const end = below.length ? Math.max(COL_TOP + fit * lh, 548) + below.length * lh : COL_TOP + side.length * lh;
     const rule = Math.max(565, end + 22);
-    const bf = fitBlocks(x, [res.blessing, res.prayer], { font: SANS, maxW: 940, maxH: BOTTOM - (rule + 28), max: 38, min: 22, extra: LABEL * 2 + GAP });
+    const bf = fitBlocks(x, [res.blessing, res.prayer], { font: SANS, maxW: 960, maxH: BOTTOM - (rule + 28), max: 38, min: 22, extra: LABEL * 2 + GAP });
     plan = { vs, lh, side, below, rule, bf };
     if (bf.size >= 28) break;
   }
