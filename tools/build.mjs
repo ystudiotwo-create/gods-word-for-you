@@ -20,18 +20,16 @@ for (const t of topics) {
     const x = withText(bible, r);
     P[ref] = { label: x.label, verses: x.verses, before: x.before, after: x.after, ...notes[ref] };
   }
-  for (const w of ["self", "other"]) {
-    const s = t[w]?.prayer || "";
-    if (!s) errors.push(`缺少 ${t.key}.${w}.prayer`);
-    if (!s.endsWith("奉主耶穌的名求，阿們。")) errors.push(`禱告結尾 ${t.key}.${w}`);
-    if (w === "other" && !s.includes("{name}")) errors.push(`${t.key}.other.prayer 缺少 {name}`);
+  // 每段經文各有一則祝福與一則禱告（為自己／為他人），順序對應 passages
+  for (const k of ["blessings", "prayers"]) {
+    if (t[k]?.length !== t.passages.length) errors.push(`${t.key}.${k} 數量要和 passages 一樣`);
+    (t[k] || []).forEach((b, i) => {
+      if (!b.self) errors.push(`缺少 ${t.key}.${k}[${i}].self`);
+      if (!b.other?.includes("{name}")) errors.push(`${t.key}.${k}[${i}].other 缺少 {name}`);
+      if (k === "prayers") for (const w of ["self", "other"])
+        if (!(b[w] || "").endsWith("奉主耶穌的名求，阿們。")) errors.push(`禱告結尾 ${t.key}.prayers[${i}].${w}`);
+    });
   }
-  // 每段經文各有一則祝福（為自己／為他人），順序對應 passages
-  if (t.blessings?.length !== t.passages.length) errors.push(`${t.key}.blessings 數量要和 passages 一樣`);
-  (t.blessings || []).forEach((b, i) => {
-    if (!b.self) errors.push(`缺少 ${t.key}.blessings[${i}].self`);
-    if (!b.other?.includes("{name}")) errors.push(`${t.key}.blessings[${i}].other 缺少 {name}`);
-  });
 }
 if (errors.length) { console.error(errors.join("\n")); process.exit(1); }
 const lin = read("tools/linocut.js").replace(/^export\s+/gm, "");
