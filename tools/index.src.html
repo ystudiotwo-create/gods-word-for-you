@@ -303,7 +303,16 @@ function wrapText(ctx, text, maxW) {
     while (line.length > 1 && NO_LINE_END.includes(line.at(-1))) { carry = line.at(-1) + carry; line = line.slice(0, -1); }
     lines.push(line); line = carry + ch;
   }
-  if (line) lines.push(line); return lines;
+  if (line) lines.push(line);
+  // 避免最後一行只剩一兩個字（如「們。」）：從上一行借字，借完仍守上面的標點規則
+  const MIN_LAST = 4, n = lines.length;
+  if (n > 1 && [...lines[n - 1]].length < MIN_LAST) {
+    let prev = lines[n - 2], last = lines[n - 1];
+    while ([...last].length < MIN_LAST && prev.length > MIN_LAST) { last = prev.at(-1) + last; prev = prev.slice(0, -1); }
+    while (prev.length > 1 && (NO_LINE_START.includes(last[0]) || NO_LINE_END.includes(prev.at(-1)))) { last = prev.at(-1) + last; prev = prev.slice(0, -1); }
+    lines[n - 2] = prev; lines[n - 1] = last;
+  }
+  return lines;
 }
 // largest font size (from max down to min) whose wrapped blocks fit the height
 function fitBlocks(ctx, blocks, { font, maxW, maxH, max, min, extra = 0 }) {
