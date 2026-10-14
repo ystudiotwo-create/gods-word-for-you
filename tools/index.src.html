@@ -181,6 +181,7 @@ const DEFAULT_NAME = "這位朋友";
 const $ = (s) => document.querySelector(s);
 const use = (n) => (window.claude?.use ? window.claude.use(n) : Promise.resolve(null));
 const inArtifact = !!window.claude;
+const IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 const TOPICS = DATA.topics, BY_KEY = Object.fromEntries(TOPICS.map((t) => [t.key, t]));
 let current = null;
 
@@ -249,6 +250,7 @@ function render(res, { fresh = false, related = [] } = {}) {
   $("#blessing").textContent = res.blessing;
   $("#prayer").textContent = res.prayer;
   renderPrint(res, fresh);
+  if (IOS) setTimeout(() => current === res && prepareCard(res).catch(() => {}), 300);
   document.querySelectorAll("#cols button").forEach((b) => b.setAttribute("aria-current", String(b.dataset.k === res.topic.key)));
   const rel = $("#related");
   rel.hidden = !related.length;
@@ -282,10 +284,24 @@ async function svgToImage(svg) {
   const url = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
   try { const img = new Image(); img.src = url; await img.decode(); return img; } finally { setTimeout(() => URL.revokeObjectURL(url), 2000); }
 }
+const NO_LINE_START = "，。、；：！？）」』》〉,.;:!?)";   // 標點不放在行首，掛在上一行行尾
 function wrapText(ctx, text, maxW) {
   const lines = []; let line = "";
-  for (const ch of text) { if (ctx.measureText(line + ch).width > maxW && line) { lines.push(line); line = ch; } else line += ch; }
+  for (const ch of text) {
+    if (ctx.measureText(line + ch).width > maxW && line && !NO_LINE_START.includes(ch)) { lines.push(line); line = ch; }
+    else line += ch;
+  }
   if (line) lines.push(line); return lines;
+}
+// largest font size (from max down to min) whose wrapped blocks fit the height
+function fitBlocks(ctx, blocks, { font, maxW, maxH, max, min, extra = 0 }) {
+  for (let size = max; ; size--) {
+    ctx.font = font(size);
+    const lh = Math.round(size * 1.62);
+    const wrapped = blocks.map((t) => wrapText(ctx, t, maxW));
+    const h = wrapped.reduce((a, l) => a + l.length * lh, 0) + extra;
+    if (h <= maxH || size <= min) return { size, lh, wrapped };
+  }
 }
 async function makeCard(res) {
   await document.fonts.load('500 40px "Noto Serif TC"').catch(() => {});
@@ -302,12 +318,20 @@ async function makeCard(res) {
   x.fillStyle = INK; x.font = '900 36px "Noto Sans TC", sans-serif'; x.fillText("God's word for you", 584, 110);
   x.fillStyle = "#FFD25A"; x.fillRect(560, 160, 460, 60);
   x.fillStyle = INK; x.font = '900 30px "Noto Sans TC", sans-serif'; x.fillText(p0.label.zh, 580, 201);
-  x.font = '500 30px "Noto Serif TC", serif';
-  let y = 272; for (const l of wrapText(x, p0.verses.map((v) => v.text).join(""), 440).slice(0, 12)) { x.fillText(l, 570, y); y += 50; }
+  // scripture: fit beside the print (y 240–660)
+  const vf = fitBlocks(x, [p0.verses.map((v) => v.text).join("")], { font: (n) => `500 ${n}px "Noto Serif TC", serif`, maxW: 440, maxH: 420, max: 30, min: 20 });
+  let y = 240 + vf.size; for (const l of vf.wrapped[0]) { x.fillText(l, 570, y); y += vf.lh; }
   x.fillRect(60, 690, 960, 6);
-  x.font = '800 18px "JetBrains Mono", monospace'; x.fillText("BLESSING  祝福", 60, 740);
-  x.font = '500 30px "Noto Sans TC", sans-serif';
-  y = 795; for (const l of wrapText(x, res.blessing, 940).slice(0, 9)) { x.fillText(l, 60, y); y += 52; }
+  // blessing + prayer share the lower half (y 718–1262); shrink together until both fit
+  const LABEL = 46, GAP = 30;
+  const bf = fitBlocks(x, [res.blessing, res.prayer], { font: (n) => `500 ${n}px "Noto Sans TC", sans-serif`, maxW: 940, maxH: 544, max: 30, min: 18, extra: LABEL * 2 + GAP });
+  y = 718;
+  [["BLESSING  祝福", bf.wrapped[0]], ["PRAYER  禱告", bf.wrapped[1]]].forEach(([label, lines], i) => {
+    if (i) y += GAP;
+    x.font = '800 18px "JetBrains Mono", monospace'; x.fillText(label, 60, y + 22); y += LABEL;
+    x.font = `500 ${bf.size}px "Noto Sans TC", sans-serif`;
+    for (const l of lines) { x.fillText(l, 60, y + bf.size); y += bf.lh; }
+  });
   x.font = '700 16px "JetBrains Mono", monospace'; x.fillStyle = "#4D5A66";
   x.fillText("經文：和合本（公有領域）", 60, 1290);
   return new Promise((r) => c.toBlob(r, "image/png"));
@@ -360,23 +384,51 @@ $("#reroll").addEventListener("click", () => {
   current.seed = Math.floor(Math.random() * 1e6);
   if (Math.random() < 0.35) { const keys = Object.keys(MOTIFS); current.motif = keys[Math.floor(Math.random() * keys.length)]; }
   renderPrint(current, true);
+  if (IOS) prepareCard(current).catch(() => {});
 });
 $("#copyAll").addEventListener("click", (e) => current && copy(fullText(current), e.currentTarget));
 document.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", () => current && copy(current[b.dataset.copy], b)));
 if (!inArtifact) { $("#shareLink").hidden = false; $("#shareLink").addEventListener("click", (e) => current && copy(shareURL(current), e.currentTarget)); }
 
+/* iPhone / iPad: a plain download lands in the Files app, so hand the image to the share sheet,
+   whose 「儲存影像」 saves it to Photos. Elsewhere, download the file. */
+const cardName = (res) => `GodsWordForYou-${res.passages[0].label.abbr.replace(/[\s:–]/g, "_")}.png`;
+const cardKey = (res) => [res.topic.key, res.forWhom, res.name, res.seed, res.motif].join("|");
+let card = { key: "", blob: null, job: null };
+function prepareCard(res) {   // build ahead of the tap: the share sheet must open right after the user's tap
+  const key = cardKey(res);
+  if (card.key === key && (card.blob || card.job)) return card.job || Promise.resolve(card.blob);
+  const c = card = { key, blob: null, job: null };
+  c.job = makeCard(res).then((b) => { c.blob = b; c.job = null; return b; }, (err) => { c.job = null; throw err; });
+  return c.job;
+}
+const canShareImage = (file) => IOS && !inArtifact && navigator.canShare?.({ files: [file] });
+const DL_LABEL = IOS ? "存到相簿・分享圖卡 1080×1350" : "下載分享圖卡 1080×1350";
+$("#download").textContent = DL_LABEL;
 $("#download").addEventListener("click", async (e) => {
-  const btn = e.currentTarget, old = btn.textContent;
-  btn.disabled = true; btn.textContent = "製作圖卡中…";
-  const filename = `GodsWordForYou-${current.passages[0].label.abbr.replace(/[\s:–]/g, "_")}.png`;
+  const btn = e.currentTarget;
+  const done = (t) => { btn.textContent = t; setTimeout(() => { btn.textContent = DL_LABEL; btn.disabled = false; }, 1800); };
+  if (!current) return;
+  const ready = card.key === cardKey(current) && card.blob;
+  if (!ready) { btn.disabled = true; btn.textContent = "製作圖卡中…"; }
   try {
-    const blob = await makeCard(current);
+    const blob = ready || await prepareCard(current);
+    const filename = cardName(current);
+    const file = new File([blob], filename, { type: "image/png" });
+    if (canShareImage(file)) {
+      try { await navigator.share({ files: [file] }); return done("在選單裡點「儲存影像」"); }
+      catch (err) {
+        if (err.name === "AbortError") return done(DL_LABEL);
+        // the tap expired while the card was being drawn: the card is ready now, a second tap opens the sheet
+        if (err.name === "NotAllowedError") { btn.disabled = false; btn.textContent = "圖卡已備好，再按一次存到相簿"; return; }
+        throw err;
+      }
+    }
     const downloads = inArtifact ? await use("downloads").catch(() => null) : null;
     if (downloads) await downloads.save({ filename, data: blob });
     else { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = filename; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 3000); }
-    btn.textContent = "已下載";
-  } catch { btn.textContent = "未能下載"; }
-  setTimeout(() => { btn.textContent = old; btn.disabled = false; }, 1800);
+    done("已下載");
+  } catch { done("未能下載"); }
 });
 
 /* ---------- first view: shared link, or a sample ---------- */
