@@ -1,0 +1,1062 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>God's word for you</title>
+<meta name="description" content="寫下你或朋友的處境，從和合本找到合適的經文，附上下文說明、祝福、禱告與版畫插畫。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Noto+Sans+TC:wght@500;900&family=Noto+Serif+TC:wght@500;700&display=swap">
+<style>
+
+/* Layout: a raw print-shop grid — thick ink rules split the sheet into cells; colour blocks borrow the morning palette of the linocut prints (sky, sun, mint, peach). */
+:root {
+  --ink: #1F2A36;          /* deep slate instead of pure black */
+  --paper: #FFFBF1;
+  --paper-2: #EEF7F3;      /* mint-tinted proof sheet */
+  --muted: #4D5A66;        /* secondary text on paper, AA */
+  --sun: #FFD25A;          /* 鼓勵 */
+  --sky: #A8DCF0;          /* 安慰 */
+  --mint: #A9DFC0;         /* 造就 */
+  --peach: #FFC9B8;        /* 勸勉 */
+  --coral: #FF8A70;        /* alerts, focus */
+  --rule: 3px;
+  --shadow: 6px 6px 0 var(--ink);
+  --display: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  --mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, "Noto Sans TC", monospace;
+  --serif: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--paper); }
+body { background: var(--paper); color: var(--ink); font-family: var(--mono); font-size: 15px; line-height: 1.6; margin: 0; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-inline: 16px; padding-block: 0 48px; }
+a { color: var(--ink); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+:focus-visible { outline: 3px solid var(--coral); outline-offset: 2px; }
+button, input, textarea { font: inherit; color: inherit; }
+
+/* top bar */
+.bar { display: flex; flex-wrap: wrap; align-items: stretch; border: var(--rule) solid var(--ink); border-top: 0; background: var(--mint); color: var(--ink); }
+.logo { display: flex; align-items: baseline; gap: 12px; padding: 10px 16px; background: var(--paper); color: var(--ink); border-right: var(--rule) solid var(--ink); }
+.logo b { font-family: var(--display); font-weight: 900; font-size: 26px; letter-spacing: .04em; }
+.logo span { font-weight: 800; font-size: 12px; letter-spacing: .18em; }
+.bar nav { display: flex; flex-wrap: wrap; margin-left: auto; }
+.bar nav a { color: var(--ink); text-decoration: none; font-size: 12px; letter-spacing: .14em; padding: 14px 16px; border-left: 2px solid var(--ink); display: flex; align-items: center; }
+.bar nav a:hover { background: var(--sun); color: var(--ink); }
+
+/* hero + form */
+.hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); border: var(--rule) solid var(--ink); border-top: 0; }
+.hero-l { padding: 32px 24px 28px; border-right: var(--rule) solid var(--ink); display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+.kicker { font-size: 12px; letter-spacing: .2em; font-weight: 700; }
+h1 { font-family: var(--display); font-weight: 900; font-size: clamp(44px, 7.4vw, 104px); line-height: 1.18; margin: 0; letter-spacing: -.01em; text-wrap: balance; }
+h1 > span { display: block; }
+h1 em { font-style: normal; display: inline-block; line-height: 1.18; background: var(--sun); padding: .04em .1em 0; margin-top: .14em; }
+.lede { max-width: 30em; margin: 0; padding-left: 16px; border-left: 6px solid var(--sky); }
+.lede p { margin: 0; font-family: var(--serif); font-weight: 500; font-size: clamp(17px, 1.6vw, 20px); line-height: 1.85; color: var(--ink); }
+.lede cite { display: block; margin-top: 6px; font-style: normal; font-size: 12px; font-weight: 800; letter-spacing: .14em; }
+.legend { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 2px solid var(--ink); margin-top: auto; }
+.legend div { padding: 8px 10px; border-right: 2px solid var(--ink); min-width: 0; }
+.legend div:last-child { border-right: 0; }
+.legend div:nth-child(1) { background: var(--sky); }
+.legend div:nth-child(2) { background: var(--sun); }
+.legend div:nth-child(3) { background: var(--mint); }
+.legend div:nth-child(4) { background: var(--peach); }
+.legend b { display: block; font-family: var(--display); font-size: 20px; font-weight: 900; }
+.legend small { font-size: 11px; letter-spacing: .06em; color: var(--ink); }
+
+.hero-r { padding: 24px; background: var(--paper-2); min-width: 0; }
+form { background: var(--paper); border: var(--rule) solid var(--ink); box-shadow: var(--shadow); display: flex; flex-direction: column; }
+.field { padding: 14px 16px; border-bottom: 2px solid var(--ink); display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.label { font-size: 12px; font-weight: 800; letter-spacing: .14em; display: flex; justify-content: space-between; gap: 8px; }
+.label span { font-weight: 400; letter-spacing: .04em; color: var(--muted); }
+textarea { width: 100%; min-height: 128px; resize: vertical; border: 2px solid var(--ink); background: #fff; padding: 12px; font-family: var(--display); font-weight: 500; font-size: 18px; line-height: 1.55; border-radius: 0; }
+.seg { display: flex; flex-wrap: wrap; gap: 0; border: 2px solid var(--ink); width: fit-content; max-width: 100%; }
+.seg label { cursor: pointer; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg span { display: block; padding: 7px 14px; font-size: 14px; border-right: 2px solid var(--ink); }
+.seg label:last-child span { border-right: 0; }
+.seg input:checked + span { background: var(--ink); color: var(--paper); }
+.seg input:focus-visible + span { outline: 3px solid var(--coral); outline-offset: -3px; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+input[type=text] { border: 2px solid var(--ink); background: #fff; padding: 7px 10px; border-radius: 0; min-width: 0; flex: 1 1 160px; }
+.examples { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { border: 2px solid var(--ink); background: transparent; padding: 3px 8px; font-size: 12.5px; cursor: pointer; border-radius: 0; text-align: left; }
+.chip:hover { background: var(--ink); color: var(--paper); }
+.go { all: unset; box-sizing: border-box; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 18px 16px; background: var(--ink); color: var(--paper); font-family: var(--display); font-weight: 900; font-size: 24px; letter-spacing: .06em; }
+.go:hover { background: var(--sun); color: var(--ink); }
+.go:active { transform: translate(2px, 2px); }
+.go:focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; }
+.go[disabled] { background: var(--muted); cursor: progress; }
+.go small { font-family: var(--mono); font-size: 12px; font-weight: 400; letter-spacing: .1em; }
+.note { font-size: 12px; color: var(--muted); padding: 10px 16px 12px; margin: 0; }
+
+/* crisis */
+.crisis { border: var(--rule) solid var(--ink); border-top: 0; background: var(--peach); padding: 18px 20px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 16px; }
+.crisis h2 { font-family: var(--display); font-weight: 900; font-size: 26px; margin: 0 0 6px; }
+.crisis p { margin: 0; }
+.lines { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0; border: 2px solid var(--ink); background: var(--paper); }
+.lines div { padding: 8px 10px; border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); margin: 0 -2px -2px 0; }
+.lines b { font-family: var(--display); font-size: 26px; font-weight: 900; display: block; line-height: 1.1; user-select: all; font-variant-numeric: tabular-nums; }
+.lines small { font-size: 12px; }
+
+/* status */
+.status { border: var(--rule) solid var(--ink); border-top: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: var(--paper); }
+.step { padding: 10px 14px; border-right: 2px solid var(--ink); font-size: 12.5px; display: flex; gap: 8px; align-items: center; min-width: 0; }
+.step:last-child { border-right: 0; }
+.step i { font-style: normal; width: 14px; height: 14px; border: 2px solid var(--ink); flex: none; }
+.step.on i { background: repeating-linear-gradient(45deg, var(--ink) 0 3px, transparent 3px 6px); }
+.step.done i { background: var(--ink); }
+.step.on { font-weight: 800; }
+.msg { border: var(--rule) solid var(--ink); border-top: 0; padding: 12px 16px; background: var(--paper-2); font-size: 14px; }
+.msg.err { background: var(--peach); }
+
+/* result */
+.res-head { border: var(--rule) solid var(--ink); border-top: 0; display: flex; flex-wrap: wrap; align-items: stretch; background: var(--paper); }
+.res-head h2 { margin: 0; padding: 12px 16px; font-family: var(--display); font-weight: 900; font-size: 22px; border-right: var(--rule) solid var(--ink); }
+.res-head .q { padding: 12px 16px; flex: 1 1 260px; min-width: 0; font-family: var(--display); font-weight: 500; font-size: 16px; display: flex; align-items: center; }
+.tag { display: inline-flex; align-items: center; padding: 0 12px; font-size: 12px; font-weight: 800; letter-spacing: .14em; border-left: var(--rule) solid var(--ink); }
+.tag.cat { background: var(--sky); }
+.tag.cat[data-c=encourage] { background: var(--sun); }
+.tag.cat[data-c=edify] { background: var(--mint); }
+.tag.cat[data-c=exhort] { background: var(--peach); }
+.tag.demo { background: var(--paper-2); }
+
+.result { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); border: var(--rule) solid var(--ink); border-top: 0; }
+.print-col { border-right: var(--rule) solid var(--ink); padding: 20px; background: var(--paper-2); min-width: 0; }
+.print-sticky { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); display: flex; flex-direction: column; gap: 12px; }
+.print { border: var(--rule) solid var(--ink); box-shadow: var(--shadow); background: var(--paper); aspect-ratio: 4 / 5; max-width: 100%; }
+.print svg { display: block; width: 100%; height: 100%; }
+.print.fresh { animation: pull .9s ease-out; }
+@keyframes pull { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+@media (prefers-reduced-motion: reduce) { .print.fresh { animation: none; } }
+.print-meta { font-size: 12px; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.tools { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.btn { border: 2px solid var(--ink); background: var(--paper); padding: 9px 10px; cursor: pointer; font-size: 13px; font-weight: 700; border-radius: 0; box-shadow: 3px 3px 0 var(--ink); text-align: center; }
+.btn:hover { background: var(--ink); color: var(--paper); }
+.btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+.btn[disabled] { opacity: .45; cursor: not-allowed; }
+.btn.wide { grid-column: 1 / -1; }
+
+.texts { display: flex; flex-direction: column; min-width: 0; }
+.passage { border-bottom: var(--rule) solid var(--ink); display: grid; grid-template-columns: 56px minmax(0, 1fr); }
+.passage .num { border-right: 2px solid var(--ink); font-family: var(--display); font-weight: 900; font-size: 30px; display: flex; justify-content: center; padding-top: 14px; }
+.passage .body { padding: 16px 20px 18px; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+.ref { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+.ref b { font-family: var(--display); font-weight: 900; font-size: 22px; }
+.ref span { font-size: 12px; letter-spacing: .16em; font-weight: 700; }
+.ref .ok { margin-left: auto; font-size: 11px; letter-spacing: .1em; border: 2px solid var(--ink); padding: 0 6px; }
+.ref .ok.wait { border-style: dashed; color: var(--muted); }
+.scripture { font-family: var(--serif); font-weight: 500; font-size: clamp(19px, 1.9vw, 23px); line-height: 1.85; margin: 0; max-width: 32em; }
+.scripture sup { font-family: var(--mono); font-size: 11px; font-weight: 700; margin-right: 2px; vertical-align: .55em; }
+.notes { display: grid; grid-template-columns: 4.5em minmax(0, 1fr); gap: 4px 12px; margin: 0; font-size: 13.5px; }
+.notes dt { font-weight: 800; letter-spacing: .1em; }
+.notes dd { margin: 0; color: var(--ink); max-width: 46em; }
+.caution { border: 2px solid var(--ink); border-left: 10px solid var(--coral); padding: 8px 12px; font-size: 13.5px; }
+.caution b { letter-spacing: .1em; }
+details { border: 2px dashed var(--ink); }
+summary { cursor: pointer; padding: 6px 10px; font-size: 12.5px; font-weight: 700; letter-spacing: .08em; }
+.ctx { padding: 4px 12px 12px; font-family: var(--serif); font-size: 15px; line-height: 1.8; color: var(--muted); }
+.ctx mark { background: var(--sun); color: var(--ink); padding: 0 2px; }
+.dropped { padding: 14px 20px; font-size: 12.5px; color: var(--muted); border-bottom: var(--rule) solid var(--ink); }
+.dropped b { color: var(--ink); letter-spacing: .1em; }
+.dropped ul { margin: 6px 0 0; padding-left: 1.2em; }
+
+.words { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); border: var(--rule) solid var(--ink); border-top: 0; }
+.word { padding: 22px 24px 26px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.word h3 { margin: 0; font-size: 12px; letter-spacing: .24em; font-weight: 800; display: flex; justify-content: space-between; }
+.word p { margin: 0; font-family: var(--display); font-weight: 500; font-size: 18px; line-height: 1.85; max-width: 30em; white-space: pre-line; }
+.blessing { background: var(--sun); border-right: var(--rule) solid var(--ink); }
+.prayer { background: var(--sky); }
+.copy { border: 2px solid var(--ink); background: transparent; font-size: 11px; letter-spacing: .1em; padding: 1px 8px; cursor: pointer; border-radius: 0; }
+
+.about { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: var(--rule) solid var(--ink); border-top: 0; }
+.about section { padding: 18px 20px; border-right: 2px solid var(--ink); font-size: 13px; min-width: 0; }
+.about section:last-child { border-right: 0; }
+.about h4 { margin: 0 0 8px; font-family: var(--display); font-weight: 900; font-size: 18px; }
+.about p { margin: 0 0 8px; }
+footer { padding: 14px 0; font-size: 11.5px; letter-spacing: .06em; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+@media (max-width: 900px) {
+  .hero, .result, .words, .about, .crisis { grid-template-columns: minmax(0, 1fr); }
+  .hero-l, .print-col, .blessing { border-right: 0; }
+  .hero-l { border-bottom: var(--rule) solid var(--ink); }
+  .print-col { border-bottom: var(--rule) solid var(--ink); }
+  .print-sticky { position: static; max-width: 460px; margin: 0 auto; }
+  .blessing { border-bottom: var(--rule) solid var(--ink); }
+  .about section { border-right: 0; border-bottom: 2px solid var(--ink); }
+  .status { grid-template-columns: 1fr 1fr; }
+  .step:nth-child(2) { border-right: 0; }
+  .step:nth-child(-n+2) { border-bottom: 2px solid var(--ink); }
+}
+@media (max-width: 520px) {
+  .hero-l, .hero-r { padding: 18px 14px; }
+  .legend { grid-template-columns: 1fr 1fr; }
+  .legend div:nth-child(2) { border-right: 0; }
+  .legend div:nth-child(-n+2) { border-bottom: 2px solid var(--ink); }
+  .passage { grid-template-columns: 36px minmax(0, 1fr); }
+  .passage .num { font-size: 22px; }
+  .passage .body { padding: 14px 14px 16px; }
+  .notes { grid-template-columns: minmax(0, 1fr); }
+  .notes dd { margin-bottom: 6px; }
+  .bar nav a { padding: 10px 12px; }
+  .go { font-size: 20px; }
+}
+
+/* ---- static edition ---- */
+.related { border: var(--rule) solid var(--ink); border-top: 0; padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; background: var(--paper); font-size: 13px; }
+.related b { letter-spacing: .1em; margin-right: 4px; }
+.index { border: var(--rule) solid var(--ink); border-top: 0; }
+.index > h2 { margin: 0; padding: 14px 16px; font-family: var(--display); font-weight: 900; font-size: 22px; border-bottom: var(--rule) solid var(--ink); display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.index > h2 small { font-family: var(--mono); font-size: 12px; font-weight: 400; letter-spacing: .06em; }
+.cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.col { border-right: 2px solid var(--ink); min-width: 0; }
+.col:last-child { border-right: 0; }
+.col h3 { margin: 0; padding: 10px 14px; font-family: var(--display); font-weight: 900; font-size: 18px; border-bottom: 2px solid var(--ink); }
+.col[data-c=comfort] h3 { background: var(--sky); }
+.col[data-c=encourage] h3 { background: var(--sun); }
+.col[data-c=edify] h3 { background: var(--mint); }
+.col[data-c=exhort] h3 { background: var(--peach); }
+.col ul { list-style: none; margin: 0; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+.col button { width: 100%; text-align: left; border: 2px solid var(--ink); background: var(--paper); padding: 7px 10px; font-size: 14px; cursor: pointer; border-radius: 0; display: flex; justify-content: space-between; gap: 8px; }
+.col button:hover, .col button[aria-current=true] { background: var(--ink); color: var(--paper); }
+.col button small { font-family: var(--mono); font-size: 11px; opacity: .75; }
+.match-note { font-size: 12.5px; padding: 10px 16px; border: var(--rule) solid var(--ink); border-top: 0; background: var(--paper-2); }
+@media (max-width: 900px) {
+  .cols { grid-template-columns: 1fr 1fr; }
+  .col:nth-child(2) { border-right: 0; }
+  .col:nth-child(-n+2) { border-bottom: 2px solid var(--ink); }
+}
+@media (max-width: 520px) {
+  .cols { grid-template-columns: minmax(0, 1fr); }
+  .col { border-right: 0; border-bottom: 2px solid var(--ink); }
+  .col:last-child { border-bottom: 0; }
+}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="bar">
+    <div class="logo"><b>God's word for you</b></div>
+    <nav aria-label="頁面導覽">
+      <a href="#find">找經文</a>
+      <a href="#topics">主題索引</a>
+      <a href="#about">原則</a>
+      <a href="#help" id="helpLink">求助專線</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="find">
+    <div class="hero-l">
+      <div class="kicker">和合本 1919 · <span id="nTopics">29</span> 個主題 · 免費使用</div>
+      <h1><span>神要</span><span><em>對你說</em>：</span></h1>
+      <blockquote class="lede"><p>「神的道是活潑的，是有功效的，比一切兩刃的劍更快，甚至魂與靈，骨節與骨髓，都能刺入、剖開，連心中的思念和主意都能辨明。」</p><cite>希伯來書 4:12</cite></blockquote>
+      <div class="legend" aria-label="四種用途">
+        <div><b>安慰</b><small>悲傷・失落・病痛</small></div>
+        <div><b>鼓勵</b><small>軟弱・懼怕・疲憊</small></div>
+        <div><b>造就</b><small>成長・方向・家庭</small></div>
+        <div><b>勸勉</b><small>調整・悔改・和好</small></div>
+      </div>
+    </div>
+    <div class="hero-r">
+      <form id="form" autocomplete="off">
+        <div class="field">
+          <label class="label" for="situation">現在的狀況 <span id="count">0 / 300</span></label>
+          <textarea id="situation" maxlength="300" placeholder="例：下週要開刀，很害怕，怕醒不過來。"></textarea>
+          <div class="examples" aria-label="範例">
+            <button type="button" class="chip">朋友的爸爸上週過世，她一直自責</button>
+            <button type="button" class="chip">失業三個月，存款快用完了</button>
+            <button type="button" class="chip">和先生一直為小事吵架</button>
+            <button type="button" class="chip">明天國考，緊張到睡不著</button>
+            <button type="button" class="chip">帶小組好累，覺得沒有果效</button>
+          </div>
+        </div>
+        <div class="field">
+          <span class="label" id="whoLabel">為誰禱告</span>
+          <div class="row">
+            <div class="seg" role="radiogroup" aria-labelledby="whoLabel">
+              <label><input type="radio" name="who" id="whoSelf" value="self" checked><span>為自己</span></label>
+              <label><input type="radio" name="who" id="whoOther" value="other"><span>為他人</span></label>
+            </div>
+            <input type="text" id="name" placeholder="稱呼（選填），如：小美" maxlength="12" hidden aria-label="對方的稱呼">
+          </div>
+        </div>
+        <div class="field">
+          <span class="label" id="catLabel">用途 <span>未選則自動判斷</span></span>
+          <div class="seg" role="radiogroup" aria-labelledby="catLabel">
+            <label><input type="radio" name="cat" id="catAuto" value="" checked><span>自動</span></label>
+            <label><input type="radio" name="cat" id="catComfort" value="comfort"><span>安慰</span></label>
+            <label><input type="radio" name="cat" id="catEncourage" value="encourage"><span>鼓勵</span></label>
+            <label><input type="radio" name="cat" id="catEdify" value="edify"><span>造就</span></label>
+            <label><input type="radio" name="cat" id="catExhort" value="exhort"><span>勸勉</span></label>
+          </div>
+        </div>
+        <button class="go" id="go" type="submit"><span>找經文</span><small>立即 →</small></button>
+        <p class="note">輸入的內容只在你的瀏覽器裡比對，不會傳到任何伺服器。也可以直接從下方「主題索引」挑選。</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="crisis" id="help" hidden aria-live="polite">
+    <div>
+      <h2>你不需要獨自撐著。</h2>
+      <p>如果你或對方有傷害自己的念頭、正處在危險中，請先打給下面的專線，或聯絡身邊信任的人、牧者。經文與禱告會陪著你，但不能取代實際的幫助。</p>
+    </div>
+    <div class="lines" id="lines"></div>
+  </section>
+
+  <div class="msg" id="msg" hidden role="status"></div>
+
+  <div id="result" tabindex="-1">
+    <div class="res-head">
+      <h2>領受</h2>
+      <div class="q" id="q"></div>
+      <span class="tag cat" id="cat"></span>
+      <span class="tag demo" id="topicTag"></span>
+    </div>
+    <div class="result">
+      <div class="print-col">
+        <div class="print-sticky">
+          <div class="print" id="print"></div>
+          <div class="print-meta"><span id="motifName"></span><span>麻膠版畫・多色套印</span></div>
+          <div class="tools">
+            <button class="btn" id="reroll" type="button">重新刻一張</button>
+            <button class="btn" id="copyAll" type="button">複製全文</button>
+            <button class="btn wide" id="download" type="button">下載分享圖卡 1080×1350</button>
+            <button class="btn wide" id="shareLink" type="button" hidden>複製分享連結</button>
+          </div>
+        </div>
+      </div>
+      <div class="texts" id="texts"></div>
+    </div>
+    <div class="words">
+      <section class="word blessing"><h3>祝福 <button class="copy" type="button" data-copy="blessing">複製</button></h3><p id="blessing"></p></section>
+      <section class="word prayer"><h3>禱告 <button class="copy" type="button" data-copy="prayer">複製</button></h3><p id="prayer"></p></section>
+    </div>
+  </div>
+  <div class="related" id="related" hidden></div>
+
+  <section class="index" id="topics">
+    <h2>主題索引 <small>點一個主題，直接看經文、祝福與禱告</small></h2>
+    <div class="cols" id="cols"></div>
+  </section>
+
+  <div class="about" id="about">
+    <section>
+      <h4>經文只取自和合本</h4>
+      <p>每一段經文都直接取自和合本（1919，公有領域），不改寫、不摘句。展開「看上下文」可以讀到前後各五節。</p>
+    </section>
+    <section>
+      <h4>先看上下文，再應用</h4>
+      <p>每段經文都附上說話者、對象、原意和應用；容易被誤用的經文另外標出提醒，避免斷章取義。</p>
+    </section>
+    <section>
+      <h4>請一起分辨</h4>
+      <p>這是輔助靈修的工具，內容是依主題預先寫好的，不一定完全貼合你的處境。重要的決定請與牧者、屬靈同伴一起禱告；身心危機請尋求專業協助。</p>
+    </section>
+  </div>
+  <footer><span>經文：和合本（繁體）公有領域・資料來源 scrollmapper/bible_databases</span><span>God's word for you</span></footer>
+</div>
+
+<script>
+/**
+ * 手繪版畫（麻膠版／木刻）風格 SVG 產生器
+ * Linocut-style SVG generator — zero dependencies, runs in browser and Node.
+ *
+ * 模擬多色套印：先印暖黃太陽版，再印天空／地面的淺色版（刻掉的地方露出紙色），
+ * 最後以深青色印細節線。色調清新明亮，不使用純黑。
+ *
+ *   renderLinocut({ motif: "sheep", seed: 7, seal: "安", caption: "PS 23:1-4" })
+ */
+
+const MOTIFS = {
+  lamp:   { zh: "燈與光",     hint: "lamp, light, guidance, word of God (Ps 119:105, Matt 5:14)" },
+  sheep:  { zh: "羊與牧杖",   hint: "shepherd, care, provision, being led (Ps 23, John 10)" },
+  dove:   { zh: "鴿子與橄欖枝", hint: "peace, Holy Spirit, new beginning (Gen 8, John 14:27)" },
+  tree:   { zh: "溪水旁的樹", hint: "rootedness, fruitfulness, delight in the word (Ps 1, Jer 17:7-8)" },
+  eagle:  { zh: "展翅的鷹",   hint: "renewed strength, rising above (Isa 40:31)" },
+  rock:   { zh: "磐石",       hint: "refuge, stability, God as fortress (Ps 18, Ps 62, Matt 7:24)" },
+  boat:   { zh: "風浪中的小船", hint: "storm, fear, Jesus calming the sea (Mark 4:35-41)" },
+  sprout: { zh: "種子發芽",   hint: "growth, waiting, sowing and reaping (Gal 6:9, John 12:24)" },
+  path:   { zh: "通往光的路", hint: "direction, decisions, trusting God's way (Prov 3:5-6)" },
+  vine:   { zh: "葡萄樹與枝子", hint: "abiding, fruit, community (John 15)" },
+  hands:  { zh: "捧著光的雙手", hint: "prayer, receiving grace, offering (Phil 4:6-7)" },
+  lily:   { zh: "野地的百合與飛鳥", hint: "provision, not worrying (Matt 6:25-34)" },
+  anchor: { zh: "錨",         hint: "hope, steadfastness (Heb 6:19)" },
+  cross:  { zh: "山上的十字架", hint: "salvation, forgiveness, grace (Rom 5:8, 1 John 1:9)" },
+};
+
+const W = 600, H = 750, M = 34;           // canvas, paper margin
+const X0 = M, Y0 = M, X1 = W - M, Y1 = H - M;
+const PAPER = "#FFFBF1";
+
+/* ---------- small helpers ---------- */
+function rng(seed) {
+  let a = (seed >>> 0) || 1;
+  return () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+}
+const f = (n) => Math.round(n * 10) / 10;
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+/** 刀痕：兩端尖、中間寬的梭形 gouge mark */
+function gouge(x1, y1, x2, y2, w, fill) {
+  const mx = (x1 + x2) / 2, my = (y1 + y2) / 2, dx = x2 - x1, dy = y2 - y1;
+  const L = Math.hypot(dx, dy) || 1, nx = -dy / L * w, ny = dx / L * w;
+  return `<path d="M${f(x1)} ${f(y1)}Q${f(mx + nx)} ${f(my + ny)} ${f(x2)} ${f(y2)}Q${f(mx - nx)} ${f(my - ny)} ${f(x1)} ${f(y1)}Z" fill="${fill}"/>`;
+}
+const C = "#000", K = "#fff";             // in the black-plate mask: C = carve away, K = keep ink
+
+function circle(cx, cy, r, fill) { return `<circle cx="${f(cx)}" cy="${f(cy)}" r="${f(r)}" fill="${fill}"/>`; }
+function ellipse(cx, cy, rx, ry, rot, fill) {
+  return `<ellipse cx="${f(cx)}" cy="${f(cy)}" rx="${f(rx)}" ry="${f(ry)}" transform="rotate(${f(rot)} ${f(cx)} ${f(cy)})" fill="${fill}"/>`;
+}
+function path(d, fill, extra = "") { return `<path d="${d}" fill="${fill}" ${extra}/>`; }
+function stroke(d, color, w, extra = "") {
+  return `<path d="${d}" fill="none" stroke="${color}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" ${extra}/>`;
+}
+
+/* ---------- background carving ---------- */
+function skyRays(r, cx, cy, r0, clipId) {
+  let s = "";
+  const n = 64;
+  for (let i = 0; i < n; i++) {
+    const a = (i / n) * Math.PI * 2 + r() * 0.04;
+    const ra = r0 + 6 + r() * 14, rb = ra + 120 + r() * 420;
+    const w = 2.2 + r() * 4.5;
+    s += gouge(cx + Math.cos(a) * ra, cy + Math.sin(a) * ra, cx + Math.cos(a) * rb, cy + Math.sin(a) * rb, w, C);
+  }
+  return `<g clip-path="url(#${clipId})">${s}</g>`;
+}
+function skyStreaks(r, top, bottom, clipId) {
+  let s = "";
+  for (let y = top + 10; y < bottom - 4; y += 13 + r() * 6) {
+    let x = X0 - 20 + r() * 40;
+    while (x < X1) {
+      const len = 30 + r() * 140, gap = 8 + r() * 30;
+      s += gouge(x, y + r() * 3, x + len, y + r() * 3 - 1.5, 1.6 + r() * 2.6, C);
+      x += len + gap;
+    }
+  }
+  return `<g clip-path="url(#${clipId})">${s}</g>`;
+}
+function skyNight(r, bottom, clipId) {
+  let s = "";
+  for (let i = 0; i < 60; i++) {
+    const x = X0 + r() * (X1 - X0), y = Y0 + r() * (bottom - Y0 - 20), k = 2 + r() * 5;
+    s += r() < 0.25
+      ? `${gouge(x - k * 2, y, x + k * 2, y, k * 0.35, C)}${gouge(x, y - k * 2, x, y + k * 2, k * 0.35, C)}`
+      : circle(x, y, k * 0.45, C);
+  }
+  for (let y = bottom - 70; y < bottom - 4; y += 12 + r() * 5) {
+    let x = X0 + r() * 30;
+    while (x < X1) { const len = 20 + r() * 70; s += gouge(x, y, x + len, y, 1.4 + r() * 1.6, C); x += len + 20 + r() * 50; }
+  }
+  return `<g clip-path="url(#${clipId})">${s}</g>`;
+}
+/** 太陽：黑版刻空的圓 + 兩圈斷續刀痕 */
+function sunCarve(r, cx, cy, R, clipId) {
+  let s = circle(cx, cy, R, C);
+  for (let k = 1; k <= 2; k++) {
+    const rr = R + k * 13;
+    const dash = `${f(10 + r() * 16)} ${f(5 + r() * 7)}`;
+    s += `<circle cx="${f(cx)}" cy="${f(cy)}" r="${f(rr)}" fill="none" stroke="${C}" stroke-width="${f(3.5 - k * 0.6)}" stroke-dasharray="${dash}" stroke-linecap="round"/>`;
+  }
+  return clipId ? `<g clip-path="url(#${clipId})">${s}</g>` : s;
+}
+/** 起伏山丘的等高刀痕 */
+function hillY(x, horizon, phase, amp) {
+  return horizon + Math.sin(x / 95 + phase) * amp + Math.sin(x / 41 + phase * 2) * amp * 0.25;
+}
+function hills(r, horizon, amp = 14) {
+  const phase = r() * 6;
+  let edge = `M${X0 - 10} ${Y1 + 10}`;
+  for (let x = X0 - 10; x <= X1 + 10; x += 10) edge += `L${x} ${f(hillY(x, horizon, phase, amp))}`;
+  edge += `L${X1 + 10} ${Y1 + 10}Z`;
+  let lines = "";
+  for (let k = 1, dy = 14; horizon + dy < Y1 + 10; k++, dy += 10 + k * 1.6) {
+    let d = "";
+    for (let x = X0 - 10; x <= X1 + 10; x += 12) d += `${d ? "L" : "M"}${x} ${f(hillY(x, horizon, phase + k * 0.18, amp * (1 + k * 0.06)) + dy)}`;
+    const dash = `${f(18 + r() * 60)} ${f(6 + r() * 16)} ${f(8 + r() * 30)} ${f(5 + r() * 12)}`;
+    lines += stroke(d, C, f(1.6 + r() * 1.8 + k * 0.12), `stroke-dasharray="${dash}"`);
+  }
+  return { ground: path(edge, K), lines, top: (x) => hillY(x, horizon, phase, amp) };
+}
+function waves(r, top, color = C) {
+  let s = "";
+  for (let y = top + 12, row = 0; y < Y1 + 10; y += 15 + row * 1.2, row++) {
+    const off = r() * 60, wl = 46 + row * 4;
+    let d = "";
+    for (let x = X0 - 60 + off; x < X1 + 60; x += wl) {
+      d += `M${f(x)} ${f(y)}q${f(wl / 4)} ${f(-7 - row * 0.4)} ${f(wl / 2)} 0q${f(wl / 5)} ${f(4)} ${f(wl * 0.38)} ${f(-1)}`;
+    }
+    s += stroke(d, color, f(2 + r() * 1.6 + row * 0.08));
+  }
+  return s;
+}
+function mountains(r, base) {
+  const peaks = [[X0 - 20, base + 30], [90, base - 60], [150, base - 10], [230, base - 130], [300, base - 40],
+    [380, base - 150], [450, base - 30], [520, base - 90], [X1 + 20, base - 10]];
+  let edge = `M${X0 - 20} ${Y1 + 10}`; for (const [x, y] of peaks) edge += `L${x} ${y}`; edge += `L${X1 + 20} ${Y1 + 10}Z`;
+  let lines = "";
+  for (let i = 1; i < peaks.length - 1; i++) {
+    const [px, py] = peaks[i];
+    for (let k = 0; k < 9; k++) {
+      const t = 18 + k * 16 + r() * 6;
+      lines += gouge(px - 4 + k * 3, py + 10 + k * 6, px - t * 0.7 + 10, py + t * 1.3, 1.2 + r() * 1.4, C);
+    }
+  }
+  for (let y = base + 20; y < Y1 + 10; y += 12 + r() * 5) {
+    let x = X0 + r() * 20;
+    while (x < X1) { const l = 20 + r() * 90; lines += gouge(x, y, x + l, y + r() * 4 - 2, 1.5 + r() * 1.8, C); x += l + 14 + r() * 40; }
+  }
+  let ridge = ""; for (const [x, y] of peaks) ridge += `${ridge ? "L" : "M"}${x} ${y}`;
+  lines += stroke(ridge, C, 4.5);
+  return { ground: path(edge, K), lines };
+}
+
+/* ---------- motifs ----------
+ * each returns { sky, sun, ground, carve, ink, red, horizon }
+ *   carve: silhouettes cut away (show paper; knocked out of the red plate too)
+ *   ink:   black details kept inside the carved shapes
+ *   red:   shapes printed on the vermilion plate
+ */
+const motifs = {
+  lamp(r) {
+    const flameD = "M454 528C436 504 442 470 462 440C466 470 486 488 472 516C468 526 462 530 454 528Z";
+    const body = "M120 585C115 548 175 528 250 528C310 528 360 536 398 552L450 530C460 526 466 536 458 544L412 574C396 600 342 612 250 612C176 612 125 604 120 585Z";
+    let ink = ellipse(250, 541, 24, 7, 0, K) + stroke("M140 590C190 604 310 604 392 580", K, 3.2);
+    for (let i = 0; i < 9; i++) ink += circle(165 + i * 26, 575 + Math.sin(i / 1.4) * 2, 3.2, K);
+    ink += stroke("M412 556C420 552 432 546 446 540", K, 2.4);
+    return {
+      horizon: 612, sky: "rays", sunAt: [462, 482, 34], sunHidden: true,
+      carve: path(body, C) + stroke("M122 575C88 570 78 540 96 528C110 520 126 534 130 552", C, 15) +
+        path("M190 608L310 608L300 626L200 626Z", C) + path(flameD, C),
+      ink, red: path(flameD, K) + circle(462, 486, 30, K),
+    };
+  },
+  sheep(r) {
+    let carve = ellipse(310, 550, 112, 62, 0, C);
+    const lumps = [];
+    for (let i = 0; i < 14; i++) {
+      const a = (i / 14) * Math.PI * 2, x = 310 + Math.cos(a) * 104, y = 550 + Math.sin(a) * 56;
+      carve += circle(x, y, 24 + r() * 10, C); lumps.push([x, y]);
+    }
+    carve += ellipse(196, 520, 26, 38, -32, C) + ellipse(214, 494, 22, 9, -20, C);
+    for (const x of [244, 276, 344, 376]) carve += path(`M${x - 8} 596L${x + 8} 596L${x + 6} 652L${x - 6} 652Z`, C);
+    carve += stroke("M120 690L120 300C120 236 196 236 196 296C196 320 176 324 166 306", C, 15);
+    let ink = circle(186, 512, 4.2, K) + stroke("M174 540C182 548 192 548 198 542", K, 2.6) + stroke("M206 494L224 496", K, 2.2);
+    for (let i = 0; i < 26; i++) {
+      const x = 240 + r() * 150, y = 512 + r() * 80, s = 6 + r() * 5;
+      ink += stroke(`M${f(x)} ${f(y)}c${f(-s)} ${f(-s * 0.6)} ${f(-s * 0.4)} ${f(s * 1.3)} ${f(s * 0.5)} ${f(s * 0.6)}`, K, 2.3);
+    }
+    for (const x of [244, 276, 344, 376]) ink += stroke(`M${x - 6} 644L${x + 6} 644`, K, 3);
+    return { horizon: 600, sky: "rays", sunAt: [440, 210, 58], carve, ink, red: "" };
+  },
+  dove(r) {
+    const body = "M150 330C190 300 260 290 320 300C360 306 392 296 412 280C424 270 440 268 452 276C462 283 470 284 486 283C474 292 464 300 454 306C432 330 400 350 360 360C320 370 300 380 280 410L262 380C230 372 190 352 150 330Z";
+    const tail = "M162 326L96 298L112 330L94 356L162 344Z";
+    const wing = "M280 302C250 250 210 190 196 112C240 148 300 170 340 210C360 230 368 260 360 300Z";
+    const wing2 = "M330 296C350 240 384 180 436 138C436 190 412 250 382 296Z";
+    let carve = path(wing2, C) + path(body, C) + path(tail, C) + path(wing, C);
+    let ink = circle(447, 281, 3.4, K) + stroke("M454 287L486 284", K, 2);
+    for (let i = 0; i < 6; i++) ink += stroke(`M${290 - i * 4} ${296 - i * 8}C${270 - i * 10} ${250 - i * 12} ${250 - i * 9} ${210 - i * 12} ${234 - i * 7} ${160 - i * 6}`, K, 2.2);
+    for (let i = 0; i < 4; i++) ink += stroke(`M${352 + i * 6} ${292 - i * 10}C${368 + i * 8} ${250 - i * 12} ${390 + i * 8} ${210 - i * 8} ${414 + i * 4} ${170 - i * 4}`, K, 2);
+    for (let i = 0; i < 4; i++) ink += stroke(`M${170 + i * 30} ${338 + i * 4}C${200 + i * 30} ${344 + i * 4} ${230 + i * 30} ${346 + i * 2} ${250 + i * 30} ${344}`, K, 1.8);
+    ink += stroke("M160 330L112 316M160 336L106 342", K, 2);
+    carve += stroke("M484 288C506 296 524 310 540 330", C, 4.5);
+    for (const [x, y, a] of [[500, 296, 30], [516, 312, -20], [526, 300, 50], [534, 326, 0], [512, 324, -60]]) carve += ellipse(x, y, 12, 4.6, a, C);
+    return { horizon: 560, ground: "waves", sky: "streaks", sunAt: [300, 560, 92], sunClip: true, carve, ink, red: "" };
+  },
+  tree(r) {
+    let carve = path("M282 610C290 520 286 452 272 398L330 398C316 452 310 520 318 610C328 618 348 622 362 626L238 626C252 622 272 618 282 610Z", C);
+    carve += stroke("M300 420C270 380 236 360 204 350M302 430C338 384 370 368 404 360M298 400L298 300", C, 12);
+    const blobs = [];
+    for (let i = 0; i < 16; i++) {
+      const a = r() * Math.PI * 2, d = r() * 92, x = 300 + Math.cos(a) * d * 1.3, y = 280 + Math.sin(a) * d * 0.75;
+      const rr = 46 + r() * 26; carve += circle(x, y, rr, C); blobs.push([x, y, rr]);
+    }
+    let ink = "";
+    for (let i = 0; i < 70; i++) {
+      const [bx, by, br] = blobs[Math.floor(r() * blobs.length)];
+      const a = r() * Math.PI * 2, d = r() * br * 0.75, x = bx + Math.cos(a) * d, y = by + Math.sin(a) * d, ang = r() * 3;
+      ink += gouge(x, y, x + Math.cos(ang) * 14, y + Math.sin(ang) * 14, 3, K);
+    }
+    for (let i = 0; i < 5; i++) ink += stroke(`M${292 + i * 4} ${600 - i * 2}C${290 + i * 3} ${540} ${294 + i * 2} ${480} ${286 + i * 4} ${410}`, K, 1.6);
+    const stream = "M150 716C200 680 250 668 300 650C346 634 372 622 382 610C388 602 392 600 404 600L414 600C410 612 400 628 380 642C340 668 300 690 270 716Z";
+    carve += path(stream, C);
+    for (let i = 0; i < 9; i++) { const t = i / 9; ink += gouge(200 + t * 180 + r() * 10, 700 - t * 90, 220 + t * 180 + r() * 10, 698 - t * 90, 1.5, K); }
+    return { horizon: 610, sky: "streaks", sunAt: [118, 142, 42], carve, ink, red: "" };
+  },
+  eagle(r) {
+    const lw = "M300 332C250 304 180 284 64 300C104 312 114 318 92 330C134 334 144 342 122 354C164 352 184 360 168 372C214 364 256 362 292 364Z";
+    let carve = path(lw, C) + `<g transform="translate(600 0) scale(-1 1)">${path(lw, C)}</g>`;
+    carve += ellipse(300, 340, 20, 36, 0, C) + circle(300, 304, 15, C) + path("M296 296L300 284L304 296Z", C);
+    carve += path("M284 368L316 368L334 418L300 406L266 418Z", C);
+    let ink = "";
+    for (let i = 0; i < 7; i++) {
+      const x = 110 + i * 26;
+      ink += stroke(`M${x + 20} ${312 + i * 1.5}L${x} ${336 + i * 2}`, K, 2);
+      ink += stroke(`M${600 - x - 20} ${312 + i * 1.5}L${600 - x} ${336 + i * 2}`, K, 2);
+    }
+    ink += stroke("M286 380L300 400L314 380", K, 1.8) + circle(296, 302, 2.2, K) + circle(304, 302, 2.2, K);
+    return { horizon: 560, ground: "mountains", sky: "rays", sunAt: [300, 214, 74], carve, ink, red: "" };
+  },
+  rock(r) {
+    const rockD = "M34 716L34 430L80 392L132 318L196 284L248 310L292 252L346 276L372 352L414 420L456 506L566 590L566 716Z";
+    let ink = "";
+    for (let i = 0; i < 26; i++) {
+      const x = 60 + r() * 380, y = 340 + r() * 340;
+      ink += gouge(x, y, x + 16 + r() * 40, y + 30 + r() * 50, 1.6 + r() * 2.2, K);
+    }
+    for (let k = 0; k < 7; k++) ink += stroke(`M${110 + k * 48} ${330 + k * 18}L${92 + k * 46} ${450 + k * 22}L${122 + k * 44} ${570 + k * 18}`, K, 2.4, `stroke-dasharray="${f(14 + r() * 20)} ${f(8 + r() * 12)}"`);
+    ink += stroke("M132 318L150 380L120 470M248 310L240 380M346 276L330 360L360 440", K, 3);
+    const figure = stroke("M292 250L292 222M284 234L300 234M287 250L292 238L297 250", C, 5) + circle(292, 214, 6.5, C);
+    let surf = "";
+    for (let i = 0; i < 6; i++) surf += stroke(`M${430 + i * 22} ${600 + i * 10}c10 -14 26 -14 30 0`, K, 3);
+    return { horizon: null, sky: "rays", sunAt: [452, 168, 54], carve: path(rockD, C) + figure, ink: ink + surf, red: "" };
+  },
+  boat(r) {
+    const hull = "M190 486L410 486C400 512 380 528 350 532L250 532C220 528 200 512 190 486Z";
+    let carve = path(hull, C) + stroke("M300 486L300 300", C, 8);
+    carve += path("M306 306C352 350 372 410 376 474L306 474Z", C) + path("M294 330C262 370 248 420 246 474L294 474Z", C);
+    let ink = stroke("M200 500L400 500", K, 2.6) + stroke("M226 516L374 516", K, 2);
+    for (let i = 0; i < 5; i++) ink += stroke(`M${314 + i * 10} ${340 + i * 22}L${314 + i * 12} ${470}`, K, 1.5);
+    const lantern = circle(300, 296, 9, K);
+    return { horizon: 500, ground: "waves", sky: "night", sunAt: [150, 150, 44], carve: carve + circle(300, 296, 9, C), ink, red: lantern };
+  },
+  sprout(r) {
+    let carve = ellipse(300, 610, 30, 19, -12, C);
+    carve += stroke("M300 594C304 540 296 470 300 360", C, 10);
+    carve += path("M300 380C258 382 214 352 196 306C246 300 288 330 300 380Z", C);
+    carve += path("M302 360C326 316 378 292 420 300C404 346 354 372 302 360Z", C);
+    for (let i = 0; i < 7; i++) carve += stroke(`M${290 + i * 4} 624C${270 + i * 10} 660 ${230 + i * 22} 680 ${210 + i * 30} 706`, C, 2.4 - i * 0.12);
+    let ink = stroke("M298 376C268 364 238 344 214 312", K, 2.2) + stroke("M304 364C336 340 368 320 404 306", K, 2.2);
+    ink += stroke("M288 612C296 604 308 604 314 610", K, 2);
+    let soil = "";
+    for (let i = 0; i < 90; i++) { const x = X0 + r() * (X1 - X0), y = 500 + r() * 210; soil += r() < 0.5 ? circle(x, y, 1.6 + r() * 2.4, C) : gouge(x, y, x + 8 + r() * 10, y + r() * 4, 1.4, C); }
+    return { horizon: 490, flatGround: true, sky: "rays", sunAt: [300, 196, 60], preCarve: soil, carve, ink, red: "" };
+  },
+  path(r) {
+    const road = "M196 716C250 660 404 630 328 568C300 544 300 516 300 492L306 492C314 514 338 540 370 566C454 632 404 684 430 716Z";
+    let ink = "";
+    for (let i = 0; i < 8; i++) { const t = i / 8, y = 700 - t * 196, x = 316 + Math.sin(t * 3.4) * 40 * (1 - t); ink += gouge(x - 6 + t * 3, y, x + 6 - t * 3, y - 10 + t * 6, 2.4 - t * 1.4, K); }
+    return { horizon: 494, ground: "hills", hillAmp: 8, sky: "rays", sunAt: [303, 494, 66], sunClip: true, carve: path(road, C), ink, red: "" };
+  },
+  vine(r) {
+    let carve = stroke("M300 716C290 640 320 600 300 540C280 480 220 470 210 410C200 350 260 320 300 300C350 274 380 230 360 170", C, 15);
+    carve += stroke("M300 540C350 530 400 500 410 450M210 410C170 400 130 370 120 320M300 300C250 270 220 220 230 170", C, 8);
+    const leaf = (x, y, s, a) => `<g transform="translate(${x} ${y}) rotate(${a}) scale(${s})">${path("M0 0C-10 -20 -34 -24 -40 -6C-52 -10 -56 8 -44 16C-50 30 -30 40 -18 30C-14 44 6 44 6 30C14 40 34 34 28 18C42 12 38 -8 26 -8C26 -26 6 -26 0 0Z", C)}</g>`;
+    carve += leaf(420, 448, 1.3, 30) + leaf(116, 316, 1.2, -40) + leaf(232, 166, 1.1, 10) + leaf(366, 168, 1.2, 40) + leaf(262, 600, 1.1, -70);
+    let ink = "", red = "";
+    const cluster = (cx, cy, isRed) => {
+      for (let row = 0; row < 5; row++) for (let j = 0; j <= 4 - row; j++) {
+        const x = cx + (j - (4 - row) / 2) * 20 + r() * 3, y = cy + row * 18;
+        carve += circle(x, y, 10, C); ink += stroke(`M${f(x - 4)} ${f(y - 4)}a5 5 0 0 1 6 -2`, K, 1.6);
+        if (isRed) red += circle(x, y, 10, K);
+      }
+    };
+    cluster(400, 470, true); cluster(150, 350, false); cluster(320, 330, false);
+    for (const [x, y, a, s] of [[420, 448, 30, 1.3], [116, 316, -40, 1.2], [232, 166, 10, 1.1], [366, 168, 40, 1.2], [262, 600, -70, 1.1]])
+      ink += `<g transform="translate(${x} ${y}) rotate(${a}) scale(${s})">${stroke("M-36 4L22 8M-8 6L-20 -14M-8 6L-14 28M8 7L18 -10M8 7L18 26", K, 1.5)}</g>`;
+    return { horizon: null, sky: "streaks", sunAt: [470, 140, 46], carve, ink, red };
+  },
+  hands(r) {
+    const left = "M300 700C238 700 178 660 166 592C164 574 176 566 186 574C190 560 202 556 212 566C216 552 230 550 236 562C242 550 256 552 260 564C266 556 280 558 282 570C292 604 300 646 300 700Z";
+    const wristL = "M196 670L176 716L300 716L300 690Z";
+    let carve = path(left, C) + path(wristL, C) + `<g transform="translate(600 0) scale(-1 1)">${path(left, C)}${path(wristL, C)}</g>`;
+    let ink = "";
+    for (const sx of [1, -1]) {
+      const g = (d) => sx > 0 ? stroke(d, K, 2) : `<g transform="translate(600 0) scale(-1 1)">${stroke(d, K, 2)}</g>`;
+      ink += g("M212 572L216 600M236 566L240 596M260 568L262 598M186 580L194 606");
+      ink += g("M200 640C230 660 262 666 296 668");
+    }
+    ink += stroke("M300 640L300 712", K, 2.4);
+    const big = (g) => `<g transform="translate(300 716) scale(1.45) translate(-300 -716)">${g}</g>`;
+    return { horizon: null, sky: "rays", sunAt: [300, 380, 50], carve: big(carve), ink: big(ink), red: "" };
+  },
+  lily(r) {
+    let carve = "", ink = "", red = "";
+    const flower = (x, y, s) => {
+      carve += stroke(`M${x} ${y + 30 * s}C${x - 6} ${y + 120 * s} ${x + 8} ${y + 200 * s} ${x} 716`, C, 6 * s);
+      carve += ellipse(x - 24 * s, y + 110 * s, 30 * s, 8 * s, 50, C) + ellipse(x + 22 * s, y + 150 * s, 30 * s, 8 * s, -50, C);
+      for (const a of [-40, 0, 40]) carve += `<g transform="translate(${x} ${y + 30 * s}) rotate(${a}) scale(${s})">${path("M0 0C-22 -20 -24 -60 0 -84C24 -60 22 -20 0 0Z", C)}</g>`;
+      for (const a of [-40, 0, 40]) red += `<g transform="translate(${x} ${y + 30 * s}) rotate(${a}) scale(${s})">${path("M0 0C-22 -20 -24 -60 0 -84C24 -60 22 -20 0 0Z", K)}</g>`;
+      for (const a of [-40, 0, 40]) ink += `<g transform="translate(${x} ${y + 30 * s}) rotate(${a}) scale(${s})">${stroke("M0 -6L0 -66", K, 2)}</g>`;
+    };
+    flower(300, 330, 1.25); flower(170, 410, 1); flower(440, 400, 1.05);
+    const bird = (x, y, s) => stroke(`M${x - 22 * s} ${y}C${x - 12 * s} ${y - 12 * s} ${x - 4 * s} ${y - 6 * s} ${x} ${y + 2 * s}C${x + 4 * s} ${y - 6 * s} ${x + 12 * s} ${y - 12 * s} ${x + 22 * s} ${y}`, K, 4 * s);
+    return { horizon: 560, ground: "hills", sky: "streaks", sunAt: [112, 136, 40], carve, ink, figure: bird(420, 160, 1.4) + bird(480, 200, 1) + bird(370, 214, 0.8), red };
+  },
+  anchor(r) {
+    let carve = `<circle cx="300" cy="268" r="30" fill="none" stroke="${C}" stroke-width="13"/>`;
+    carve += stroke("M300 298L300 640", C, 24) + stroke("M218 340L382 340", C, 18);
+    carve += stroke("M168 540C186 620 246 652 300 652C354 652 414 620 432 540", C, 20);
+    carve += path("M150 556L168 510L196 552Z", C) + path("M450 556L432 510L404 552Z", C);
+    carve += stroke("M300 254C380 240 420 300 380 360C350 404 250 420 236 480C226 524 280 560 310 600", C, 9);
+    let ink = "";
+    for (let i = 0; i < 26; i++) { const y = 300 + i * 12; ink += stroke(`M296 ${y}L304 ${y + 6}`, K, 1.6); }
+    let bubbles = "";
+    for (let i = 0; i < 26; i++) bubbles += `<circle cx="${f(80 + r() * 440)}" cy="${f(260 + r() * 420)}" r="${f(3 + r() * 6)}" fill="none" stroke="${C}" stroke-width="2"/>`;
+    return { horizon: 230, ground: "water", sky: "streaks", sunAt: [300, 230, 70], sunClip: true, preCarve: bubbles, carve, ink, red: "" };
+  },
+  cross(r) {
+    const carve = path("M286 230L314 230L316 300L392 302L392 330L316 332L320 560L280 560L284 332L208 330L208 302L284 300Z", C);
+    let ink = "";
+    for (let i = 0; i < 12; i++) ink += stroke(`M${292 + (i % 3) * 6} ${340 + i * 18}L${294 + (i % 3) * 6} ${352 + i * 18}`, K, 1.4);
+    return { horizon: 560, ground: "hills", hillAmp: 22, sky: "rays", sunAt: [300, 316, 120], carve, ink, red: "" };
+  },
+};
+
+/* ---------- palettes ----------
+ * 清新多色套印：天空、地面各一版淺色，太陽一版暖黃，細節線用深青色（不用純黑）。
+ * 依 seed 挑一組，讓每次重刻都有些微不同的晨光色調。 */
+const PALETTES = [
+  { sky: "#A8DCF0", ground: "#93D3A8", water: "#7FC8E4", soil: "#EBC48F", night: "#AEB8EE", sun: "#FFD25A", accent: "#FF8A70", line: "#2C4A5A" },
+  { sky: "#BEE7E1", ground: "#A9DA90", water: "#86CFE0", soil: "#EFCB9C", night: "#B9B6EC", sun: "#FFC94D", accent: "#FF9479", line: "#2D4B57" },
+  { sky: "#C6E2F8", ground: "#9DD5B3", water: "#8EC5EC", soil: "#F2CB96", night: "#B2C2F2", sun: "#FFDA6A", accent: "#FF8F8F", line: "#334866" },
+  { sky: "#D4ECF7", ground: "#B5DE9F", water: "#95D3E6", soil: "#EDC48C", night: "#C0BDF0", sun: "#FFCF55", accent: "#FF9F6E", line: "#2F4F5C" },
+];
+
+/* ---------- main ---------- */
+function renderLinocut({ motif = "lamp", seed = 1, seal = "", caption = "", width, uid = "" } = {}) {
+  const r = rng(seed * 9973 + motif.length * 31);
+  // 以 motif + seed 決定 id，伺服器與瀏覽器輸出一致（避免 hydration 不一致）；同頁多張同圖時傳 uid
+  const id = "lc" + motif + (seed >>> 0).toString(36) + (uid ? "_" + uid : "");
+  const pal = PALETTES[(seed >>> 0) % PALETTES.length];
+  const m = (motifs[motif] || motifs.lamp)(r);
+  const horizon = m.horizon ?? Y1;
+  const [sx, sy, sR] = m.sunAt;
+
+  // --- key-block mask: white = color printed, black = carved away (paper shows) ---
+  let mask = `<rect x="${X0}" y="${Y0}" width="${X1 - X0}" height="${Y1 - Y0}" fill="${K}"/>`;
+  if (m.sky === "rays") mask += skyRays(r, sx, sy, sR, `${id}sky`);
+  else if (m.sky === "night") mask += skyNight(r, horizon, `${id}sky`);
+  else mask += skyStreaks(r, Y0, horizon, `${id}sky`);
+  if (!m.sunHidden) mask += sunCarve(r, sx, sy, sR, m.sunClip ? `${id}sky` : null);
+  else mask += circle(sx, sy, sR, C);
+
+  // region colors: which color each part of the block is inked with
+  let groundShape = "", groundColor = pal.ground;
+  if (m.horizon != null) {
+    const rect = `<rect x="${X0}" y="${horizon}" width="${X1 - X0}" height="${Y1 - horizon}" fill="${K}"/>`;
+    if (m.ground === "waves" || m.ground === "water") { groundShape = rect; groundColor = pal.water; mask += rect + waves(r, horizon); }
+    else if (m.ground === "mountains") { const g = mountains(r, horizon); groundShape = g.ground; mask += g.ground + g.lines; }
+    else if (m.flatGround) {
+      groundShape = rect; groundColor = pal.soil;
+      mask += rect + stroke(`M${X0} ${horizon + 3}L${X1} ${horizon + 3}`, C, 3, `stroke-dasharray="40 9 16 7"`);
+    } else { const g = hills(r, horizon, m.hillAmp ?? 10); groundShape = g.ground; mask += g.ground + g.lines; }
+  }
+  if (m.inkOver) mask += m.inkOver;
+  if (m.preCarve) mask += m.preCarve;
+  mask += m.carve;
+  const skyColor = m.sky === "night" ? pal.night : pal.sky;
+  const regions = `<rect width="${W}" height="${H}" fill="${skyColor}"/>` + groundShape.replaceAll(`"${K}"`, `"${groundColor}"`);
+
+  // details (wool, feathers, veins, birds) printed last in the deep line color
+  const details = (m.ink + (m.figure || "")).replaceAll(`"${K}"`, `"${pal.line}"`);
+
+  // --- sun plate: sun + motif warm parts, knocked out by motif silhouettes ---
+  const redMask = `<rect width="${W}" height="${H}" fill="${K}"/>` + m.carve.replaceAll(`"${C}"`, `"#000"`) + (m.red || "");
+  const warm = m.red ? `<g>${m.red.replaceAll(`"${K}"`, `"${pal.accent}"`)}</g>` : "";
+  let sun = m.sunHidden ? "" : circle(sx, sy, sR + 3, pal.sun) + `<circle cx="${f(sx)}" cy="${f(sy)}" r="${f(sR * 0.55)}" fill="#FFF3C4" opacity=".55"/>`;
+  sun = m.sunClip ? `<g clip-path="url(#${id}sky)">${sun}</g>${warm}` : sun + warm;
+
+  const sealSvg = seal ? `<g transform="translate(${X1 - 30} ${Y1 + 6})" filter="url(#${id}rough)">
+      <rect width="30" height="26" fill="${pal.accent}"/>
+      <text x="15" y="19.5" text-anchor="middle" font-size="17" font-weight="900" fill="${PAPER}" font-family="'Noto Serif TC','Noto Sans TC',serif">${esc(seal.slice(0, 1))}</text></g>` : "";
+  const cap = caption ? `<text x="${X0}" y="${Y1 + 22}" font-size="11" letter-spacing="2" fill="${pal.line}" font-family="'JetBrains Mono','IBM Plex Mono',ui-monospace,monospace">${esc(caption.toUpperCase())} · 1/1</text>` : "";
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}"${width ? ` width="${width}"` : ""} role="img" aria-label="${esc((MOTIFS[motif] || MOTIFS.lamp).zh)} 版畫插畫">
+<defs>
+  <clipPath id="${id}sky"><rect x="${X0}" y="${Y0}" width="${X1 - X0}" height="${(m.horizon ?? Y1) - Y0}"/></clipPath>
+  <filter id="${id}rough" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="${seed % 97}"/>
+    <feDisplacementMap in="SourceGraphic" scale="4.5"/>
+  </filter>
+  <filter id="${id}speck" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="${(seed * 7) % 89}" result="n"/>
+    <feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 0.984  0 0 0 0 0.945  18 0 0 0 -12.4"/>
+    <feComposite in2="SourceGraphic" operator="in"/>
+  </filter>
+  <filter id="${id}edge" x="-5%" y="-5%" width="110%" height="110%">
+    <feMorphology in="SourceAlpha" operator="dilate" radius="2.4" result="d"/>
+    <feComposite in="d" in2="SourceAlpha" operator="out" result="ring"/>
+    <feFlood flood-color="${pal.line}"/>
+    <feComposite in2="ring" operator="in"/>
+  </filter>
+  <clipPath id="${id}print"><rect x="${X0}" y="${Y0}" width="${X1 - X0}" height="${Y1 - Y0}"/></clipPath>
+  <mask id="${id}blk" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><g clip-path="url(#${id}print)">${mask}</g></mask>
+  <mask id="${id}red" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}">${redMask}</mask>
+</defs>
+<rect width="${W}" height="${H}" fill="${PAPER}"/>
+<g filter="url(#${id}rough)">
+  <g mask="url(#${id}red)" transform="translate(2.5 1.5)">${sun}</g>
+  <g mask="url(#${id}blk)">${regions}</g>
+  <g filter="url(#${id}edge)" clip-path="url(#${id}print)">${m.carve}</g>
+  <g transform="translate(-1 0.5)">${details}</g>
+</g>
+<rect x="${X0}" y="${Y0}" width="${X1 - X0}" height="${Y1 - Y0}" fill="#000" filter="url(#${id}speck)" opacity="0.5"/>
+${cap}${sealSvg}
+</svg>`;
+}
+
+const DATA = {"topics":[{"key":"anxiety","name":"焦慮與憂慮","cat":"encourage","motif":"lily","seal":"安","keywords":["焦慮","擔心","憂慮","緊張","壓力","煩惱","不安","恐慌","胡思亂想","放不下","心很亂","操心"],"passages":[["Phil 4:6-7","可以把現在掛心的事一件一件說給神聽，求祂的平安守住心思意念。"],["Matt 6:31-34","天父知道你的需要；今天只需要面對今天的難處。"],["1Pet 5:6-7","把壓在心上的重量卸給神，因為祂真的顧念你。"]],"self":{"blessing":"願那位顧念你的神，接住你心裡一件一件的掛慮。願你今天只需要面對今天的難處，明天的事交在天父手中。願出人意外的平安，像清晨的光一樣，安靜地守住你的心懷意念。","prayer":"天父，我心裡有好多放不下的事，越想越緊張。謝謝你說我可以把一切憂慮卸給你，因為你顧念我。我現在把這些事一件一件交給你，求你賜我今天需要的力量和智慧，也求你用出人意外的平安保守我的心。奉主耶穌的名求，阿們。"},"other":{"blessing":"願那位顧念人的神，接住{name}心裡的掛慮。願{name}今天只需要面對今天的難處，明天的事交在天父手中。願出人意外的平安保守{name}的心懷意念。","prayer":"天父，我把{name}帶到你面前。你知道{name}現在心裡的緊張和掛慮。求你幫助{name}把憂慮卸給你，賜下今天所需要的力量，也讓{name}知道自己並不孤單。求你用出人意外的平安保守{name}的心。奉主耶穌的名求，阿們。"}},{"key":"fear","name":"懼怕","cat":"encourage","motif":"boat","seal":"勇","keywords":["害怕","恐懼","懼怕","驚嚇","惶恐","不敢","手術","開刀","檢查報告","怕"],"passages":[["Isa 41:10","害怕的時候，可以抓住神「與你同在」的應許，求祂堅固、扶持你。"],["Ps 56:3-4","不必假裝不怕；在懼怕的時候，仍然可以選擇倚靠神。"],["Ps 27:1","神是你的光和保障，懼怕不必成為主宰你的聲音。"]],"self":{"blessing":"願那位說「不要害怕，我與你同在」的神，在你最害怕的時刻緊緊扶持你。願你懼怕的時候仍能倚靠祂，願祂公義的右手托住你，使你一步一步走過眼前的路。","prayer":"主啊，我很害怕，也不想假裝堅強。謝謝你應許與我同在，必堅固我、幫助我。求你在我懼怕的時候成為我的光，賜我勇氣面對眼前的事，也賜我安穩的睡眠。我把自己交在你手中。奉主耶穌的名求，阿們。"},"other":{"blessing":"願那位說「不要害怕，我與你同在」的神，在{name}最害怕的時刻緊緊扶持。願{name}在懼怕中仍能倚靠祂，願祂公義的右手托住{name}，一步一步走過眼前的路。","prayer":"主啊，我為{name}禱告。你知道{name}心裡的害怕。求你親自與{name}同在，堅固、幫助、扶持{name}，賜下勇氣與平安。也求你使用身邊的人陪伴{name}，讓{name}經歷你的同在。奉主耶穌的名求，阿們。"}},{"key":"grief","name":"悲傷與喪親","cat":"comfort","motif":"dove","seal":"慰","keywords":["*過世","*離世","*去世","走了","死了","喪","失去","*告別式","*喪禮","悲傷","想念","思念","*流產","離開我們","安息"],"passages":[["Ps 34:18","神沒有遠離正在傷心的你，祂就在你身邊。"],["1Thess 4:13-14","可以哭，可以想念；在主裡，我們的悲傷仍帶著盼望。"],["Rev 21:3-4","有一天，神要親自擦去一切的眼淚。"]],"self":{"blessing":"願靠近傷心人的神，此刻就在你身邊。你可以哭，可以想念，不必急著堅強。願神親自擁抱你破碎的心，在每個想念的時刻安慰你，直到祂擦去一切眼淚的那一天。","prayer":"天父，我的心好痛，好想念那位離開的人。謝謝你靠近傷心的人，也允許我在你面前流淚。求你安慰我，陪我走過每一個想念的日子，也賜我力量面對接下來的生活。求你讓我在悲傷中仍看見你所賜的盼望。奉主耶穌的名求，阿們。"},"other":{"blessing":"願靠近傷心人的神，此刻就在{name}身邊。願{name}可以安心地哭、安心地想念，不必急著堅強。願神親自擁抱{name}破碎的心，在每個想念的時刻賜下安慰。","prayer":"天父，我把正在悲傷中的{name}帶到你面前。求你靠近{name}，安慰{name}破碎的心，陪伴{name}走過每一個想念的日子。若{name}心裡有自責或遺憾，求你溫柔地醫治。也求你使用我，用合適的方式陪伴{name}。奉主耶穌的名求，阿們。"}},{"key":"illness","name":"病痛","cat":"comfort","motif":"hands","seal":"恩","keywords":["生病","病","住院","癌","腫瘤","化療","放療","開刀","疼痛","身體","醫院","診斷","確診","復健","慢性病","病房","治療"],"passages":[["Ps 73:26","身體衰弱的時候，神仍是你心裡的力量。"],["2Cor 4:16-18","外在的身體雖然軟弱，神仍在你裡面一天一天更新你。"],["2Cor 12:9-10","不論病情如何，神的恩典在每一天都夠你用。"]],"self":{"blessing":"願神作你心裡的力量，在身體軟弱的日子扶持你。願醫治你的主與你同在，也看顧照顧你的醫療團隊。願祂的恩典每天都夠你用，使你的內心一天新似一天。","prayer":"主啊，我的身體很不舒服，心裡也很疲憊。我求你醫治我，也賜醫生和護理人員智慧。不論病程怎麼走，求你讓我經歷你的恩典夠我用，作我心裡的力量，也讓我能誠實地向你、向身邊的人說出需要。奉主耶穌的名求，阿們。"},"other":{"blessing":"願神作{name}心裡的力量，在身體軟弱的日子扶持{name}。願醫治的主與{name}同在，也看顧照顧{name}的醫療團隊與家人。願祂的恩典每天都夠{name}用。","prayer":"主啊，我為生病的{name}禱告。求你醫治{name}的身體，減輕疼痛，賜醫療團隊智慧。不論病程怎麼走，求你作{name}心裡的力量，也賜照顧{name}的家人體力與平安。奉主耶穌的名求，阿們。"}},{"key":"weary","name":"疲憊與軟弱","cat":"encourage","motif":"sheep","seal":"息","keywords":["累","好累","疲憊","疲倦","撐不下去","無力","軟弱","耗盡","倦怠","燃燒","沒力氣","喘不過氣","身心俱疲"],"passages":[["Matt 11:28-30","耶穌邀請勞苦擔重擔的你，到祂那裡得安息。"],["Isa 40:28-31","神不疲乏，祂賜力量給軟弱的人。"],["Ps 23:1-3","好牧人會領你到可安歇的水邊，使你的靈魂甦醒。"]],"self":{"blessing":"願邀請你來得安息的主，卸下你肩上過重的擔子。願那位不疲乏的神，把新的力量賜給你，讓你在可安歇的水邊重新得力，如鷹展翅上騰。","prayer":"主耶穌，我真的好累，好像撐不下去了。謝謝你邀請勞苦擔重擔的人到你那裡得安息。我現在就來到你面前，求你讓我的靈魂甦醒，賜我智慧知道什麼可以放下，也賜我勇氣請別人幫忙。奉主耶穌的名求，阿們。"},"other":{"blessing":"願邀請人來得安息的主，卸下{name}肩上過重的擔子。願那位不疲乏的神，把新的力量賜給{name}，讓{name}在可安歇的水邊重新得力。","prayer":"主耶穌，我為疲憊的{name}禱告。求你讓{name}在你裡面得安息，使{name}的靈魂甦醒。求你賜{name}智慧知道什麼可以放下，也為{name}預備願意分擔的人。奉主耶穌的名求，阿們。"}},{"key":"lonely","name":"孤單與被棄","cat":"comfort","motif":"lamp","seal":"伴","keywords":["孤單","寂寞","沒人","被拋棄","被遺棄","沒有朋友","一個人","被排擠","沒人懂","被忽略","分手","被甩","失戀"],"passages":[["Heb 13:5-6","神說「我總不撇下你，也不丟棄你」。"],["Ps 27:10","就算最親近的人離開了，神仍然收留你。"],["Isa 49:15-16","神沒有忘記你，你的名字刻在祂的掌上。"]],"self":{"blessing":"願那位總不撇下你的神，在你覺得孤單的時候讓你知道：你沒有被忘記。你的名字刻在祂的掌上。願祂為你預備真誠的陪伴，也親自作你隨時的幫助。","prayer":"天父，我覺得好孤單，好像沒有人真正懂我。謝謝你應許總不撇下我、也不丟棄我。求你讓我感受到你的同在，也為我預備可以信任的朋友和屬靈同伴，給我勇氣踏出一步與人連結。奉主耶穌的名求，阿們。"},"other":{"blessing":"願那位總不撇下人的神，在{name}覺得孤單的時候讓{name}知道：{name}沒有被忘記。願祂為{name}預備真誠的陪伴，也親自作{name}隨時的幫助。","prayer":"天父，我為覺得孤單的{name}禱告。求你讓{name}感受到你的同在與愛，為{name}預備可以信任的朋友。也求你讓我知道怎樣陪伴{name}，成為你愛{name}的管道。奉主耶穌的名求，阿們。"}},{"key":"failure","name":"失敗與挫折","cat":"encourage","motif":"path","seal":"起","keywords":["失敗","考差","落榜","被拒","挫折","搞砸","沒考上","失業","被裁","被開除","裁員","找不到工作","失利","輸了","沒錄取"],"passages":[["Ps 37:23-24","這次跌倒了，但神的手仍然扶著你。"],["Mic 7:8","坐在黑暗裡的時候，耶和華仍是你的光。"],["Lam 3:21-26","神的憐憫每早晨都是新的，明天仍然有新的開始。"]],"self":{"blessing":"願那位攙扶你的神，在你跌倒的地方扶你起來。這次的失敗不是你的全部，神的憐憫每早晨都是新的。願祂立定你的腳步，為你開出下一條路。","prayer":"主啊，這次的結果讓我很失望，也很難面對自己。謝謝你說義人雖失腳也不至全身仆倒，因為你用手攙扶。求你醫治我的沮喪，幫助我從這次經驗中學習，也為我開出下一步的道路。奉主耶穌的名求，阿們。"},"other":{"blessing":"願那位攙扶人的神，在{name}跌倒的地方扶{name}起來。願{name}知道這次的失敗不是全部，神的憐憫每早晨都是新的。願祂立定{name}的腳步。","prayer":"主啊，我為正經歷挫折的{name}禱告。求你安慰{name}的失望，不讓{name}被沮喪壓垮，也為{name}開出下一步的道路，賜下需要的供應與機會。奉主耶穌的名求，阿們。"}},{"key":"guilt","name":"罪疚與悔改","cat":"exhort","motif":"cross","seal":"赦","keywords":["罪","犯罪","後悔","內疚","愧疚","犯錯","做錯","羞恥","悔改","跌倒","對不起神","良心不安","自責"],"passages":[["1John 1:8-9","誠實地承認，神是信實的，必定赦免、洗淨。"],["Ps 51:10-12","求神造一顆清潔的心，並恢復得救的喜樂。"],["Rom 8:1-2","悔改的人不必再活在定罪之下。"]],"self":{"blessing":"願信實公義的神，在你誠實面對時赦免你、洗淨你。願祂為你造一顆清潔的心，恢復你得救的喜樂。願你知道：在基督裡，你不必再活在定罪之下。","prayer":"天父，我在你面前承認我的錯，我真的很後悔。謝謝你應許，我若認罪，你是信實的，必赦免我。求你為我造清潔的心，賜我力量改變，也給我勇氣去修補被我傷害的關係。讓我重新經歷得救的喜樂。奉主耶穌的名求，阿們。"},"other":{"blessing":"願信實公義的神，在{name}誠實面對時赦免、洗淨{name}。願祂為{name}造一顆清潔的心，恢復得救的喜樂，讓{name}不再活在定罪之下。","prayer":"天父，我為{name}禱告。求你用恩慈引導{name}誠實地來到你面前，經歷你的赦免與潔淨。也求你賜{name}力量改變、修補關係，並重新經歷得救的喜樂。奉主耶穌的名求，阿們。"}},{"key":"forgive","name":"饒恕與和好","cat":"exhort","motif":"dove","seal":"和","keywords":["饒恕","原諒","傷害","背叛","仇恨","怨恨","和好","衝突","不肯原諒","鬧翻","絕交","冷戰","放不下"],"passages":[["Eph 4:31-32","饒恕的力量，來自我們先被神饒恕。"],["Col 3:12-14","以憐憫、恩慈、忍耐彼此包容，用愛把關係連結起來。"],["Matt 18:21-22","饒恕常常需要一次又一次，是一個過程。"]],"self":{"blessing":"願那位在基督裡饒恕你的神，親自醫治你心裡的傷。願苦毒慢慢離開，憐憫與恩慈慢慢長出來。願祂賜你智慧，知道哪些關係可以和好，哪些需要時間與界線。","prayer":"主啊，這段關係讓我很受傷，也很難放下。謝謝你先饒恕了我。求你醫治我的傷，除去我心裡的苦毒，一步一步帶領我走向饒恕。若有我需要道歉的地方，求你給我勇氣；若需要界線，也求你賜我智慧。奉主耶穌的名求，阿們。"},"other":{"blessing":"願那位饒恕人的神，親自醫治{name}心裡的傷。願苦毒慢慢離開，憐憫與恩慈慢慢長出來。願祂賜{name}智慧，在合適的時候走向和好。","prayer":"主啊，我為{name}和這段受傷的關係禱告。求你醫治雙方的傷，除去苦毒，賜下饒恕的力量與和好的機會。也求你賜{name}智慧，知道何時需要時間與界線。奉主耶穌的名求，阿們。"}},{"key":"anger","name":"憤怒與言語","cat":"exhort","motif":"rock","seal":"柔","keywords":["生氣","憤怒","發脾氣","暴躁","吵架","爭吵","口角","罵人","失控","情緒","講話很衝","氣到"],"passages":[["Jas 1:19-20","先停下來聽，再開口，也慢慢地讓怒氣過去。"],["Eph 4:26-27","生氣可以，但不要讓怒氣過夜、變成更大的傷害。"],["Prov 15:1","一句柔和的回答，常常能讓衝突降溫。"]],"self":{"blessing":"願賜平安的神，在你怒氣上升的時候讓你停下來。願你快快地聽、慢慢地說，說出的話帶著恩慈。願聖靈結出溫柔與節制的果子，修補你珍惜的關係。","prayer":"主啊，我最近很容易生氣，說出的話也傷了人。求你在我情緒上來時提醒我停下來，賜我溫柔與節制。求你讓我不含怒到日落，有勇氣道歉、修補關係，也幫助我看見怒氣底下真正的需要。奉主耶穌的名求，阿們。"},"other":{"blessing":"願賜平安的神，在{name}怒氣上升的時候讓{name}停下來。願{name}快快地聽、慢慢地說，說出的話帶著恩慈。願溫柔與節制在{name}身上長出來。","prayer":"主啊，我為{name}禱告。求你在{name}情緒激動時賜下平靜，讓{name}看見怒氣底下真正的需要。也求你修補因衝突受傷的關係，使彼此能用柔和的話溝通。奉主耶穌的名求，阿們。"}},{"key":"marriage","name":"婚姻與家庭","cat":"edify","motif":"vine","seal":"愛","keywords":["*婚姻","*夫妻","丈夫","妻子","*先生","*太太","*老公","*老婆","*離婚","家庭","家人","孩子","父母","小孩","教養","*婆媳","親子"],"passages":[["1Cor 13:4-7","愛不只是感覺，是每天選擇的忍耐、恩慈與包容。"],["Eccl 4:9-12","兩個人一起，加上神作第三股繩子，就不容易折斷。"],["Ps 127:1-2","家需要由神來建造，不是只靠我們的力氣。"]],"self":{"blessing":"願建造家庭的神，親自來建造你的家。願你們之間有恆久的忍耐與恩慈，在彼此扶持中更靠近。願神作你們之間的第三股繩子，使你們的關係不易折斷。","prayer":"天父，我把我的家交在你手中。你知道我們之間的張力和疲憊。求你賜我們恆久忍耐和恩慈的心，學會好好聽、好好說，彼此包容。若需要尋求輔導或幫助，也求你給我們勇氣。求你親自建造這個家。奉主耶穌的名求，阿們。"},"other":{"blessing":"願建造家庭的神，親自來建造{name}的家。願{name}的家中有恆久的忍耐與恩慈，在彼此扶持中更靠近。願神作他們之間的第三股繩子。","prayer":"天父，我為{name}和{name}的家禱告。求你醫治家中受傷的關係，賜下忍耐、恩慈與好好溝通的能力。若需要外在的協助，求你為他們預備合適的人。求你親自建造這個家。奉主耶穌的名求，阿們。"}},{"key":"work","name":"工作與經濟","cat":"encourage","motif":"sprout","seal":"足","keywords":["工作","職場","老闆","主管","同事","薪水","錢","經濟","負債","債","收入","創業","生意","存款","房貸","開銷","業績"],"passages":[["Ps 37:3-5","倚靠神、踏實地做好眼前的事，把道路交託給祂。"],["Phil 4:11-13","不論有餘或缺乏，靠著主都能學會知足、面對。"],["Col 3:23-24","你的工作，主都看見；可以把它當作獻給主的。"]],"self":{"blessing":"願供應你的神，看顧你工作與生活的每一個需要。願你在有餘或缺乏中都學會知足，靠著主面對每一天。願你手所做的工被神堅立，真正的賞賜從祂而來。","prayer":"天父，我為工作和經濟的壓力向你呼求。你知道我的需要。求你供應我，賜我智慧處理財務，也在工作中給我好的機會與方向。不論有餘或缺乏，求你教我知足，靠著你面對每一天。奉主耶穌的名求，阿們。"},"other":{"blessing":"願供應人的神，看顧{name}工作與生活的每一個需要。願{name}在有餘或缺乏中都經歷主的同在，願{name}手所做的工被神堅立。","prayer":"天父，我為{name}在工作與經濟上的需要禱告。求你為{name}預備供應與機會，賜下智慧與平安。也求你讓我知道是否能用實際的方式幫助{name}。奉主耶穌的名求，阿們。"}},{"key":"guidance","name":"前途與方向","cat":"edify","motif":"path","seal":"引","keywords":["方向","選擇","決定","迷惘","迷茫","前途","未來","轉職","換工作","不知道該","抉擇","搬家","出國","升學","外派","要不要","猶豫","志向"],"passages":[["Prov 3:5-6","不只靠自己的聰明，在每一步上都認定神的帶領。"],["Jas 1:5","缺少智慧的時候，可以放心地向神求。"],["Ps 32:8","神願意教導你、指示你當行的路。"]],"self":{"blessing":"願那位指引道路的神，在你面前的岔路上帶領你。願你不倚靠自己的聰明，在一切事上認定祂。願祂厚厚地賜你智慧，讓你一步一步走得踏實、平安。","prayer":"主啊，我站在一個選擇面前，不知道該怎麼走。謝謝你說缺少智慧的人可以向你求，你必厚賜。求你賜我分辨的智慧，為我開該開的門、關該關的門，也讓我身邊有能一起禱告商量的人。不論怎麼選，求你與我同行。奉主耶穌的名求，阿們。"},"other":{"blessing":"願那位指引道路的神，在{name}面前的岔路上帶領{name}。願{name}在一切事上認定祂，願祂厚厚地賜{name}智慧與平安。","prayer":"主啊，我為正在做決定的{name}禱告。求你賜{name}分辨的智慧和心裡的平安，為{name}開該開的門、關該關的門。不論{name}怎麼選，求你與{name}同行。奉主耶穌的名求，阿們。"}},{"key":"waiting","name":"等候","cat":"encourage","motif":"eagle","seal":"候","keywords":["等","等待","等候","*不孕","*求子","單身","結果","還沒","遲遲","很久","一直沒有","盼了好久","等通知","*沒有懷孕","*沒懷孕","*等了好多年","灰心","*等很久"],"passages":[["Ps 27:13-14","等候的時候，可以一邊壯膽，一邊相信會看見神的恩惠。"],["Lam 3:25-26","靜默地等候神，本身就是好的。"],["Ps 40:1-3","神會垂聽耐心等候的人，使他的腳站在磐石上。"]],"self":{"blessing":"願那位垂聽的神，在漫長的等候中堅固你的心。願你在等候中不被灰心吞沒，仍能壯膽、仰望。願你在活人之地看見耶和華的恩惠。","prayer":"主啊，我等了好久，有時候真的很灰心。謝謝你聽見我每一次的呼求。求你在等候中堅固我的心，讓我不被沮喪吞沒，也讓我在等候中仍能經歷你的同在。我把結果交在你手中。奉主耶穌的名求，阿們。"},"other":{"blessing":"願那位垂聽的神，在漫長的等候中堅固{name}的心。願{name}不被灰心吞沒，仍能壯膽、仰望，並在活人之地看見耶和華的恩惠。","prayer":"主啊，我為在等候中的{name}禱告。求你垂聽{name}的呼求，在等候中堅固{name}的心，賜下盼望與平安。也求你讓身邊的人懂得溫柔地陪伴{name}。奉主耶穌的名求，阿們。"}},{"key":"suffering","name":"苦難與試煉","cat":"comfort","motif":"rock","seal":"堅","keywords":["苦難","試煉","痛苦","為什麼是我","打擊","艱難","困境","災難","意外","車禍","倒楣","接連","雪上加霜"],"passages":[["Ps 46:1-3","神是你患難中隨時的幫助。"],["2Cor 4:8-9","被壓、作難，但神不讓你被壓垮。"],["Rom 8:26-28","說不出話時，聖靈親自為你代求；神仍在其中掌權。"]],"self":{"blessing":"願那位作你避難所的神，在一切動盪中成為你隨時的幫助。願你雖然四面受壓，卻不被困住；心裡作難，卻不至失望。願聖靈在你說不出話的時候為你代求。","prayer":"主啊，最近的事接連發生，我真的不明白為什麼。我不知道該怎麼禱告，謝謝你的靈親自為我代求。求你作我的避難所和力量，讓我不被壓垮，也讓我在困境中仍看見你的同在。奉主耶穌的名求，阿們。"},"other":{"blessing":"願那位作避難所的神，在{name}經歷的動盪中成為隨時的幫助。願{name}雖然四面受壓，卻不被困住；心裡作難，卻不至失望。","prayer":"主啊，我為正經歷艱難的{name}禱告。求你作{name}的避難所和力量，在{name}說不出話時為{name}代求。求你保守{name}不被壓垮，也預備實際的幫助。奉主耶穌的名求，阿們。"}},{"key":"doubt","name":"信心與疑惑","cat":"encourage","motif":"lamp","seal":"信","keywords":["懷疑","疑惑","信心","不確定","神在哪","神不在","禱告沒有","沉默","信不下去","質疑","沒有回應","感覺不到神"],"passages":[["Mark 9:23-24","信心不夠也可以來到耶穌面前，祂接納誠實的人。"],["Ps 13:1-6","可以誠實地問「要到幾時」，同時選擇倚靠神的慈愛。"],["Heb 4:14-16","耶穌體恤我們的軟弱，你可以坦然無懼地來到祂面前。"]],"self":{"blessing":"願那位接納不完全信心的主，親自扶持你的疑惑。願你可以誠實地問，也被溫柔地接住。願你在神看似沉默的日子，仍能一點一點經歷祂的慈愛。","prayer":"主啊，我信，但我信不足，求你幫助我。有時候我感覺不到你，也不明白你的沉默。謝謝你體恤我的軟弱，讓我可以坦然來到你面前。求你親自向我顯明你自己，也為我預備能陪伴我的屬靈同伴。奉主耶穌的名求，阿們。"},"other":{"blessing":"願那位接納不完全信心的主，親自扶持{name}的疑惑。願{name}可以誠實地問，也被溫柔地接住，並一點一點經歷祂的慈愛。","prayer":"主啊，我為在信心上掙扎的{name}禱告。求你親自向{name}顯明你的同在與慈愛，也讓我在陪伴{name}時有耐心，不急著給答案。奉主耶穌的名求，阿們。"}},{"key":"hope","name":"低潮與盼望","cat":"comfort","motif":"anchor","seal":"望","keywords":["盼望","絕望","沒有希望","黑暗","低潮","憂鬱","憂鬱症","沮喪","難過","提不起勁","什麼都不想做","空虛","負擔","想哭"],"passages":[["Ps 42:5","可以承認憂悶，也可以對自己的心說：仍要仰望神。"],["Ps 139:7-12","再深的黑暗，也不能遮蔽神看見你。"],["Rom 15:13","盼望不是靠自己擠出來的，是神藉著聖靈賜下的。"]],"self":{"blessing":"願使人有盼望的神，在你最低落的時候陪著你。黑暗不能遮蔽你，使神看不見你。願祂一點一點地把喜樂與平安放回你心裡，也讓你身邊有願意陪你走的人。","prayer":"天父，我心裡好沉重，提不起勁，也看不到盼望。謝謝你說黑暗也不能遮蔽我，使你看不見。求你在這段日子陪著我，賜我力量去找能幫助我的人，包括家人、朋友、牧者或專業的醫療協助。求你一點一點地把盼望放回我心裡。奉主耶穌的名求，阿們。"},"other":{"blessing":"願使人有盼望的神，在{name}最低落的時候陪著{name}。願{name}知道再深的黑暗也不能遮蔽神。願祂一點一點地把喜樂與平安放回{name}心裡。","prayer":"天父，我為正在低潮中的{name}禱告。求你陪著{name}，讓{name}知道自己沒有被放棄，也幫助{name}得到需要的陪伴與專業協助。求你一點一點地把盼望放回{name}心裡。奉主耶穌的名求，阿們。"}},{"key":"worth","name":"自我價值","cat":"edify","motif":"lily","seal":"珍","keywords":["自卑","沒價值","不夠好","醜","比較","被否定","沒用","被看不起","討厭自己","外貌","身材","沒自信","不配"],"passages":[["Ps 139:13-14","你是被神親手奇妙可畏地造成的。"],["Eph 2:10","你是神的作品，不是隨便被丟在世上的。"],["Matt 10:29-31","連你的頭髮都被數過，你在神眼中十分貴重。"]],"self":{"blessing":"願造你的神，讓你用祂的眼光看自己。你是祂親手奇妙可畏地造成的，是祂的作品，連頭髮都被數過。願你不再用比較來衡量自己，而是在祂的愛裡站穩。","prayer":"天父，我常常覺得自己不夠好，也常拿自己跟別人比較。謝謝你說我是你奇妙可畏地造成的，是你的作品。求你醫治我心裡被否定的傷，讓我用你的眼光看自己，也看見你為我預備的路。奉主耶穌的名求，阿們。"},"other":{"blessing":"願造{name}的神，讓{name}用祂的眼光看自己。{name}是祂親手奇妙可畏地造成的，是祂的作品。願{name}在祂的愛裡站穩，不再被比較綑綁。","prayer":"天父，我為{name}禱告。求你醫治{name}心裡被否定的傷，讓{name}知道自己在你眼中多麼貴重。也求你使用我，用真誠的話語肯定{name}。奉主耶穌的名求，阿們。"}},{"key":"study","name":"學業與考試","cat":"encourage","motif":"lamp","seal":"智","keywords":["*考試","*學測","*分科","指考","*會考","*國考","期末","期中","*論文","學業","讀書","成績","*面試","證照","畢業","報告","*期中考","*期末考"],"passages":[["Prov 16:3","盡力準備，也把結果交託給神。"],["Ps 90:17","求神堅立你手所做的工，包括這段時間的努力。"],["Phil 4:6-7","緊張的時候，可以把壓力說給神聽，求祂的平安守住你的心。"]],"self":{"blessing":"願賜智慧的神，在你準備的每一天與你同在。願你記得所學的、清楚地表達，在考場上心裡平安。願你盡力之後把結果交託給祂，因為你的價值不由分數決定。","prayer":"主啊，考試快到了，我很緊張。求你賜我專注與記憶力，讓我好好準備，也賜我安穩的睡眠。考試時求你使我心裡平安、頭腦清楚。我會盡力，也把結果交託給你。奉主耶穌的名求，阿們。"},"other":{"blessing":"願賜智慧的神，在{name}準備的每一天同在。願{name}記得所學的、清楚地表達，在考場上心裡平安，並在盡力之後把結果交託給祂。","prayer":"主啊，我為準備考試的{name}禱告。求你賜{name}專注、記憶力和安穩的睡眠，考試時心裡平安、頭腦清楚。不論結果如何，求你讓{name}知道自己的價值不由分數決定。奉主耶穌的名求，阿們。"}},{"key":"temptation","name":"試探與成癮","cat":"exhort","motif":"anchor","seal":"守","keywords":["試探","誘惑","*上癮","*成癮","*色情","賭","*賭博","酒","喝酒","*戒不掉","網路成癮","手遊","沉迷","抽菸","停不下來"],"passages":[["1Cor 10:13","神是信實的，必為你開一條出路。"],["Heb 4:14-16","耶穌體恤你的軟弱，跌倒了也可以坦然回到祂面前。"],["Jas 4:7-8","親近神，神就必親近你。"]],"self":{"blessing":"願信實的神，在每一次試探中為你開一條出路。願你不被羞愧壓垮，而是一次又一次坦然回到施恩的寶座前。願祂賜你力量，也為你預備同行的夥伴。","prayer":"主啊，我在這件事上掙扎很久，一直戒不掉，也覺得很羞愧。謝謝你體恤我的軟弱。求你在試探來時為我開出路，賜我力量說不，也給我勇氣向可信任的人或專業機構求助。我願意親近你。奉主耶穌的名求，阿們。"},"other":{"blessing":"願信實的神，在每一次試探中為{name}開一條出路。願{name}不被羞愧壓垮，而能坦然回到神面前，並得著同行的夥伴與實際的幫助。","prayer":"主啊，我為在試探中掙扎的{name}禱告。求你賜{name}力量和出路，讓{name}不被羞愧壓垮，也願意接受陪伴與專業的協助。求你讓我用恩慈而不是定罪陪伴{name}。奉主耶穌的名求，阿們。"}},{"key":"injustice","name":"受委屈與不公","cat":"comfort","motif":"rock","seal":"公","keywords":["*委屈","*冤枉","不公平","被誤會","*霸凌","欺負","批評","毀謗","*排擠","*羞辱","被罵","*被針對","黑函","職場霸凌","被冤","*壞話","*背後說","背後","*當眾","*被罵"],"passages":[["Ps 37:5-7","把這件事交託給神，在祂面前安靜等候。"],["1Pet 2:21-23","耶穌也受過不公平的對待，祂明白你的委屈。"],["Rom 12:19-21","不必自己報復，把公義交給神，也可以透過正當管道求助。"]],"self":{"blessing":"願按公義審判的神，看見你所受的委屈。願你不被苦毒和報復的念頭綑綁，而能把公義交在祂手中。願祂保護你，為你預備替你說話、幫助你的人。","prayer":"主啊，我受了很大的委屈，心裡很不平。你看見一切，也明白被不公平對待的痛。求你保護我，賜我智慧知道該怎麼回應、該向誰求助，不讓苦毒在我心裡扎根。我把公義交在你手中。奉主耶穌的名求，阿們。"},"other":{"blessing":"願按公義審判的神，看見{name}所受的委屈。願祂保護{name}，為{name}預備替{name}說話、幫助{name}的人，也保守{name}的心不被苦毒綑綁。","prayer":"主啊，我為受委屈的{name}禱告。求你保護{name}，安慰{name}受傷的心，賜{name}智慧知道如何回應、向誰求助。若需要實際的保護，求你為{name}開路。奉主耶穌的名求，阿們。"}},{"key":"growth","name":"靈命成長","cat":"edify","motif":"vine","seal":"長","keywords":["靈命","成長","讀經","禱告生活","靈修","冷淡","門徒","跟隨","親近神","信仰","乾渴","屬靈"],"passages":[["John 15:4-5","成長的祕訣是常在主裡面，像枝子連在葡萄樹上。"],["Phil 1:6","神已經在你裡面開始了工作，祂必成全。"],["2Pet 1:5-8","在恩典中殷勤，一點一點長出品格的果子。"]],"self":{"blessing":"願那位在你心裡動了善工的神，親自成全祂的工作。願你像枝子連在葡萄樹上，常在主裡面，結出愛、喜樂、和平的果子。願你在恩典中一天一天長大。","prayer":"主耶穌，我渴望更認識你，但常常覺得冷淡、乾渴。謝謝你說你已經開始的工作必會成全。求你吸引我親近你，讓我在讀經和禱告中遇見你，也讓我在生活中結出果子。奉主耶穌的名求，阿們。"},"other":{"blessing":"願那位在{name}心裡動了善工的神，親自成全祂的工作。願{name}常在主裡面，像枝子連在葡萄樹上，在恩典中一天一天長大。","prayer":"主耶穌，我為{name}的靈命禱告。求你吸引{name}更親近你，在讀經和禱告中遇見你，結出生命的果子。也求你為{name}預備一同成長的屬靈同伴。奉主耶穌的名求，阿們。"}},{"key":"service","name":"服事與事奉","cat":"encourage","motif":"sprout","seal":"忠","keywords":["*服事","*事奉","*事工","*帶小組","小組長","教會","傳福音","宣教","同工","講道","敬拜","主日學","沒有果效","服事好累","*小組"],"passages":[["1Cor 15:58","你在主裡的勞苦，不是徒然的。"],["Gal 6:9-10","不要喪志，收成在神的時間裡。"],["1Pet 4:10-11","按著神給你的恩賜服事，力量也從祂而來。"]],"self":{"blessing":"願呼召你的主，記念你一切看得見與看不見的擺上。願你知道你在主裡的勞苦不是徒然的。願祂更新你的熱情，賜你力量，在祂的時間裡看見收成。","prayer":"主啊，服事了這麼久，我有時候很累，也看不到果效。謝謝你說在主裡的勞苦不是徒然的。求你更新我的熱情，讓我按你所給的恩賜服事，而不是靠自己的力氣。也求你賜我智慧知道何時需要休息。奉主耶穌的名求，阿們。"},"other":{"blessing":"願呼召{name}的主，記念{name}一切看得見與看不見的擺上。願{name}知道在主裡的勞苦不是徒然的，願祂更新{name}的熱情與力量。","prayer":"主啊，我為在服事中疲憊的{name}禱告。求你更新{name}的熱情，賜下力量與安息，讓{name}知道這些擺上你都看見。也求你為{name}預備同心的同工。奉主耶穌的名求，阿們。"}},{"key":"humility","name":"謙卑與嫉妒","cat":"exhort","motif":"lily","seal":"謙","keywords":["驕傲","自大","嫉妒","羨慕","比較心","論斷","批評別人","貪心","升遷","眼紅","不服氣","看不慣","酸"],"passages":[["Phil 2:3-5","以基督的心為心，看別人比自己強。"],["Gal 6:4-5","專心察驗自己的路，不必活在和別人的比較裡。"],["1Pet 5:5-6","在神大能的手下謙卑，祂會在合適的時候提升你。"]],"self":{"blessing":"願那位虛己的主，把祂的心放在你心裡。願你從比較中得自由，專心走神為你預備的路，也能真心為別人的祝福歡喜。願神在合適的時候提升你。","prayer":"主啊，我承認我心裡有嫉妒和比較，也有不服氣。求你赦免我，賜我以基督的心為心，讓我能真心為別人歡喜。求你幫助我專心走你給我的路，把我的未來交在你大能的手中。奉主耶穌的名求，阿們。"},"other":{"blessing":"願那位虛己的主，把祂的心放在{name}心裡。願{name}從比較中得自由，專心走神為{name}預備的路，並在合適的時候被神提升。","prayer":"主啊，我為{name}禱告。求你讓{name}從比較與不平中得自由，以基督的心為心，也看見你為{name}預備的路。奉主耶穌的名求，阿們。"}},{"key":"joy","name":"感恩與祝賀","cat":"edify","motif":"sprout","seal":"喜","keywords":["感恩","感謝","開心","喜樂","慶祝","*生日","*結婚","*婚禮","*畢業","升遷","新生兒","出生","錄取","考上","新工作","受洗","搬新家","*祝福","*恭喜","*祝賀","好消息"],"passages":[["Num 6:24-26","願耶和華賜福、保護你，使祂的臉光照你。"],["Ps 103:1-5","數算神一切的恩惠，一件也不要忘記。"],["1Thess 5:16-18","在每個季節都常常喜樂、不住禱告、凡事謝恩。"]],"self":{"blessing":"願耶和華賜福給你，保護你；願祂的臉光照你，賜恩給你；願祂向你仰臉，賜你平安。願你在這個值得紀念的時刻，數算神一切的恩惠，滿心喜樂地感謝祂。","prayer":"天父，謝謝你！我要用全心稱頌你，不忘記你一切的恩惠。謝謝你在這件事上的帶領與恩典。求你讓我在喜樂中仍謙卑倚靠你，也讓這份祝福流向身邊的人。奉主耶穌的名求，阿們。"},"other":{"blessing":"願耶和華賜福給{name}，保護{name}；願祂的臉光照{name}，賜恩給{name}；願祂向{name}仰臉，賜{name}平安。願{name}在這個值得紀念的時刻滿心喜樂，數算神一切的恩惠。","prayer":"天父，謝謝你在{name}身上的恩典與祝福！求你繼續賜福、保護{name}，讓{name}在新的階段中經歷你的同在與帶領，也讓這份喜樂成為更多人的祝福。奉主耶穌的名求，阿們。"}},{"key":"peace","name":"平安","cat":"comfort","motif":"dove","seal":"平","keywords":["平安","安靜","安息","放鬆","心亂","睡不著","失眠","靜下來","煩躁","心神不寧"],"passages":[["John 14:27","耶穌留下的平安，和世界給的不一樣。"],["Isa 26:3-4","堅心倚靠神的人，神必保守他十分平安。"],["Ps 4:8","因為有神看顧，今晚可以安然躺下睡覺。"]],"self":{"blessing":"願主耶穌親自把祂的平安賜給你，這平安不像世人所賜的。願你的心安靜下來，倚靠那永久的磐石。願你今晚能安然躺下睡覺，因為獨有耶和華使你安然居住。","prayer":"主耶穌，我的心很亂，靜不下來。謝謝你把你的平安留給我。求你讓我心裡安靜，把思緒一件件交給你，也賜我安穩的睡眠。求你作我永久的磐石。奉主耶穌的名求，阿們。"},"other":{"blessing":"願主耶穌親自把祂的平安賜給{name}，這平安不像世人所賜的。願{name}的心安靜下來，倚靠那永久的磐石，並能安然躺下睡覺。","prayer":"主耶穌，我為{name}禱告。求你把你的平安賜給{name}，讓{name}的心安靜下來，也賜{name}安穩的睡眠。求你作{name}永久的磐石。奉主耶穌的名求，阿們。"}},{"key":"salvation","name":"認識福音","cat":"edify","motif":"cross","seal":"生","keywords":["信主","得救","福音","永生","慕道","慕道友","認識耶穌","想信","受洗","決志","基督徒是什麼","神愛我嗎"],"passages":[["John 3:16-17","神愛世人，祂差耶穌來不是要定罪，是要拯救。"],["Eph 2:8-10","得救是神白白的恩典，不是靠自己的表現換來的。"],["2Cor 5:17","在基督裡，就是新造的人。"]],"self":{"blessing":"願愛世人的神，讓你深深知道祂也愛你。願你明白得救是祂白白的恩典，不是靠自己的表現換來的。願你在基督裡經歷新造的生命，舊事已過，都變成新的。","prayer":"天父，謝謝你這樣愛我，差耶穌來不是要定罪，而是要拯救。我想更認識你。求你打開我的心，讓我明白你的恩典，也帶領我認識願意陪我讀聖經的人和教會。奉主耶穌的名求，阿們。"},"other":{"blessing":"願愛世人的神，讓{name}深深知道祂也愛{name}。願{name}明白得救是祂白白的恩典，並在基督裡經歷新造的生命。","prayer":"天父，我為{name}禱告。謝謝你這樣愛{name}。求你打開{name}的心，讓{name}明白你的恩典，也為{name}預備合適的人和教會，陪伴{name}認識你。奉主耶穌的名求，阿們。"}},{"key":"death","name":"面對死亡與臨終","cat":"comfort","motif":"lamp","seal":"恆","keywords":["*臨終","*安寧","*病危","*末期","*時間不多","最後一程","死亡","加護病房","插管","彌留"],"passages":[["Ps 23:4-6","即使走過死蔭的幽谷，主仍與你同在。"],["John 14:1-3","耶穌已經為屬祂的人預備了地方。"],["Rom 8:38-39","無論是死是生，都不能使我們與神的愛隔絕。"]],"self":{"blessing":"願好牧人在這段幽谷中與你同行，祂的杖和竿安慰你。願你知道沒有任何事能使你與神的愛隔絕。願主的平安充滿你和你所愛的家人，直到你住在耶和華的殿中。","prayer":"主耶穌，我知道自己正走在一段很難的路上。謝謝你應許與我同在，也為我預備了地方。求你減輕我身體的痛苦，賜我平安，讓我和家人能好好說愛、說謝謝、說再見。我把自己完全交在你手中。奉主耶穌的名求，阿們。"},"other":{"blessing":"願好牧人在這段幽谷中與{name}同行，祂的杖和竿安慰{name}。願{name}和家人都知道，沒有任何事能使我們與神的愛隔絕。願主的平安充滿這段時光。","prayer":"主耶穌，我為走在最後一段路上的{name}禱告。求你減輕{name}身體的痛苦，賜{name}平安，與{name}同在。也求你安慰{name}的家人，讓他們有時間好好道愛、道謝、道別。奉主耶穌的名求，阿們。"}},{"key":"refuge","name":"危險中的投靠","cat":"comfort","motif":"rock","seal":"護","keywords":["*家暴","*被打","*打我","毆打","施暴","虐待","*性侵","強暴","性騷擾","威脅","跟蹤","不安全","危險"],"crisisOnly":false,"passages":[["Ps 9:9-10","神是受欺壓之人的高臺，你的呼求祂聽見了。"],["Ps 34:17-18","神靠近傷心的人；尋求實際的保護也是祂的看顧。"],["Ps 62:5-8","可以在神面前傾心吐意，祂是你的避難所。"]],"self":{"blessing":"願作受欺壓之人高臺的神，此刻保護你的安全。你所受的傷害不是你的錯。願祂為你預備可以信任、能實際幫助你的人，帶你到安全的地方。","prayer":"主啊，我很害怕，也覺得很無助。謝謝你是受欺壓之人的高臺，聽見我的呼求。求你保護我的安全，給我勇氣向專線、可信任的人或警察求助，為我開一條安全的路。奉主耶穌的名求，阿們。"},"other":{"blessing":"願作受欺壓之人高臺的神，此刻保護{name}的安全。願{name}知道所受的傷害不是{name}的錯，願神為{name}預備能實際幫助的人，帶{name}到安全的地方。","prayer":"主啊，我為處在危險中的{name}禱告。求你保護{name}的安全，給{name}勇氣向專業單位求助，也讓我知道怎樣實際地幫助{name}。求你作{name}的避難所。奉主耶穌的名求，阿們。"}}],"passages":{"Phil 4:6-7":{"label":{"zh":"腓立比書 4:6–7","en":"PHILIPPIANS 4:6–7","abbr":"腓 4:6–7"},"verses":[{"v":6,"text":"應當一無掛慮，只要凡事藉著禱告、祈求，和感謝，將你們所要的告訴神。"},{"v":7,"text":"神所賜、出人意外的平安必在基督耶穌裡保守你們的心懷意念。"}],"before":[{"v":1,"text":"我所親愛、所想念的弟兄們，你們就是我的喜樂，我的冠冕。我親愛的弟兄，你們應當靠主站立得穩。"},{"v":2,"text":"我勸友阿蝶和循都基，要在主裡同心。"},{"v":3,"text":"我也求你這真實同負一軛的，幫助這兩個女人，因為她們在福音上曾與我一同勞苦；還有革利免，並其餘和我一同做工的，他們的名字都在生命冊上。"},{"v":4,"text":"你們要靠主常常喜樂。我再說，你們要喜樂。"},{"v":5,"text":"當叫眾人知道你們謙讓的心。主已經近了。"}],"after":[{"v":8,"text":"弟兄們，我還有未盡的話：凡是真實的、可敬的、公義的、清潔的、可愛的、有美名的，若有甚麼德行，若有甚麼稱讚，這些事你們都要思念。"},{"v":9,"text":"你們在我身上所學習的，所領受的，所聽見的，所看見的，這些事你們都要去行，賜平安的神就必與你們同在。"},{"v":10,"text":"我靠主大大地喜樂，因為你們思念我的心如今又發生；你們向來就思念我，只是沒得機會。"},{"v":11,"text":"我並不是因缺乏說這話；我無論在甚麼景況都可以知足，這是我已經學會了。"},{"v":12,"text":"我知道怎樣處卑賤，也知道怎樣處豐富；或飽足，或飢餓；或有餘，或缺乏，隨事隨在，我都得了祕訣。"}],"ctx":"保羅在監禁中寫信給腓立比教會；前文勸他們靠主喜樂、讓眾人知道他們的謙讓，因為「主已經近了」（4–5 節）。","meaning":"面對掛慮，把一切具體地帶著感謝告訴神；神應許的是保守人心的平安，不一定是環境立刻改變。","caution":"「一無掛慮」是邀請人把掛慮交給神，不是責備人不可以焦慮。"},"Matt 6:31-34":{"label":{"zh":"馬太福音 6:31–34","en":"MATTHEW 6:31–34","abbr":"太 6:31–34"},"verses":[{"v":31,"text":"所以，不要憂慮說，吃甚麼？喝甚麼？穿甚麼？"},{"v":32,"text":"這都是外邦人所求的，你們需用的這一切東西，你們的天父是知道的。"},{"v":33,"text":"你們要先求他的國和他的義，這些東西都要加給你們了。"},{"v":34,"text":"所以，不要為明天憂慮，因為明天自有明天的憂慮；一天的難處一天當就夠了。」"}],"before":[{"v":26,"text":"你們看那天上的飛鳥，也不種，也不收，也不積蓄在倉裡，你們的天父尚且養活牠。你們不比飛鳥貴重得多嗎？"},{"v":27,"text":"你們哪一個能用思慮使壽數多加一刻呢（或譯：使身量多加一肘呢）？"},{"v":28,"text":"何必為衣裳憂慮呢？你想野地裡的百合花怎麼長起來；它也不勞苦，也不紡線。"},{"v":29,"text":"然而我告訴你們，就是所羅門極榮華的時候，他所穿戴的，還不如這花一朵呢！"},{"v":30,"text":"你們這小信的人哪！野地裡的草今天還在，明天就丟在爐裡，神還給它這樣的妝飾，何況你們呢！"}],"after":[],"ctx":"登山寶訓中，耶穌教導門徒不要為吃穿憂慮，並以天上的飛鳥、野地的百合花為例（25–30 節）。","meaning":"天父知道我們的需要；門徒的優先次序是先求神的國和義，一天的難處一天當。","caution":"這不是叫人不必工作或計劃，而是不被憂慮轄制。"},"1Pet 5:6-7":{"label":{"zh":"彼得前書 5:6–7","en":"1 PETER 5:6–7","abbr":"彼前 5:6–7"},"verses":[{"v":6,"text":"所以，你們要自卑，服在神大能的手下，到了時候，他必叫你們升高。"},{"v":7,"text":"你們要將一切的憂慮卸給神，因為他顧念你們。"}],"before":[{"v":1,"text":"我這作長老、作基督受苦的見證、同享後來所要顯現之榮耀的，勸你們中間與我同作長老的人："},{"v":2,"text":"務要牧養在你們中間神的群羊，按著神旨意照管他們；不是出於勉強，乃是出於甘心；也不是因為貪財，乃是出於樂意；"},{"v":3,"text":"也不是轄制所託付你們的，乃是作群羊的榜樣。"},{"v":4,"text":"到了牧長顯現的時候，你們必得那永不衰殘的榮耀冠冕。"},{"v":5,"text":"你們年幼的，也要順服年長的。就是你們眾人也都要以謙卑束腰，彼此順服；因為神阻擋驕傲的人，賜恩給謙卑的人。"}],"after":[{"v":8,"text":"務要謹守，警醒。因為你們的仇敵魔鬼，如同吼叫的獅子，遍地遊行，尋找可吞吃的人。"},{"v":9,"text":"你們要用堅固的信心抵擋他，因為知道你們在世上的眾弟兄也是經歷這樣的苦難。"},{"v":10,"text":"那賜諸般恩典的神曾在基督裡召你們，得享他永遠的榮耀，等你們暫受苦難之後，必要親自成全你們，堅固你們，賜力量給你們。"},{"v":11,"text":"願權能歸給他，直到永永遠遠。阿們！"},{"v":12,"text":"我略略地寫了這信，託我所看為忠心的兄弟西拉轉交你們，勸勉你們，又證明這恩是神的真恩。你們務要在這恩上站立得住。"}],"ctx":"彼得寫給分散各地、正在受苦的信徒；前文勸長老與年輕人都要以謙卑束腰（1–5 節）。","meaning":"在神大能的手下謙卑，把一切憂慮卸給祂，因為祂顧念我們。","caution":""},"Isa 41:10":{"label":{"zh":"以賽亞書 41:10","en":"ISAIAH 41:10","abbr":"賽 41:10"},"verses":[{"v":10,"text":"你不要害怕，因為我與你同在；不要驚惶，因為我是你的神。我必堅固你，我必幫助你；我必用我公義的右手扶持你。"}],"before":[{"v":5,"text":"海島看見就都害怕；地極也都戰兢，就近前來。"},{"v":6,"text":"他們各人幫助鄰舍，各人對弟兄說：壯膽吧！"},{"v":7,"text":"木匠勉勵銀匠，用鎚打光的勉勵打砧的，論銲工說，銲得好；又用釘子釘穩，免得偶像動搖。"},{"v":8,"text":"惟你以色列─我的僕人，雅各─我所揀選的，我朋友亞伯拉罕的後裔，"},{"v":9,"text":"你是我從地極所領（原文是抓）來的，從地角所召來的，且對你說：你是我的僕人；我揀選你，並不棄絕你。"}],"after":[{"v":11,"text":"凡向你發怒的必都抱愧蒙羞；與你相爭的必如無有，並要滅亡。"},{"v":12,"text":"與你爭競的，你要找他們也找不著；與你爭戰的必如無有，成為虛無。"},{"v":13,"text":"因為我耶和華─你的神必攙扶你的右手，對你說：不要害怕！我必幫助你。"},{"v":14,"text":"你這蟲雅各和你們以色列人，不要害怕！耶和華說：我必幫助你。你的救贖主就是以色列的聖者。"},{"v":15,"text":"看哪，我已使你成為有快齒打糧的新器具；你要把山嶺打得粉碎，使岡陵如同糠秕。"}],"ctx":"神藉先知對被擄、前途不明的以色列民說話；列國驚慌地造偶像求安全（5–7 節），神卻提醒以色列是祂揀選、不棄絕的僕人（8–9 節）。","meaning":"立約的神親自同在，堅固、幫助、扶持祂的子民。","caution":"原是對以色列說的；可以應用的是神與屬祂之人同在的信實，而不是保證事情一定照我們期待的發展。"},"Ps 56:3-4":{"label":{"zh":"詩篇 56:3–4","en":"PSALMS 56:3–4","abbr":"詩 56:3–4"},"verses":[{"v":3,"text":"我懼怕的時候要倚靠你。"},{"v":4,"text":"我倚靠神，我要讚美他的話；我倚靠神，必不懼怕。血氣之輩能把我怎麼樣呢？"}],"before":[{"v":1,"text":"（非利士人在迦特拿住大衛。那時，他作這金詩，交與伶長。調用遠方無聲鴿。）神啊，求你憐憫我，因為人要把我吞了，終日攻擊欺壓我。"},{"v":2,"text":"我的仇敵終日要把我吞了，因逞驕傲攻擊我的人甚多。"}],"after":[{"v":5,"text":"他們終日顛倒我的話；他們一切的心思都是要害我。"},{"v":6,"text":"他們聚集，埋伏窺探我的腳蹤，等候要害我的命。"},{"v":7,"text":"他們豈能因罪孽逃脫嗎？神啊，求你在怒中使眾民墮落！"},{"v":8,"text":"我幾次流離，你都記數；求你把我眼淚裝在你的皮袋裡。這不都記在你冊子上嗎？"},{"v":9,"text":"我呼求的日子，我的仇敵都要轉身退後。神幫助我，這是我所知道的。"}],"ctx":"大衛逃避掃羅、在迦特被非利士人拿住時所寫的詩（見詩題與撒母耳記上 21 章）。","meaning":"懼怕的時候選擇倚靠神，並以神的話作為讚美的根據。","caution":"經文承認有「懼怕的時候」，信心不是假裝不怕。"},"Ps 27:1":{"label":{"zh":"詩篇 27:1","en":"PSALMS 27:1","abbr":"詩 27:1"},"verses":[{"v":1,"text":"（大衛的詩。）耶和華是我的亮光，是我的拯救，我還怕誰呢？耶和華是我性命的保障（或譯：力量），我還懼誰呢？"}],"before":[],"after":[{"v":2,"text":"那作惡的就是我的仇敵，前來吃我肉的時候就絆跌仆倒。"},{"v":3,"text":"雖有軍兵安營攻擊我，我的心也不害怕；雖然興起刀兵攻擊我，我必仍舊安穩。"},{"v":4,"text":"有一件事，我曾求耶和華，我仍要尋求：就是一生一世住在耶和華的殿中，瞻仰他的榮美，在他的殿裡求問。"},{"v":5,"text":"因為我遭遇患難，他必暗暗地保守我；在他亭子裡，把我藏在他帳幕的隱密處，將我高舉在磐石上。"},{"v":6,"text":"現在我得以昂首，高過四面的仇敵。我要在他的帳幕裡歡然獻祭；我要唱詩歌頌耶和華。"}],"ctx":"大衛在敵人環伺中寫的信靠之詩，後半段也有懇切的呼求（7–12 節）。","meaning":"耶和華是光、是拯救、是性命的保障，因此不必被人或處境所轄制。","caution":""},"Ps 34:18":{"label":{"zh":"詩篇 34:18","en":"PSALMS 34:18","abbr":"詩 34:18"},"verses":[{"v":18,"text":"耶和華靠近傷心的人，拯救靈性痛悔的人。"}],"before":[{"v":13,"text":"就要禁止舌頭不出惡言，嘴唇不說詭詐的話。"},{"v":14,"text":"要離惡行善，尋求和睦，一心追趕。"},{"v":15,"text":"耶和華的眼目看顧義人；他的耳朵聽他們的呼求。"},{"v":16,"text":"耶和華向行惡的人變臉，要從世上除滅他們的名號。"},{"v":17,"text":"義人呼求，耶和華聽見了，便救他們脫離一切患難。"}],"after":[{"v":19,"text":"義人多有苦難，但耶和華救他脫離這一切，"},{"v":20,"text":"又保全他一身的骨頭，連一根也不折斷。"},{"v":21,"text":"惡必害死惡人；恨惡義人的，必被定罪。"},{"v":22,"text":"耶和華救贖他僕人的靈魂；凡投靠他的，必不致定罪。"}],"ctx":"大衛在亞比米勒（迦特王亞吉）面前裝瘋、脫險之後所寫的感恩詩（見詩題）。","meaning":"神並不遠離傷心的人，祂親近他們，並拯救心靈痛悔的人。","caution":""},"1Thess 4:13-14":{"label":{"zh":"帖撒羅尼迦前書 4:13–14","en":"1 THESSALONIANS 4:13–14","abbr":"帖前 4:13–14"},"verses":[{"v":13,"text":"論到睡了的人，我們不願意弟兄們不知道，恐怕你們憂傷，像那些沒有指望的人一樣。"},{"v":14,"text":"我們若信耶穌死而復活了，那已經在耶穌裡睡了的人，神也必將他們與耶穌一同帶來。"}],"before":[{"v":8,"text":"所以，那棄絕的，不是棄絕人，乃是棄絕那賜聖靈給你們的神。"},{"v":9,"text":"論到弟兄們相愛，不用人寫信給你們；因為你們自己蒙了神的教訓，叫你們彼此相愛。"},{"v":10,"text":"你們向馬其頓全地的眾弟兄固然是這樣行，但我勸弟兄們要更加勉勵。"},{"v":11,"text":"又要立志作安靜人，辦自己的事，親手做工，正如我們從前所吩咐你們的，"},{"v":12,"text":"叫你們可以向外人行事端正，自己也就沒有甚麼缺乏了。"}],"after":[{"v":15,"text":"我們現在照主的話告訴你們一件事：我們這活著還存留到主降臨的人，斷不能在那已經睡了的人之先。"},{"v":16,"text":"因為主必親自從天降臨，有呼叫的聲音和天使長的聲音，又有神的號吹響；那在基督裡死了的人必先復活。"},{"v":17,"text":"以後我們這活著還存留的人必和他們一同被提到雲裡，在空中與主相遇。這樣，我們就要和主永遠同在。"},{"v":18,"text":"所以，你們當用這些話彼此勸慰。"}],"ctx":"帖撒羅尼迦的信徒擔心已經過世的弟兄姊妹，在主再來時會如何；保羅回應他們的疑問。","meaning":"信徒可以悲傷，但不像那些沒有指望的人；因為耶穌死而復活，神也要將在耶穌裡睡了的人與祂一同帶來。","caution":"經文沒有說「不可以悲傷」。這段應許是對在主裡過世的人說的；若逝者的信仰狀況不明，請溫柔使用，不要輕易下結論。"},"Rev 21:3-4":{"label":{"zh":"啟示錄 21:3–4","en":"REVELATION 21:3–4","abbr":"啟 21:3–4"},"verses":[{"v":3,"text":"我聽見有大聲音從寶座出來說：「看哪，神的帳幕在人間。他要與人同住，他們要作他的子民。神要親自與他們同在，作他們的神。"},{"v":4,"text":"神要擦去他們一切的眼淚；不再有死亡，也不再有悲哀、哭號、疼痛，因為以前的事都過去了。」"}],"before":[{"v":1,"text":"我又看見一個新天新地；因為先前的天地已經過去了，海也不再有了。"},{"v":2,"text":"我又看見聖城新耶路撒冷由神那裡從天而降，預備好了，就如新婦妝飾整齊，等候丈夫。"}],"after":[{"v":5,"text":"坐寶座的說：「看哪，我將一切都更新了！」又說：「你要寫上；因這些話是可信的，是真實的。」"},{"v":6,"text":"他又對我說：「都成了！我是阿拉法，我是俄梅戛；我是初，我是終。我要將生命泉的水白白賜給那口渴的人喝。"},{"v":7,"text":"得勝的，必承受這些為業：我要作他的神，他要作我的兒子。"},{"v":8,"text":"惟有膽怯的、不信的、可憎的、殺人的、淫亂的、行邪術的、拜偶像的，和一切說謊話的，他們的分就在燒著硫磺的火湖裡；這是第二次的死。」"},{"v":9,"text":"拿著七個金碗、盛滿末後七災的七位天使中，有一位來對我說：「你到這裡來，我要將新婦，就是羔羊的妻，指給你看。」"}],"ctx":"約翰看見新天新地、新耶路撒冷從天降下的異象，是整本聖經最後的盼望。","meaning":"神要與人同住，親自擦去一切眼淚，不再有死亡、悲哀、哭號、疼痛。","caution":"這是將來的盼望，並不否認現在的眼淚。"},"Ps 73:26":{"label":{"zh":"詩篇 73:26","en":"PSALMS 73:26","abbr":"詩 73:26"},"verses":[{"v":26,"text":"我的肉體和我的心腸衰殘；但神是我心裡的力量，又是我的福分，直到永遠。"}],"before":[{"v":21,"text":"因而，我心裡發酸，肺腑被刺。"},{"v":22,"text":"我這樣愚昧無知，在你面前如畜類一般。"},{"v":23,"text":"然而，我常與你同在；你攙著我的右手。"},{"v":24,"text":"你要以你的訓言引導我，以後必接我到榮耀裡。"},{"v":25,"text":"除你以外，在天上我有誰呢？除你以外，在地上我也沒有所愛慕的。"}],"after":[{"v":27,"text":"遠離你的，必要死亡；凡離棄你行邪淫的，你都滅絕了。"},{"v":28,"text":"但我親近神是與我有益；我以主耶和華為我的避難所，好叫我述說你一切的作為。"}],"ctx":"亞薩曾因惡人亨通、自己受苦而幾乎失腳（2–3 節），直到進了神的聖所才明白（17 節）。","meaning":"即使身體和心腸都衰殘，神仍是心裡的力量，是永遠的福分。","caution":""},"2Cor 4:16-18":{"label":{"zh":"哥林多後書 4:16–18","en":"2 CORINTHIANS 4:16–18","abbr":"林後 4:16–18"},"verses":[{"v":16,"text":"所以，我們不喪膽。外體雖然毀壞，內心卻一天新似一天。"},{"v":17,"text":"我們這至暫至輕的苦楚，要為我們成就極重無比、永遠的榮耀。"},{"v":18,"text":"原來我們不是顧念所見的，乃是顧念所不見的；因為所見的是暫時的，所不見的是永遠的。"}],"before":[{"v":11,"text":"因為我們這活著的人是常為耶穌被交於死地，使耶穌的生在我們這必死的身上顯明出來。"},{"v":12,"text":"這樣看來，死是在我們身上發動，生卻在你們身上發動。"},{"v":13,"text":"但我們既有信心，正如經上記著說：「我因信，所以如此說話。」我們也信，所以也說話。"},{"v":14,"text":"自己知道那叫主耶穌復活的，也必叫我們與耶穌一同復活，並且叫我們與你們一同站在他面前。"},{"v":15,"text":"凡事都是為你們，好叫恩惠因人多越發加增，感謝格外顯多，以致榮耀歸與神。"}],"after":[],"ctx":"保羅描述在事奉中四面受敵、身體受苦的經歷（7–12 節），接著說明他不喪膽的理由。","meaning":"外體雖然毀壞，內心卻一天新似一天；眼前的苦楚和將來的榮耀相比，是至暫至輕的。","caution":"「至暫至輕」是保羅從永恆角度所作的比較，不是要人輕看正在經歷的痛苦。"},"2Cor 12:9-10":{"label":{"zh":"哥林多後書 12:9–10","en":"2 CORINTHIANS 12:9–10","abbr":"林後 12:9–10"},"verses":[{"v":9,"text":"他對我說：「我的恩典夠你用的，因為我的能力是在人的軟弱上顯得完全。」所以，我更喜歡誇自己的軟弱，好叫基督的能力覆庇我。"},{"v":10,"text":"我為基督的緣故，就以軟弱、凌辱、急難、逼迫、困苦為可喜樂的；因我甚麼時候軟弱，甚麼時候就剛強了。"}],"before":[{"v":4,"text":"他被提到樂園裡，聽見隱祕的言語，是人不可說的。"},{"v":5,"text":"為這人，我要誇口；但是為我自己，除了我的軟弱以外，我並不誇口。"},{"v":6,"text":"我就是願意誇口也不算狂，因為我必說實話；只是我禁止不說，恐怕有人把我看高了，過於他在我身上所看見、所聽見的。"},{"v":7,"text":"又恐怕我因所得的啟示甚大，就過於自高，所以有一根刺加在我肉體上，就是撒但的差役要攻擊我，免得我過於自高。"},{"v":8,"text":"為這事，我三次求過主，叫這刺離開我。"}],"after":[{"v":11,"text":"我成了愚妄人，是被你們強逼的。我本該被你們稱許才是。我雖算不了甚麼，卻沒有一件事在那些最大的使徒以下。"},{"v":12,"text":"我在你們中間，用百般的忍耐，藉著神蹟、奇事、異能顯出使徒的憑據來。"},{"v":13,"text":"除了我不累著你們這一件事，你們還有甚麼事不及別的教會呢？這不公之處，求你們饒恕我吧。"},{"v":14,"text":"如今，我打算第三次到你們那裡去，也必不累著你們；因我所求的是你們，不是你們的財物。兒女不該為父母積財，父母該為兒女積財。"},{"v":15,"text":"我也甘心樂意為你們的靈魂費財費力。難道我越發愛你們，就越發少得你們的愛嗎？"}],"ctx":"保羅身上有一根「刺」，他三次求主挪去，主卻沒有照他所求的挪去（7–8 節）。","meaning":"神的恩典夠用，祂的能力在人的軟弱上顯得完全。","caution":"這段正好說明禱告不一定得到痊癒的答案；不可用來暗示病沒有好是因為信心不夠。"},"Matt 11:28-30":{"label":{"zh":"馬太福音 11:28–30","en":"MATTHEW 11:28–30","abbr":"太 11:28–30"},"verses":[{"v":28,"text":"凡勞苦擔重擔的人可以到我這裡來，我就使你們得安息。"},{"v":29,"text":"我心裡柔和謙卑，你們當負我的軛，學我的樣式；這樣，你們心裡就必得享安息。"},{"v":30,"text":"因為我的軛是容易的，我的擔子是輕省的。」"}],"before":[{"v":23,"text":"迦百農啊，你已經升到天上（或譯：你將要升到天上嗎），將來必墜落陰間；因為在你那裡所行的異能，若行在所多瑪，它還可以存到今日。"},{"v":24,"text":"但我告訴你們，當審判的日子，所多瑪所受的，比你還容易受呢！」"},{"v":25,"text":"那時，耶穌說：「父啊，天地的主，我感謝你！因為你將這些事向聰明通達人就藏起來，向嬰孩就顯出來。"},{"v":26,"text":"父啊，是的，因為你的美意本是如此。"},{"v":27,"text":"一切所有的，都是我父交付我的；除了父，沒有人知道子；除了子和子所願意指示的，沒有人知道父。"}],"after":[],"ctx":"耶穌責備不肯悔改的城市後，向父感謝（20–27 節），接著向眾人發出邀請。","meaning":"凡勞苦擔重擔的人都可以到耶穌那裡得安息，學祂的樣式，負祂容易的軛。","caution":"「軛」仍是一種跟隨與學習；安息不等於不再有任何責任。"},"Isa 40:28-31":{"label":{"zh":"以賽亞書 40:28–31","en":"ISAIAH 40:28–31","abbr":"賽 40:28–31"},"verses":[{"v":28,"text":"你豈不曾知道嗎？你豈不曾聽見嗎？永在的神耶和華，創造地極的主，並不疲乏，也不困倦；他的智慧無法測度。"},{"v":29,"text":"疲乏的，他賜能力；軟弱的，他加力量。"},{"v":30,"text":"就是少年人也要疲乏困倦；強壯的也必全然跌倒。"},{"v":31,"text":"但那等候耶和華的必重新得力。他們必如鷹展翅上騰；他們奔跑卻不困倦，行走卻不疲乏。"}],"before":[{"v":23,"text":"他使君王歸於虛無，使地上的審判官成為虛空。"},{"v":24,"text":"他們是剛才（或譯：不曾；下同）栽上，剛才種上，根也剛才扎在地裡，他一吹在其上，便都枯乾；旋風將他們吹去，像碎秸一樣。"},{"v":25,"text":"那聖者說：你們將誰比我，叫他與我相等呢？"},{"v":26,"text":"你們向上舉目，看誰創造這萬象，按數目領出，他一一稱其名；因他的權能，又因他的大能大力，連一個都不缺。"},{"v":27,"text":"雅各啊，你為何說，我的道路向耶和華隱藏？以色列啊，你為何言，我的冤屈神並不查問？"}],"after":[],"ctx":"先知向被擄、抱怨「我的道路向耶和華隱藏」的以色列民說話（27 節）。","meaning":"創造天地的神不疲乏、不困倦，祂賜力量給軟弱的人；等候祂的必如鷹展翅上騰。","caution":""},"Ps 23:1-3":{"label":{"zh":"詩篇 23:1–3","en":"PSALMS 23:1–3","abbr":"詩 23:1–3"},"verses":[{"v":1,"text":"（大衛的詩。）耶和華是我的牧者，我必不致缺乏。"},{"v":2,"text":"他使我躺臥在青草地上，領我在可安歇的水邊。"},{"v":3,"text":"他使我的靈魂甦醒，為自己的名引導我走義路。"}],"before":[],"after":[{"v":4,"text":"我雖然行過死蔭的幽谷，也不怕遭害，因為你與我同在；你的杖，你的竿，都安慰我。"},{"v":5,"text":"在我敵人面前，你為我擺設筵席；你用油膏了我的頭，使我的福杯滿溢。"},{"v":6,"text":"我一生一世必有恩惠慈愛隨著我；我且要住在耶和華的殿中，直到永遠。"}],"ctx":"大衛以牧羊人的經驗寫下的信靠之詩，從青草地寫到死蔭的幽谷，再到神的筵席與殿中。","meaning":"神像好牧人，供應所需、使人安歇，並使疲乏的靈魂甦醒。","caution":""},"Heb 13:5-6":{"label":{"zh":"希伯來書 13:5–6","en":"HEBREWS 13:5–6","abbr":"來 13:5–6"},"verses":[{"v":5,"text":"你們存心不可貪愛錢財，要以自己所有的為足；因為主曾說：「我總不撇下你，也不丟棄你。」"},{"v":6,"text":"所以我們可以放膽說：主是幫助我的，我必不懼怕；人能把我怎麼樣呢？"}],"before":[{"v":1,"text":"你們務要常存弟兄相愛的心。"},{"v":2,"text":"不可忘記用愛心接待客旅；因為曾有接待客旅的，不知不覺就接待了天使。"},{"v":3,"text":"你們要記念被捆綁的人，好像與他們同受捆綁；也要記念遭苦害的人，想到自己也在肉身之內。"},{"v":4,"text":"婚姻，人人都當尊重，床也不可污穢；因為苟合行淫的人，神必要審判。"}],"after":[{"v":7,"text":"從前引導你們、傳神之道給你們的人，你們要想念他們，效法他們的信心，留心看他們為人的結局。"},{"v":8,"text":"耶穌基督昨日、今日、一直到永遠，是一樣的。"},{"v":9,"text":"你們不要被那諸般怪異的教訓勾引了去；因為人心靠恩得堅固才是好的，並不是靠飲食。那在飲食上專心的從來沒有得著益處。"},{"v":10,"text":"我們有一祭壇，上面的祭物是那些在帳幕中供職的人不可同吃的。"},{"v":11,"text":"原來牲畜的血被大祭司帶入聖所作贖罪祭；牲畜的身子被燒在營外。"}],"ctx":"希伯來書結尾的生活勸勉，上文談到不可貪愛錢財，要以現在所有的為足；「我總不撇下你」引自申命記 31:6。","meaning":"神應許總不撇下、也不丟棄屬祂的人，所以可以放膽說「主是幫助我的」。","caution":""},"Ps 27:10":{"label":{"zh":"詩篇 27:10","en":"PSALMS 27:10","abbr":"詩 27:10"},"verses":[{"v":10,"text":"我父母離棄我，耶和華必收留我。"}],"before":[{"v":5,"text":"因為我遭遇患難，他必暗暗地保守我；在他亭子裡，把我藏在他帳幕的隱密處，將我高舉在磐石上。"},{"v":6,"text":"現在我得以昂首，高過四面的仇敵。我要在他的帳幕裡歡然獻祭；我要唱詩歌頌耶和華。"},{"v":7,"text":"耶和華啊，我用聲音呼籲的時候，求你垂聽；並求你憐恤我，應允我。"},{"v":8,"text":"你說：你們當尋求我的面。那時我心向你說：耶和華啊，你的面我正要尋求。"},{"v":9,"text":"不要向我掩面。不要發怒趕逐僕人，你向來是幫助我的。救我的神啊，不要丟掉我，也不要離棄我。"}],"after":[{"v":11,"text":"耶和華啊，求你將你的道指教我，因我仇敵的緣故引導我走平坦的路。"},{"v":12,"text":"求你不要把我交給敵人，遂其所願；因為妄作見證的和口吐凶言的，起來攻擊我。"},{"v":13,"text":"我若不信在活人之地得見耶和華的恩惠，就早已喪膽了。"},{"v":14,"text":"要等候耶和華！當壯膽，堅固你的心！我再說，要等候耶和華！"}],"ctx":"同一首信靠之詩中，大衛求神不要離棄他（9 節）。","meaning":"即使最親近的人離棄，耶和華也必收留。","caution":"這節用「父母離棄」表達最深的孤單，不是說父母一定會離棄我們。"},"Isa 49:15-16":{"label":{"zh":"以賽亞書 49:15–16","en":"ISAIAH 49:15–16","abbr":"賽 49:15–16"},"verses":[{"v":15,"text":"婦人焉能忘記她吃奶的嬰孩，不憐恤她所生的兒子？即或有忘記的，我卻不忘記你。"},{"v":16,"text":"看哪，我將你銘刻在我掌上；你的牆垣常在我眼前。"}],"before":[{"v":10,"text":"不飢不渴，炎熱和烈日必不傷害他們；因為憐恤他們的必引導他們，領他們到水泉旁邊。"},{"v":11,"text":"我必使我的眾山成為大道；我的大路也被修高。"},{"v":12,"text":"看哪，這些從遠方來；這些從北方、從西方來；這些從秦（原文是希尼）國來。"},{"v":13,"text":"諸天哪，應當歡呼！大地啊，應當快樂！眾山哪，應當發聲歌唱！因為耶和華已經安慰他的百姓，也要憐恤他困苦之民。"},{"v":14,"text":"錫安說：耶和華離棄了我；主忘記了我。"}],"after":[{"v":17,"text":"你的兒女必急速歸回；毀壞你的，使你荒廢的，必都離你出去，"},{"v":18,"text":"你舉目向四方觀看；他們都聚集來到你這裡。耶和華說：我指著我的永生起誓：你必要以他們為妝飾佩戴，以他們為華帶束腰，像新婦一樣。"},{"v":19,"text":"至於你荒廢淒涼之處，並你被毀壞之地，現今眾民居住必顯為太窄；吞滅你的必離你遙遠。"},{"v":20,"text":"你必聽見喪子之後所生的兒女說：這地方我居住太窄，求你給我地方居住。"},{"v":21,"text":"那時你心裡必說：我既喪子獨居，是被擄的，漂流在外。誰給我生這些？誰將這些養大呢？撇下我一人獨居的時候，這些在哪裡呢？"}],"ctx":"錫安（被擄的以色列）抱怨「耶和華離棄了我，主忘記了我」（14 節），神這樣回答。","meaning":"母親都可能忘記吃奶的孩子，神卻不忘記祂的子民，把他們銘刻在掌上。","caution":"原是對錫安說的；可以應用的是神不忘記屬祂之人的信實。"},"Ps 37:23-24":{"label":{"zh":"詩篇 37:23–24","en":"PSALMS 37:23–24","abbr":"詩 37:23–24"},"verses":[{"v":23,"text":"義人的腳步被耶和華立定；他的道路，耶和華也喜愛。"},{"v":24,"text":"他雖失腳也不致全身仆倒，因為耶和華用手攙扶他（或譯：攙扶他的手）。"}],"before":[{"v":18,"text":"耶和華知道完全人的日子；他們的產業要存到永遠。"},{"v":19,"text":"他們在急難的時候不致羞愧，在饑荒的日子必得飽足。"},{"v":20,"text":"惡人卻要滅亡。耶和華的仇敵要像羊羔的脂油（或譯：像草地的華美）；他們要消滅，要如煙消滅。"},{"v":21,"text":"惡人借貸而不償還；義人卻恩待人，並且施捨。"},{"v":22,"text":"蒙耶和華賜福的必承受地土；被他咒詛的必被剪除。"}],"after":[{"v":25,"text":"我從前年幼，現在年老，卻未見過義人被棄，也未見過他的後裔討飯。"},{"v":26,"text":"他終日恩待人，借給人；他的後裔也蒙福！"},{"v":27,"text":"你當離惡行善，就可永遠安居。"},{"v":28,"text":"因為，耶和華喜愛公平，不撇棄他的聖民；他們永蒙保佑，但惡人的後裔必被剪除。"},{"v":29,"text":"義人必承受地土，永居其上。"}],"ctx":"大衛晚年的智慧詩，勸人不要因作惡的人心懷不平，要倚靠耶和華而行善（1–8 節）。","meaning":"義人的腳步被神立定，即使失腳也不至全身仆倒，因為神用手攙扶。","caution":"不是保證不會跌倒，而是跌倒時神仍然扶持。"},"Mic 7:8":{"label":{"zh":"彌迦書 7:8","en":"MICAH 7:8","abbr":"彌 7:8"},"verses":[{"v":8,"text":"我的仇敵啊，不要向我誇耀。我雖跌倒，卻要起來；我雖坐在黑暗裡，耶和華卻作我的光。"}],"before":[{"v":3,"text":"他們雙手作惡；君王徇情面，審判官要賄賂；位分大的吐出惡意，都彼此結聯行惡。"},{"v":4,"text":"他們最好的，不過是蒺藜；最正直的，不過是荊棘籬笆。你守望者說，降罰的日子已經來到。他們必擾亂不安。"},{"v":5,"text":"不要倚賴鄰舍；不要信靠密友。要守住你的口；不要向你懷中的妻提說。"},{"v":6,"text":"因為，兒子藐視父親；女兒抗拒母親；媳婦抗拒婆婆；人的仇敵就是自己家裡的人。"},{"v":7,"text":"至於我，我要仰望耶和華，要等候那救我的神；我的神必應允我。"}],"after":[{"v":9,"text":"我要忍受耶和華的惱怒；因我得罪了他，直等他為我辨屈，為我伸冤。他必領我到光明中；我必得見他的公義。"},{"v":10,"text":"那時我的仇敵，就是曾對我說「耶和華─你神在哪裡」的，他一看見這事就被羞愧遮蓋。我必親眼見他遭報；他必被踐踏，如同街上的泥土。"},{"v":11,"text":"以色列啊，日子必到，你的牆垣必重修；到那日，你的境界必開展（或譯：命令必傳到遠方）。"},{"v":12,"text":"當那日，人必從亞述，從埃及的城邑，從埃及到大河，從這海到那海，從這山到那山，都歸到你這裡。"},{"v":13,"text":"然而，這地因居民的緣故，又因他們行事的結果，必然荒涼。"}],"ctx":"先知代表犯罪受管教的以色列向仇敵說話，承認「我得罪了耶和華」（9 節），同時仰望神。","meaning":"跌倒、坐在黑暗裡的時候，耶和華仍是光，並且會使人再起來。","caution":"原本的情境是犯罪受管教之後的盼望；用在一般挫折上時，重點在「耶和華是我的光」。"},"Lam 3:21-26":{"label":{"zh":"耶利米哀歌 3:21–26","en":"LAMENTATIONS 3:21–26","abbr":"哀 3:21–26"},"verses":[{"v":21,"text":"我想起這事，心裡就有指望。"},{"v":22,"text":"我們不致消滅，是出於耶和華諸般的慈愛；是因他的憐憫不致斷絕。"},{"v":23,"text":"每早晨，這都是新的；你的誠實極其廣大！"},{"v":24,"text":"我心裡說：耶和華是我的分，因此，我要仰望他。"},{"v":25,"text":"凡等候耶和華，心裡尋求他的，耶和華必施恩給他。"},{"v":26,"text":"人仰望耶和華，靜默等候他的救恩，這原是好的。"}],"before":[{"v":16,"text":"他又用沙石磣斷我的牙，用灰塵將我蒙蔽。"},{"v":17,"text":"你使我遠離平安，我忘記好處。"},{"v":18,"text":"我就說：我的力量衰敗；我在耶和華那裡毫無指望！"},{"v":19,"text":"耶和華啊，求你記念我如茵蔯和苦膽的困苦窘迫。"},{"v":20,"text":"我心想念這些，就在裡面憂悶。"}],"after":[{"v":27,"text":"人在幼年負軛，這原是好的。"},{"v":28,"text":"他當獨坐無言，因為這是耶和華加在他身上的。"},{"v":29,"text":"他當口貼塵埃，或者有指望。"},{"v":30,"text":"他當由人打他的腮頰，要滿受凌辱。"},{"v":31,"text":"因為主必不永遠丟棄人。"}],"ctx":"耶路撒冷被毀後的哀歌；作者先誠實傾訴極深的痛苦（1–20 節），然後轉向回想神。","meaning":"神的慈愛使我們不致消滅，祂的憐憫每早晨都是新的；等候祂、心裡尋求祂的，祂必施恩。","caution":"這段盼望是在誠實哀哭之後出現的，不需要急著跳過難過。"},"1John 1:8-9":{"label":{"zh":"約翰一書 1:8–9","en":"1 JOHN 1:8–9","abbr":"約壹 1:8–9"},"verses":[{"v":8,"text":"我們若說自己無罪，便是自欺，真理不在我們心裡了。"},{"v":9,"text":"我們若認自己的罪，神是信實的，是公義的，必要赦免我們的罪，洗淨我們一切的不義。"}],"before":[{"v":3,"text":"我們將所看見、所聽見的傳給你們，使你們與我們相交。我們乃是與父並他兒子耶穌基督相交的。"},{"v":4,"text":"我們將這些話寫給你們，使你們（有古卷：我們）的喜樂充足。"},{"v":5,"text":"神就是光，在他毫無黑暗。這是我們從主所聽見、又報給你們的信息。"},{"v":6,"text":"我們若說是與神相交，卻仍在黑暗裡行，就是說謊話，不行真理了。"},{"v":7,"text":"我們若在光明中行，如同神在光明中，就彼此相交，他兒子耶穌的血也洗淨我們一切的罪。"}],"after":[{"v":10,"text":"我們若說自己沒有犯過罪，便是以神為說謊的，他的道也不在我們心裡了。"}],"ctx":"約翰寫信給教會，指出有人自稱沒有罪；他強調在光中行，並誠實認罪（5–10 節）。","meaning":"我們若認自己的罪，神是信實的、是公義的，必要赦免並洗淨我們。","caution":""},"Ps 51:10-12":{"label":{"zh":"詩篇 51:10–12","en":"PSALMS 51:10–12","abbr":"詩 51:10–12"},"verses":[{"v":10,"text":"神啊，求你為我造清潔的心，使我裡面重新有正直（或譯：堅定）的靈。"},{"v":11,"text":"不要丟棄我，使我離開你的面；不要從我收回你的聖靈。"},{"v":12,"text":"求你使我仍得救恩之樂，賜我樂意的靈扶持我，"}],"before":[{"v":5,"text":"我是在罪孽裡生的，在我母親懷胎的時候就有了罪。"},{"v":6,"text":"你所喜愛的是內裡誠實；你在我隱密處，必使我得智慧。"},{"v":7,"text":"求你用牛膝草潔淨我，我就乾淨；求你洗滌我，我就比雪更白。"},{"v":8,"text":"求你使我得聽歡喜快樂的聲音，使你所壓傷的骨頭可以踴躍。"},{"v":9,"text":"求你掩面不看我的罪，塗抹我一切的罪孽。"}],"after":[{"v":13,"text":"我就把你的道指教有過犯的人，罪人必歸順你。"},{"v":14,"text":"神啊，你是拯救我的神；求你救我脫離流人血的罪！我的舌頭就高聲歌唱你的公義。"},{"v":15,"text":"主啊，求你使我嘴唇張開，我的口便傳揚讚美你的話！"},{"v":16,"text":"你本不喜愛祭物，若喜愛，我就獻上；燔祭，你也不喜悅。"},{"v":17,"text":"神所要的祭就是憂傷的靈；神啊，憂傷痛悔的心，你必不輕看。"}],"ctx":"大衛與拔示巴犯罪、被先知拿單指出後所寫的悔罪詩（見詩題與撒母耳記下 12 章）。","meaning":"悔改不只是求赦免，也求神造清潔的心、更新正直的靈，並恢復得救的喜樂。","caution":""},"Rom 8:1-2":{"label":{"zh":"羅馬書 8:1–2","en":"ROMANS 8:1–2","abbr":"羅 8:1–2"},"verses":[{"v":1,"text":"如今，那些在基督耶穌裡的就不定罪了。"},{"v":2,"text":"因為賜生命聖靈的律，在基督耶穌裡釋放了我，使我脫離罪和死的律了。"}],"before":[],"after":[{"v":3,"text":"律法既因肉體軟弱，有所不能行的，神就差遣自己的兒子，成為罪身的形狀，作了贖罪祭，在肉體中定了罪案，"},{"v":4,"text":"使律法的義成就在我們這不隨從肉體、只隨從聖靈的人身上。"},{"v":5,"text":"因為，隨從肉體的人體貼肉體的事；隨從聖靈的人體貼聖靈的事。"},{"v":6,"text":"體貼肉體的，就是死；體貼聖靈的，乃是生命、平安。"},{"v":7,"text":"原來體貼肉體的，就是與神為仇；因為不服神的律法，也是不能服，"}],"ctx":"保羅在第 7 章描述與罪掙扎的痛苦，到第 8 章宣告在基督裡的自由。","meaning":"在基督耶穌裡的人不再被定罪，因為賜生命聖靈的律使人脫離罪和死的律。","caution":"不定罪不等於不必悔改，而是悔改的人可以不再活在定罪之下。"},"Eph 4:31-32":{"label":{"zh":"以弗所書 4:31–32","en":"EPHESIANS 4:31–32","abbr":"弗 4:31–32"},"verses":[{"v":31,"text":"一切苦毒、惱恨、忿怒、嚷鬧、毀謗，並一切的惡毒（或譯：陰毒），都當從你們中間除掉；"},{"v":32,"text":"並要以恩慈相待，存憐憫的心，彼此饒恕，正如神在基督裡饒恕了你們一樣。"}],"before":[{"v":26,"text":"生氣卻不要犯罪；不可含怒到日落，"},{"v":27,"text":"也不可給魔鬼留地步。"},{"v":28,"text":"從前偷竊的，不要再偷；總要勞力，親手做正經事，就可有餘分給那缺少的人。"},{"v":29,"text":"污穢的言語一句不可出口，只要隨事說造就人的好話，叫聽見的人得益處。"},{"v":30,"text":"不要叫神的聖靈擔憂；你們原是受了他的印記，等候得贖的日子來到。"}],"after":[],"ctx":"保羅勸以弗所信徒脫去舊人、穿上新人（22–24 節），並在言語與人際關係中活出來。","meaning":"除掉苦毒、惱恨，以恩慈相待、存憐憫的心彼此饒恕，正如神在基督裡饒恕了我們。","caution":"饒恕不等於否認傷害，也不等於必須立刻恢復信任，或留在危險的關係裡。"},"Col 3:12-14":{"label":{"zh":"歌羅西書 3:12–14","en":"COLOSSIANS 3:12–14","abbr":"西 3:12–14"},"verses":[{"v":12,"text":"所以，你們既是神的選民，聖潔蒙愛的人，就要存（原文是穿；下同）憐憫、恩慈、謙虛、溫柔、忍耐的心。"},{"v":13,"text":"倘若這人與那人有嫌隙，總要彼此包容，彼此饒恕；主怎樣饒恕了你們，你們也要怎樣饒恕人。"},{"v":14,"text":"在這一切之外，要存著愛心，愛心就是聯絡全德的。"}],"before":[{"v":7,"text":"當你們在這些事中活著的時候，也曾這樣行過。"},{"v":8,"text":"但現在你們要棄絕這一切的事，以及惱恨、忿怒、惡毒（或譯：陰毒）、毀謗，並口中污穢的言語。"},{"v":9,"text":"不要彼此說謊；因你們已經脫去舊人和舊人的行為，"},{"v":10,"text":"穿上了新人。這新人在知識上漸漸更新，正如造他主的形像。"},{"v":11,"text":"在此並不分希臘人、猶太人，受割禮的、未受割禮的，化外人、西古提人，為奴的、自主的，惟有基督是包括一切，又住在各人之內。"}],"after":[{"v":15,"text":"又要叫基督的平安在你們心裡作主；你們也為此蒙召，歸為一體；且要存感謝的心。"},{"v":16,"text":"當用各樣的智慧，把基督的道理豐豐富富地存在心裡（或譯：當把基督的道理豐豐富富地存在心裡，以各樣的智慧），用詩章、頌詞、靈歌，彼此教導，互相勸戒，心被恩感，歌頌神。"},{"v":17,"text":"無論做甚麼，或說話或行事，都要奉主耶穌的名，藉著他感謝父神。"},{"v":18,"text":"你們作妻子的，當順服自己的丈夫，這在主裡面是相宜的。"},{"v":19,"text":"你們作丈夫的，要愛你們的妻子，不可苦待她們。"}],"ctx":"保羅勸歌羅西信徒，既然與基督一同復活，就要穿上新的生活樣式（1–11 節）。","meaning":"以憐憫、恩慈、謙虛、溫柔、忍耐彼此包容、彼此饒恕，並以愛聯絡全德。","caution":""},"Matt 18:21-22":{"label":{"zh":"馬太福音 18:21–22","en":"MATTHEW 18:21–22","abbr":"太 18:21–22"},"verses":[{"v":21,"text":"那時，彼得進前來，對耶穌說：「主啊，我弟兄得罪我，我當饒恕他幾次呢？到七次可以嗎？」"},{"v":22,"text":"耶穌說：「我對你說，不是到七次，乃是到七十個七次。"}],"before":[{"v":16,"text":"他若不聽，你就另外帶一兩個人同去，要憑兩三個人的口作見證，句句都可定準。"},{"v":17,"text":"若是不聽他們，就告訴教會；若是不聽教會，就看他像外邦人和稅吏一樣。"},{"v":18,"text":"「我實在告訴你們，凡你們在地上所捆綁的，在天上也要捆綁；凡你們在地上所釋放的，在天上也要釋放。"},{"v":19,"text":"我又告訴你們，若是你們中間有兩個人在地上同心合意地求甚麼事，我在天上的父必為他們成全。"},{"v":20,"text":"因為無論在哪裡，有兩三個人奉我的名聚會，那裡就有我在他們中間。」"}],"after":[{"v":23,"text":"天國好像一個王要和他僕人算帳。"},{"v":24,"text":"才算的時候，有人帶了一個欠一千萬銀子的來。"},{"v":25,"text":"因為他沒有甚麼償還之物，主人吩咐把他和他妻子兒女，並一切所有的都賣了償還。"},{"v":26,"text":"那僕人就俯伏拜他，說：『主啊，寬容我，將來我都要還清。』"},{"v":27,"text":"那僕人的主人就動了慈心，把他釋放了，並且免了他的債。"}],"ctx":"彼得問耶穌要饒恕弟兄幾次；耶穌接著講了「不饒恕人的惡僕」的比喻（23–35 節）。","meaning":"饒恕沒有次數的上限，因為我們先被神饒恕了極大的債。","caution":"饒恕是一個過程，不是要求受傷的人立刻假裝沒事。"},"Jas 1:19-20":{"label":{"zh":"雅各書 1:19–20","en":"JAMES 1:19–20","abbr":"雅 1:19–20"},"verses":[{"v":19,"text":"我親愛的弟兄們，這是你們所知道的。但你們各人要快快地聽，慢慢地說，慢慢地動怒，"},{"v":20,"text":"因為人的怒氣並不成就神的義。"}],"before":[{"v":14,"text":"但各人被試探，乃是被自己的私慾牽引誘惑的。"},{"v":15,"text":"私慾既懷了胎，就生出罪來；罪既長成，就生出死來。"},{"v":16,"text":"我親愛的弟兄們，不要看錯了。"},{"v":17,"text":"各樣美善的恩賜和各樣全備的賞賜都是從上頭來的，從眾光之父那裡降下來的；在他並沒有改變，也沒有轉動的影兒。"},{"v":18,"text":"他按自己的旨意，用真道生了我們，叫我們在他所造的萬物中好像初熟的果子。"}],"after":[{"v":21,"text":"所以，你們要脫去一切的污穢和盈餘的邪惡，存溫柔的心領受那所栽種的道，就是能救你們靈魂的道。"},{"v":22,"text":"只是你們要行道，不要單單聽道，自己欺哄自己。"},{"v":23,"text":"因為聽道而不行道的，就像人對著鏡子看自己本來的面目，"},{"v":24,"text":"看見，走後，隨即忘了他的相貌如何。"},{"v":25,"text":"惟有詳細察看那全備、使人自由之律法的，並且時常如此，這人既不是聽了就忘，乃是實在行出來，就在他所行的事上必然得福。"}],"ctx":"雅各勸勉在試煉中的信徒，要行道，不要單單聽道（22 節）。","meaning":"要快快地聽、慢慢地說、慢慢地動怒，因為人的怒氣並不成就神的義。","caution":""},"Eph 4:26-27":{"label":{"zh":"以弗所書 4:26–27","en":"EPHESIANS 4:26–27","abbr":"弗 4:26–27"},"verses":[{"v":26,"text":"生氣卻不要犯罪；不可含怒到日落，"},{"v":27,"text":"也不可給魔鬼留地步。"}],"before":[{"v":21,"text":"如果你們聽過他的道，領了他的教，學了他的真理，"},{"v":22,"text":"就要脫去你們從前行為上的舊人，這舊人是因私慾的迷惑漸漸變壞的；"},{"v":23,"text":"又要將你們的心志改換一新，"},{"v":24,"text":"並且穿上新人；這新人是照著神的形像造的，有真理的仁義和聖潔。"},{"v":25,"text":"所以，你們要棄絕謊言，各人與鄰舍說實話，因為我們是互相為肢體。"}],"after":[{"v":28,"text":"從前偷竊的，不要再偷；總要勞力，親手做正經事，就可有餘分給那缺少的人。"},{"v":29,"text":"污穢的言語一句不可出口，只要隨事說造就人的好話，叫聽見的人得益處。"},{"v":30,"text":"不要叫神的聖靈擔憂；你們原是受了他的印記，等候得贖的日子來到。"},{"v":31,"text":"一切苦毒、惱恨、忿怒、嚷鬧、毀謗，並一切的惡毒（或譯：陰毒），都當從你們中間除掉；"},{"v":32,"text":"並要以恩慈相待，存憐憫的心，彼此饒恕，正如神在基督裡饒恕了你們一樣。"}],"ctx":"與前段同屬「穿上新人」的勸勉，談在言語與關係中的實踐。","meaning":"生氣本身不一定是罪，但不要含怒到日落，不可給魔鬼留地步。","caution":""},"Prov 15:1":{"label":{"zh":"箴言 15:1","en":"PROVERBS 15:1","abbr":"箴 15:1"},"verses":[{"v":1,"text":"回答柔和，使怒消退；言語暴戾，觸動怒氣。"}],"before":[],"after":[{"v":2,"text":"智慧人的舌善發知識；愚昧人的口吐出愚昧。"},{"v":3,"text":"耶和華的眼目無處不在；惡人善人，他都鑒察。"},{"v":4,"text":"溫良的舌是生命樹；乖謬的嘴使人心碎。"},{"v":5,"text":"愚妄人藐視父親的管教；領受責備的，得著見識。"},{"v":6,"text":"義人家中多有財寶；惡人得利反受擾害。"}],"ctx":"所羅門關於言語的智慧格言。","meaning":"回答柔和，使怒消退；言語暴戾，觸動怒氣。","caution":"箴言是普遍的智慧原則，不是保證每次都有同樣結果的應許。"},"1Cor 13:4-7":{"label":{"zh":"哥林多前書 13:4–7","en":"1 CORINTHIANS 13:4–7","abbr":"林前 13:4–7"},"verses":[{"v":4,"text":"愛是恆久忍耐，又有恩慈；愛是不嫉妒；愛是不自誇，不張狂，"},{"v":5,"text":"不做害羞的事，不求自己的益處，不輕易發怒，不計算人的惡，"},{"v":6,"text":"不喜歡不義，只喜歡真理；"},{"v":7,"text":"凡事包容，凡事相信，凡事盼望，凡事忍耐。"}],"before":[{"v":1,"text":"我若能說萬人的方言，並天使的話語，卻沒有愛，我就成了鳴的鑼，響的鈸一般。"},{"v":2,"text":"我若有先知講道之能，也明白各樣的奧祕，各樣的知識，而且有全備的信，叫我能夠移山，卻沒有愛，我就算不得甚麼。"},{"v":3,"text":"我若將所有的賙濟窮人，又捨己身叫人焚燒，卻沒有愛，仍然與我無益。"}],"after":[{"v":8,"text":"愛是永不止息。先知講道之能終必歸於無有；說方言之能終必停止；知識也終必歸於無有。"},{"v":9,"text":"我們現在所知道的有限，先知所講的也有限，"},{"v":10,"text":"等那完全的來到，這有限的必歸於無有了。"},{"v":11,"text":"我作孩子的時候，話語像孩子，心思像孩子，意念像孩子，既成了人，就把孩子的事丟棄了。"},{"v":12,"text":"我們如今彷彿對著鏡子觀看，模糊不清（原文是如同猜謎），到那時就要面對面了。我如今所知道的有限，到那時就全知道，如同主知道我一樣。"}],"ctx":"哥林多教會看重屬靈恩賜卻彼此紛爭；保羅在談恩賜的第 12 與 14 章之間寫下「愛」這一章。","meaning":"愛是恆久忍耐、又有恩慈，不求自己的益處；凡事包容、凡事相信、凡事盼望、凡事忍耐。","caution":"原是寫給教會群體的，用在婚姻家庭也很合適；但「凡事忍耐」不是要人容忍暴力或虐待。"},"Eccl 4:9-12":{"label":{"zh":"傳道書 4:9–12","en":"ECCLESIASTES 4:9–12","abbr":"傳 4:9–12"},"verses":[{"v":9,"text":"兩個人總比一個人好，因為二人勞碌同得美好的果效。"},{"v":10,"text":"若是跌倒，這人可以扶起他的同伴；若是孤身跌倒，沒有別人扶起他來，這人就有禍了。"},{"v":11,"text":"再者，二人同睡就都暖和，一人獨睡怎能暖和呢？"},{"v":12,"text":"有人攻勝孤身一人，若有二人便能敵擋他；三股合成的繩子不容易折斷。"}],"before":[{"v":4,"text":"我又見人為一切的勞碌和各樣靈巧的工作就被鄰舍嫉妒。這也是虛空，也是捕風。"},{"v":5,"text":"愚昧人抱著手，吃自己的肉。"},{"v":6,"text":"滿了一把，得享安靜，強如滿了兩把，勞碌捕風。"},{"v":7,"text":"我又轉念，見日光之下有一件虛空的事："},{"v":8,"text":"有人孤單無二，無子無兄，竟勞碌不息，眼目也不以錢財為足。他說：「我勞勞碌碌，刻苦自己，不享福樂，到底是為誰呢？」這也是虛空，是極重的勞苦。"}],"after":[{"v":13,"text":"貧窮而有智慧的少年人勝過年老不肯納諫的愚昧王。"},{"v":14,"text":"這人是從監牢中出來作王，在他國中，生來原是貧窮的。"},{"v":15,"text":"我見日光之下一切行動的活人都隨從那第二位，就是起來代替老王的少年人。"},{"v":16,"text":"他所治理的眾人就是他的百姓，多得無數；在他後來的人尚且不喜悅他。這真是虛空，也是捕風。"}],"ctx":"傳道者觀察日光之下勞碌又孤單的人（7–8 節），接著談同伴的價值。","meaning":"兩個人總比一個人好，跌倒時可以扶起同伴；三股合成的繩子不容易折斷。","caution":""},"Ps 127:1-2":{"label":{"zh":"詩篇 127:1–2","en":"PSALMS 127:1–2","abbr":"詩 127:1–2"},"verses":[{"v":1,"text":"（所羅門上行之詩。）若不是耶和華建造房屋，建造的人就枉然勞力；若不是耶和華看守城池，看守的人就枉然警醒。"},{"v":2,"text":"你們清晨早起，夜晚安歇，吃勞碌得來的飯，本是枉然；惟有耶和華所親愛的，必叫他安然睡覺。"}],"before":[],"after":[{"v":3,"text":"兒女是耶和華所賜的產業；所懷的胎是他所給的賞賜。"},{"v":4,"text":"少年時所生的兒女好像勇士手中的箭。"},{"v":5,"text":"箭袋充滿的人便為有福；他們在城門口和仇敵說話的時候，必不至於羞愧。"}],"ctx":"所羅門的上行之詩，談家庭、城市與兒女都是神所賜的。","meaning":"若不是耶和華建造房屋，建造的人就枉然勞力；神賜祂所親愛的安然睡覺。","caution":""},"Ps 37:3-5":{"label":{"zh":"詩篇 37:3–5","en":"PSALMS 37:3–5","abbr":"詩 37:3–5"},"verses":[{"v":3,"text":"你當倚靠耶和華而行善，住在地上，以他的信實為糧；"},{"v":4,"text":"又要以耶和華為樂，他就將你心裡所求的賜給你。"},{"v":5,"text":"當將你的事交託耶和華，並倚靠他，他就必成全。"}],"before":[{"v":1,"text":"（大衛的詩。）不要為作惡的心懷不平，也不要向那行不義的生出嫉妒。"},{"v":2,"text":"因為他們如草快被割下，又如青菜快要枯乾。"}],"after":[{"v":6,"text":"他要使你的公義如光發出，使你的公平明如正午。"},{"v":7,"text":"你當默然倚靠耶和華，耐性等候他；不要因那道路通達的和那惡謀成就的心懷不平。"},{"v":8,"text":"當止住怒氣，離棄忿怒；不要心懷不平，以致作惡。"},{"v":9,"text":"因為作惡的必被剪除；惟有等候耶和華的必承受地土。"},{"v":10,"text":"還有片時，惡人要歸於無有；你就是細察他的住處也要歸於無有。"}],"ctx":"大衛勸人不要因作惡的人心懷不平，因為他們如草快被割下（1–2 節）。","meaning":"倚靠耶和華而行善，以耶和華為樂，將道路交託祂，祂就必成全。","caution":"「心裡所求的」是在以神為樂的前提下說的，不是保證得到任何想要的東西。"},"Phil 4:11-13":{"label":{"zh":"腓立比書 4:11–13","en":"PHILIPPIANS 4:11–13","abbr":"腓 4:11–13"},"verses":[{"v":11,"text":"我並不是因缺乏說這話；我無論在甚麼景況都可以知足，這是我已經學會了。"},{"v":12,"text":"我知道怎樣處卑賤，也知道怎樣處豐富；或飽足，或飢餓；或有餘，或缺乏，隨事隨在，我都得了祕訣。"},{"v":13,"text":"我靠著那加給我力量的，凡事都能做。"}],"before":[{"v":6,"text":"應當一無掛慮，只要凡事藉著禱告、祈求，和感謝，將你們所要的告訴神。"},{"v":7,"text":"神所賜、出人意外的平安必在基督耶穌裡保守你們的心懷意念。"},{"v":8,"text":"弟兄們，我還有未盡的話：凡是真實的、可敬的、公義的、清潔的、可愛的、有美名的，若有甚麼德行，若有甚麼稱讚，這些事你們都要思念。"},{"v":9,"text":"你們在我身上所學習的，所領受的，所聽見的，所看見的，這些事你們都要去行，賜平安的神就必與你們同在。"},{"v":10,"text":"我靠主大大地喜樂，因為你們思念我的心如今又發生；你們向來就思念我，只是沒得機會。"}],"after":[{"v":14,"text":"然而，你們和我同受患難原是美事。"},{"v":15,"text":"腓立比人哪，你們也知道我初傳福音離了馬其頓的時候，論到授受的事，除了你們以外，並沒有別的教會供給我。"},{"v":16,"text":"就是我在帖撒羅尼迦，你們也一次兩次地打發人供給我的需用。"},{"v":17,"text":"我並不求甚麼餽送，所求的就是你們的果子漸漸增多，歸在你們的帳上。"},{"v":18,"text":"但我樣樣都有，並且有餘。我已經充足，因我從以巴弗提受了你們的餽送，當作極美的香氣，為神所收納、所喜悅的祭物。"}],"ctx":"保羅感謝腓立比教會的饋送，說明他在監禁中已經學會知足（10–18 節）。","meaning":"無論飽足飢餓、有餘缺乏，都學會知足；靠著那加給他力量的，凡事都能面對。","caution":"13 節常被當作「靠主做什麼都會成功」，原意卻是在豐富與缺乏中都能知足。"},"Col 3:23-24":{"label":{"zh":"歌羅西書 3:23–24","en":"COLOSSIANS 3:23–24","abbr":"西 3:23–24"},"verses":[{"v":23,"text":"無論做甚麼，都要從心裡做，像是給主做的，不是給人做的，"},{"v":24,"text":"因你們知道從主那裡必得著基業為賞賜；你們所事奉的乃是主基督。"}],"before":[{"v":18,"text":"你們作妻子的，當順服自己的丈夫，這在主裡面是相宜的。"},{"v":19,"text":"你們作丈夫的，要愛你們的妻子，不可苦待她們。"},{"v":20,"text":"你們作兒女的，要凡事聽從父母，因為這是主所喜悅的。"},{"v":21,"text":"你們作父親的，不要惹兒女的氣，恐怕他們失了志氣。"},{"v":22,"text":"你們作僕人的，要凡事聽從你們肉身的主人，不要只在眼前事奉，像是討人喜歡的，總要存心誠實敬畏主。"}],"after":[{"v":25,"text":"那行不義的必受不義的報應；主並不偏待人。"}],"ctx":"保羅對當時作僕人的信徒所說的話（22 節），提醒他們工作是向主作的。","meaning":"無論做什麼都要從心裡做，像是給主做的，因為真正的賞賜從主而來。","caution":"原是對當時僕人的勸勉；可以應用的是工作的態度，不是要人默默承受不公平的對待。"},"Prov 3:5-6":{"label":{"zh":"箴言 3:5–6","en":"PROVERBS 3:5–6","abbr":"箴 3:5–6"},"verses":[{"v":5,"text":"你要專心仰賴耶和華，不可倚靠自己的聰明，"},{"v":6,"text":"在你一切所行的事上都要認定他，他必指引你的路。"}],"before":[{"v":1,"text":"我兒，不要忘記我的法則（或譯：指教）；你心要謹守我的誡命；"},{"v":2,"text":"因為它必將長久的日子，生命的年數與平安，加給你。"},{"v":3,"text":"不可使慈愛、誠實離開你，要繫在你頸項上，刻在你心版上。"},{"v":4,"text":"這樣，你必在神和世人眼前蒙恩寵，有聰明。"}],"after":[{"v":7,"text":"不要自以為有智慧；要敬畏耶和華，遠離惡事。"},{"v":8,"text":"這便醫治你的肚臍，滋潤你的百骨。"},{"v":9,"text":"你要以財物和一切初熟的土產尊榮耶和華。"},{"v":10,"text":"這樣，你的倉房必充滿有餘；你的酒醡有新酒盈溢。"},{"v":11,"text":"我兒，你不可輕看耶和華的管教（或譯：懲治），也不可厭煩他的責備；"}],"ctx":"所羅門以父親的口吻，勸兒子持守智慧與神的教導。","meaning":"專心仰賴耶和華，不倚靠自己的聰明，在一切所行的事上認定祂，祂必指引道路。","caution":"「指引你的路」不是保證得到明確的答案，而是神會帶領信靠祂的人。"},"Jas 1:5":{"label":{"zh":"雅各書 1:5","en":"JAMES 1:5","abbr":"雅 1:5"},"verses":[{"v":5,"text":"你們中間若有缺少智慧的，應當求那厚賜與眾人、也不斥責人的神，主就必賜給他。"}],"before":[{"v":1,"text":"作神和主耶穌基督僕人的雅各請散住十二個支派之人的安。"},{"v":2,"text":"我的弟兄們，你們落在百般試煉中，都要以為大喜樂；"},{"v":3,"text":"因為知道你們的信心經過試驗，就生忍耐。"},{"v":4,"text":"但忍耐也當成功，使你們成全、完備，毫無缺欠。"}],"after":[{"v":6,"text":"只要憑著信心求，一點不疑惑；因為那疑惑的人，就像海中的波浪，被風吹動翻騰。"},{"v":7,"text":"這樣的人不要想從主那裡得甚麼。"},{"v":8,"text":"心懷二意的人，在他一切所行的路上都沒有定見。"},{"v":9,"text":"卑微的弟兄升高，就該喜樂；"},{"v":10,"text":"富足的降卑，也該如此；因為他必要過去，如同草上的花一樣。"}],"ctx":"雅各勸勉在試煉中的信徒（2–4 節），缺少智慧的時候要向神求。","meaning":"神厚賜與眾人，也不斥責人；缺少智慧的人可以放心向祂求。","caution":""},"Ps 32:8":{"label":{"zh":"詩篇 32:8","en":"PSALMS 32:8","abbr":"詩 32:8"},"verses":[{"v":8,"text":"我要教導你，指示你當行的路；我要定睛在你身上勸戒你。"}],"before":[{"v":3,"text":"我閉口不認罪的時候，因終日唉哼而骨頭枯乾。"},{"v":4,"text":"黑夜白日，你的手在我身上沉重；我的精液耗盡，如同夏天的乾旱。（細拉）"},{"v":5,"text":"我向你陳明我的罪，不隱瞞我的惡。我說：我要向耶和華承認我的過犯，你就赦免我的罪惡。（細拉）"},{"v":6,"text":"為此，凡虔誠人都當趁你可尋找的時候禱告你；大水泛溢的時候，必不能到他那裡。"},{"v":7,"text":"你是我藏身之處；你必保佑我脫離苦難，以得救的樂歌四面環繞我。（細拉）"}],"after":[{"v":9,"text":"你不可像那無知的騾馬，必用嚼環轡頭勒住牠；不然，就不能馴服。"},{"v":10,"text":"惡人必多受苦楚；惟獨倚靠耶和華的必有慈愛四面環繞他。"},{"v":11,"text":"你們義人應當靠耶和華歡喜快樂；你們心裡正直的人都當歡呼。"}],"ctx":"大衛的悔罪與蒙赦免之詩，這一節是神對悔改之人的回應。","meaning":"神應許教導、指示當行的路，並定睛在人身上勸戒。","caution":""},"Ps 27:13-14":{"label":{"zh":"詩篇 27:13–14","en":"PSALMS 27:13–14","abbr":"詩 27:13–14"},"verses":[{"v":13,"text":"我若不信在活人之地得見耶和華的恩惠，就早已喪膽了。"},{"v":14,"text":"要等候耶和華！當壯膽，堅固你的心！我再說，要等候耶和華！"}],"before":[{"v":8,"text":"你說：你們當尋求我的面。那時我心向你說：耶和華啊，你的面我正要尋求。"},{"v":9,"text":"不要向我掩面。不要發怒趕逐僕人，你向來是幫助我的。救我的神啊，不要丟掉我，也不要離棄我。"},{"v":10,"text":"我父母離棄我，耶和華必收留我。"},{"v":11,"text":"耶和華啊，求你將你的道指教我，因我仇敵的緣故引導我走平坦的路。"},{"v":12,"text":"求你不要把我交給敵人，遂其所願；因為妄作見證的和口吐凶言的，起來攻擊我。"}],"after":[],"ctx":"大衛在假見證四起、敵人環伺時（12 節）寫下的結尾宣告。","meaning":"相信在活人之地必看見耶和華的恩惠，所以要壯膽、堅固心，等候耶和華。","caution":"等候不是被動放棄，而是持續信靠。"},"Lam 3:25-26":{"label":{"zh":"耶利米哀歌 3:25–26","en":"LAMENTATIONS 3:25–26","abbr":"哀 3:25–26"},"verses":[{"v":25,"text":"凡等候耶和華，心裡尋求他的，耶和華必施恩給他。"},{"v":26,"text":"人仰望耶和華，靜默等候他的救恩，這原是好的。"}],"before":[{"v":20,"text":"我心想念這些，就在裡面憂悶。"},{"v":21,"text":"我想起這事，心裡就有指望。"},{"v":22,"text":"我們不致消滅，是出於耶和華諸般的慈愛；是因他的憐憫不致斷絕。"},{"v":23,"text":"每早晨，這都是新的；你的誠實極其廣大！"},{"v":24,"text":"我心裡說：耶和華是我的分，因此，我要仰望他。"}],"after":[{"v":27,"text":"人在幼年負軛，這原是好的。"},{"v":28,"text":"他當獨坐無言，因為這是耶和華加在他身上的。"},{"v":29,"text":"他當口貼塵埃，或者有指望。"},{"v":30,"text":"他當由人打他的腮頰，要滿受凌辱。"},{"v":31,"text":"因為主必不永遠丟棄人。"}],"ctx":"耶路撒冷被毀後的哀歌；作者在痛苦中轉而回想神的慈愛（21–24 節）。","meaning":"等候耶和華、心裡尋求祂的，耶和華必施恩給他；仰望耶和華、靜默等候祂的救恩，這原是好的。","caution":""},"Ps 40:1-3":{"label":{"zh":"詩篇 40:1–3","en":"PSALMS 40:1–3","abbr":"詩 40:1–3"},"verses":[{"v":1,"text":"（大衛的詩，交與伶長。）我曾耐性等候耶和華；他垂聽我的呼求。"},{"v":2,"text":"他從禍坑裡，從淤泥中，把我拉上來，使我的腳立在磐石上，使我腳步穩當。"},{"v":3,"text":"他使我口唱新歌，就是讚美我們神的話。許多人必看見而懼怕，並要倚靠耶和華。"}],"before":[],"after":[{"v":4,"text":"那倚靠耶和華、不理會狂傲和偏向虛假之輩的，這人便為有福！"},{"v":5,"text":"耶和華─我的神啊，你所行的奇事，並你向我們所懷的意念甚多，不能向你陳明。若要陳明，其事不可勝數。"},{"v":6,"text":"祭物和禮物，你不喜悅；你已經開通我的耳朵。燔祭和贖罪祭非你所要。"},{"v":7,"text":"那時我說：看哪，我來了！我的事在經卷上已經記載了。"},{"v":8,"text":"我的神啊，我樂意照你的旨意行；你的律法在我心裡。"}],"ctx":"大衛回顧神曾回應他的呼求，詩的後段又在困境中再次求助（11–17 節）。","meaning":"耐性等候耶和華，祂就垂聽，把人從禍坑裡拉上來，使腳立在磐石上。","caution":"詩人等候的時間可能很長，經文沒有說等候一定很快結束。"},"Ps 46:1-3":{"label":{"zh":"詩篇 46:1–3","en":"PSALMS 46:1–3","abbr":"詩 46:1–3"},"verses":[{"v":1,"text":"（可拉後裔的詩歌，交與伶長。調用女音。）神是我們的避難所，是我們的力量，是我們在患難中隨時的幫助。"},{"v":2,"text":"所以，地雖改變，山雖搖動到海心，"},{"v":3,"text":"其中的水雖匉訇翻騰，山雖因海漲而戰抖，我們也不害怕。（細拉）"}],"before":[],"after":[{"v":4,"text":"有一道河，這河的分汊使神的城歡喜；這城就是至高者居住的聖所。"},{"v":5,"text":"神在其中，城必不動搖；到天一亮，神必幫助這城。"},{"v":6,"text":"外邦喧嚷，列國動搖；神發聲，地便鎔化。"},{"v":7,"text":"萬軍之耶和華與我們同在；雅各的神是我們的避難所！（細拉）"},{"v":8,"text":"你們來看耶和華的作為，看他使地怎樣荒涼。"}],"ctx":"可拉後裔的詩，描寫天災與列國動亂中，神仍是祂子民的避難所。","meaning":"神是避難所、是力量，是在患難中隨時的幫助；所以即使地改變，也不害怕。","caution":""},"2Cor 4:8-9":{"label":{"zh":"哥林多後書 4:8–9","en":"2 CORINTHIANS 4:8–9","abbr":"林後 4:8–9"},"verses":[{"v":8,"text":"我們四面受敵，卻不被困住；心裡作難，卻不至失望；"},{"v":9,"text":"遭逼迫，卻不被丟棄；打倒了，卻不至死亡。"}],"before":[{"v":3,"text":"如果我們的福音蒙蔽，就是蒙蔽在滅亡的人身上。"},{"v":4,"text":"此等不信之人被這世界的神弄瞎了心眼，不叫基督榮耀福音的光照著他們。基督本是神的像。"},{"v":5,"text":"我們原不是傳自己，乃是傳基督耶穌為主，並且自己因耶穌作你們的僕人。"},{"v":6,"text":"那吩咐光從黑暗裡照出來的神，已經照在我們心裡，叫我們得知神榮耀的光顯在耶穌基督的面上。"},{"v":7,"text":"我們有這寶貝放在瓦器裡，要顯明這莫大的能力是出於神，不是出於我們。"}],"after":[{"v":10,"text":"身上常帶著耶穌的死，使耶穌的生也顯明在我們身上。"},{"v":11,"text":"因為我們這活著的人是常為耶穌被交於死地，使耶穌的生在我們這必死的身上顯明出來。"},{"v":12,"text":"這樣看來，死是在我們身上發動，生卻在你們身上發動。"},{"v":13,"text":"但我們既有信心，正如經上記著說：「我因信，所以如此說話。」我們也信，所以也說話。"},{"v":14,"text":"自己知道那叫主耶穌復活的，也必叫我們與耶穌一同復活，並且叫我們與你們一同站在他面前。"}],"ctx":"保羅描述使徒在事奉中的受苦，說他們像瓦器裡有寶貝（7 節）。","meaning":"四面受敵卻不被困住，心裡作難卻不至失望，打倒了卻不至死亡。","caution":""},"Rom 8:26-28":{"label":{"zh":"羅馬書 8:26–28","en":"ROMANS 8:26–28","abbr":"羅 8:26–28"},"verses":[{"v":26,"text":"況且，我們的軟弱有聖靈幫助；我們本不曉得當怎樣禱告，只是聖靈親自用說不出來的歎息替我們禱告。"},{"v":27,"text":"鑒察人心的，曉得聖靈的意思，因為聖靈照著神的旨意替聖徒祈求。"},{"v":28,"text":"我們曉得萬事都互相效力，叫愛神的人得益處，就是按他旨意被召的人。"}],"before":[{"v":21,"text":"但受造之物仍然指望脫離敗壞的轄制，得享（享：原文是入）神兒女自由的榮耀。"},{"v":22,"text":"我們知道，一切受造之物一同歎息，勞苦，直到如今。"},{"v":23,"text":"不但如此，就是我們這有聖靈初結果子的，也是自己心裡歎息，等候得著兒子的名分，乃是我們的身體得贖。"},{"v":24,"text":"我們得救是在乎盼望；只是所見的盼望不是盼望，誰還盼望他所見的呢（有古卷：人所看見的何必再盼望呢）？"},{"v":25,"text":"但我們若盼望那所不見的，就必忍耐等候。"}],"after":[{"v":29,"text":"因為他預先所知道的人，就預先定下效法他兒子的模樣，使他兒子在許多弟兄中作長子。"},{"v":30,"text":"預先所定下的人又召他們來；所召來的人又稱他們為義；所稱為義的人又叫他們得榮耀。"},{"v":31,"text":"既是這樣，還有甚麼說的呢？神若幫助我們，誰能敵擋我們呢？"},{"v":32,"text":"神既不愛惜自己的兒子，為我們眾人捨了，豈不也把萬物和他一同白白地賜給我們嗎？"},{"v":33,"text":"誰能控告神所揀選的人呢？有神稱他們為義了（或譯：是稱他們為義的神嗎）。"}],"ctx":"保羅談到受造之物與信徒都在嘆息、等候得贖（18–25 節）。","meaning":"我們軟弱、不知道怎樣禱告時，聖靈親自為我們代求；萬事都互相效力，叫愛神的人得益處。","caution":"「萬事互相效力」不是說每件壞事本身是好的，也不適合在別人剛受傷時拿來安慰；重點是神在其中仍然掌權。"},"Mark 9:23-24":{"label":{"zh":"馬可福音 9:23–24","en":"MARK 9:23–24","abbr":"可 9:23–24"},"verses":[{"v":23,"text":"耶穌對他說：「你若能信，在信的人，凡事都能。」"},{"v":24,"text":"孩子的父親立時喊著說（有古卷：立時流淚地喊著說）：「我信！但我信不足，求主幫助。」"}],"before":[{"v":18,"text":"無論在哪裡，鬼捉弄他，把他摔倒，他就口中流沫，咬牙切齒，身體枯乾。我請過你的門徒把鬼趕出去，他們卻是不能。」"},{"v":19,"text":"耶穌說：「噯！不信的世代啊，我在你們這裡要到幾時呢？我忍耐你們要到幾時呢？把他帶到我這裡來吧。」"},{"v":20,"text":"他們就帶了他來。他一見耶穌，鬼便叫他重重地抽瘋，倒在地上，翻來覆去，口中流沫。"},{"v":21,"text":"耶穌問他父親說：「他得這病有多少日子呢？」回答說：「從小的時候。"},{"v":22,"text":"鬼屢次把他扔在火裡、水裡，要滅他。你若能做甚麼，求你憐憫我們，幫助我們。」"}],"after":[{"v":25,"text":"耶穌看見眾人都跑上來，就斥責那污鬼，說：「你這聾啞的鬼，我吩咐你從他裡頭出來，再不要進去！」"},{"v":26,"text":"那鬼喊叫，使孩子大大地抽了一陣瘋，就出來了。孩子好像死了一般。以致眾人多半說：「他是死了。」"},{"v":27,"text":"但耶穌拉著他的手，扶他起來，他就站起來了。"},{"v":28,"text":"耶穌進了屋子，門徒就暗暗地問他說：「我們為甚麼不能趕出他去呢？」"},{"v":29,"text":"耶穌說：「非用禱告（有古卷加：禁食二字），這一類的鬼總不能出來（或譯：不能趕他出來）。」"}],"ctx":"一位父親帶著被鬼附的兒子來求耶穌，門徒卻醫治不了（14–22 節）。","meaning":"父親誠實地說「我信！但我信不足，求主幫助」，耶穌仍然回應了他。","caution":"這段不是說得醫治取決於信心夠不夠；重點是耶穌接納不完全的信心。"},"Ps 13:1-6":{"label":{"zh":"詩篇 13:1–6","en":"PSALMS 13:1–6","abbr":"詩 13:1–6"},"verses":[{"v":1,"text":"（大衛的詩，交與伶長。）耶和華啊，你忘記我要到幾時呢？要到永遠嗎？你掩面不顧我要到幾時呢？"},{"v":2,"text":"我心裡籌算，終日愁苦，要到幾時呢？我的仇敵升高壓制我，要到幾時呢？"},{"v":3,"text":"耶和華─我的神啊，求你看顧我，應允我！使我眼目光明，免得我沉睡至死；"},{"v":4,"text":"免得我的仇敵說：我勝了他；免得我的敵人在我搖動的時候喜樂。"},{"v":5,"text":"但我倚靠你的慈愛；我的心因你的救恩快樂。"},{"v":6,"text":"我要向耶和華歌唱，因他用厚恩待我。"}],"before":[],"after":[],"ctx":"大衛在長久的困境中，向神發出「要到幾時」的哀歌。","meaning":"可以誠實向神說出被遺忘的感受，同時選擇倚靠神的慈愛。","caution":""},"Heb 4:14-16":{"label":{"zh":"希伯來書 4:14–16","en":"HEBREWS 4:14–16","abbr":"來 4:14–16"},"verses":[{"v":14,"text":"我們既然有一位已經升入高天尊榮的大祭司，就是神的兒子耶穌，便當持定所承認的道。"},{"v":15,"text":"因我們的大祭司並非不能體恤我們的軟弱。他也曾凡事受過試探，與我們一樣，只是他沒有犯罪。"},{"v":16,"text":"所以，我們只管坦然無懼地來到施恩的寶座前，為要得憐恤，蒙恩惠，作隨時的幫助。"}],"before":[{"v":9,"text":"這樣看來，必另有一安息日的安息為神的子民存留。"},{"v":10,"text":"因為那進入安息的，乃是歇了自己的工，正如神歇了他的工一樣。"},{"v":11,"text":"所以，我們務必竭力進入那安息，免得有人學那不信從的樣子跌倒了。"},{"v":12,"text":"神的道是活潑的，是有功效的，比一切兩刃的劍更快，甚至魂與靈，骨節與骨髓，都能刺入、剖開，連心中的思念和主意都能辨明。"},{"v":13,"text":"並且被造的沒有一樣在他面前不顯然的；原來萬物在那與我們有關係的主眼前，都是赤露敞開的。"}],"after":[],"ctx":"希伯來書作者勸勉受逼迫、想要退後的信徒持守信仰。","meaning":"耶穌是能體恤我們軟弱的大祭司，所以可以坦然無懼地來到施恩的寶座前。","caution":""},"Ps 42:5":{"label":{"zh":"詩篇 42:5","en":"PSALMS 42:5","abbr":"詩 42:5"},"verses":[{"v":5,"text":"我的心哪，你為何憂悶？為何在我裡面煩躁？應當仰望神，因他笑臉幫助我；我還要稱讚他。"}],"before":[{"v":1,"text":"（可拉後裔的訓誨詩，交與伶長。）神啊，我的心切慕你，如鹿切慕溪水。"},{"v":2,"text":"我的心渴想神，就是永生神；我幾時得朝見神呢？"},{"v":3,"text":"我晝夜以眼淚當飲食；人不住地對我說：你的神在哪裡呢？"},{"v":4,"text":"我從前與眾人同往，用歡呼稱讚的聲音領他們到神的殿裡，大家守節。我追想這些事，我的心極其悲傷。"}],"after":[{"v":6,"text":"我的神啊，我的心在我裡面憂悶，所以我從約旦地，從黑門嶺，從米薩山記念你。"},{"v":7,"text":"你的瀑布發聲，深淵就與深淵響應；你的波浪洪濤漫過我身。"},{"v":8,"text":"白晝，耶和華必向我施慈愛；黑夜，我要歌頌禱告賜我生命的神。"},{"v":9,"text":"我要對神─我的磐石說：你為何忘記我呢？我為何因仇敵的欺壓時常哀痛呢？"},{"v":10,"text":"我的敵人辱罵我，好像打碎我的骨頭，不住地對我說：你的神在哪裡呢？"}],"ctx":"可拉後裔在遠離聖殿、被人譏笑「你的神在哪裡呢」（3 節）時寫的哀歌。","meaning":"詩人對自己的心說話：為何憂悶？仍要仰望神。","caution":"這首詩承認憂悶會反覆出現；如果低落持續很久，尋求醫療與輔導也是神的看顧。"},"Ps 139:7-12":{"label":{"zh":"詩篇 139:7–12","en":"PSALMS 139:7–12","abbr":"詩 139:7–12"},"verses":[{"v":7,"text":"我往哪裡去躲避你的靈？我往哪裡逃、躲避你的面？"},{"v":8,"text":"我若升到天上，你在那裡；我若在陰間下榻，你也在那裡。"},{"v":9,"text":"我若展開清晨的翅膀，飛到海極居住，"},{"v":10,"text":"就是在那裡，你的手必引導我；你的右手也必扶持我。"},{"v":11,"text":"我若說：黑暗必定遮蔽我，我周圍的亮光必成為黑夜；"},{"v":12,"text":"黑暗也不能遮蔽我，使你不見，黑夜卻如白晝發亮。黑暗和光明，在你看都是一樣。"}],"before":[{"v":2,"text":"我坐下，我起來，你都曉得；你從遠處知道我的意念。"},{"v":3,"text":"我行路，我躺臥，你都細察；你也深知我一切所行的。"},{"v":4,"text":"耶和華啊，我舌頭上的話，你沒有一句不知道的。"},{"v":5,"text":"你在我前後環繞我，按手在我身上。"},{"v":6,"text":"這樣的知識奇妙，是我不能測的，至高，是我不能及的。"}],"after":[{"v":13,"text":"我的肺腑是你所造的；我在母腹中，你已覆庇我。"},{"v":14,"text":"我要稱謝你，因我受造，奇妙可畏；你的作為奇妙，這是我心深知道的。"},{"v":15,"text":"我在暗中受造，在地的深處被聯絡；那時，我的形體並不向你隱藏。"},{"v":16,"text":"我未成形的體質，你的眼早已看見了；你所定的日子，我尚未度一日（或譯：我被造的肢體尚未有其一），你都寫在你的冊上了。"},{"v":17,"text":"神啊，你的意念向我何等寶貴！其數何等眾多！"}],"ctx":"大衛默想神無所不知、無所不在的詩。","meaning":"無論到哪裡，神都在那裡；黑暗也不能遮蔽人，使神看不見。","caution":""},"Rom 15:13":{"label":{"zh":"羅馬書 15:13","en":"ROMANS 15:13","abbr":"羅 15:13"},"verses":[{"v":13,"text":"但願使人有盼望的神，因信將諸般的喜樂、平安充滿你們的心，使你們藉著聖靈的能力大有盼望！"}],"before":[{"v":8,"text":"我說，基督是為神真理作了受割禮人的執事，要證實所應許列祖的話，"},{"v":9,"text":"並叫外邦人因他的憐憫榮耀神。如經上所記：因此，我要在外邦中稱讚你，歌頌你的名；"},{"v":10,"text":"又說：你們外邦人當與主的百姓一同歡樂；"},{"v":11,"text":"又說：外邦啊，你們當讚美主！萬民哪，你們都當頌讚他！"},{"v":12,"text":"又有以賽亞說：將來有耶西的根，就是那興起來要治理外邦的；外邦人要仰望他。"}],"after":[{"v":14,"text":"弟兄們，我自己也深信你們是滿有良善，充足了諸般的知識，也能彼此勸戒。"},{"v":15,"text":"但我稍微放膽寫信給你們，是要提醒你們的記性，特因神所給我的恩典，"},{"v":16,"text":"使我為外邦人作基督耶穌的僕役，作神福音的祭司，叫所獻上的外邦人，因著聖靈成為聖潔，可蒙悅納。"},{"v":17,"text":"所以論到神的事，我在基督耶穌裡有可誇的。"},{"v":18,"text":"除了基督藉我做的那些事，我甚麼都不敢提，只提他藉我言語作為，用神蹟奇事的能力，並聖靈的能力，使外邦人順服；"}],"ctx":"保羅勸羅馬教會中不同背景的信徒彼此接納（7–12 節）之後寫下的祝福。","meaning":"願使人有盼望的神，因信將諸般的喜樂、平安充滿人心，藉聖靈的能力大有盼望。","caution":""},"Ps 139:13-14":{"label":{"zh":"詩篇 139:13–14","en":"PSALMS 139:13–14","abbr":"詩 139:13–14"},"verses":[{"v":13,"text":"我的肺腑是你所造的；我在母腹中，你已覆庇我。"},{"v":14,"text":"我要稱謝你，因我受造，奇妙可畏；你的作為奇妙，這是我心深知道的。"}],"before":[{"v":8,"text":"我若升到天上，你在那裡；我若在陰間下榻，你也在那裡。"},{"v":9,"text":"我若展開清晨的翅膀，飛到海極居住，"},{"v":10,"text":"就是在那裡，你的手必引導我；你的右手也必扶持我。"},{"v":11,"text":"我若說：黑暗必定遮蔽我，我周圍的亮光必成為黑夜；"},{"v":12,"text":"黑暗也不能遮蔽我，使你不見，黑夜卻如白晝發亮。黑暗和光明，在你看都是一樣。"}],"after":[{"v":15,"text":"我在暗中受造，在地的深處被聯絡；那時，我的形體並不向你隱藏。"},{"v":16,"text":"我未成形的體質，你的眼早已看見了；你所定的日子，我尚未度一日（或譯：我被造的肢體尚未有其一），你都寫在你的冊上了。"},{"v":17,"text":"神啊，你的意念向我何等寶貴！其數何等眾多！"},{"v":18,"text":"我若數點，比海沙更多；我睡醒的時候，仍和你同在。"},{"v":19,"text":"神啊，你必要殺戮惡人；所以，你們好流人血的，離開我去吧！"}],"ctx":"同一首詩中，大衛讚嘆神在母腹中造了他。","meaning":"人是被神親手奇妙可畏地造成的。","caution":""},"Eph 2:10":{"label":{"zh":"以弗所書 2:10","en":"EPHESIANS 2:10","abbr":"弗 2:10"},"verses":[{"v":10,"text":"我們原是他的工作，在基督耶穌裡造成的，為要叫我們行善，就是神所預備叫我們行的。"}],"before":[{"v":5,"text":"當我們死在過犯中的時候，便叫我們與基督一同活過來。你們得救是本乎恩。"},{"v":6,"text":"他又叫我們與基督耶穌一同復活，一同坐在天上，"},{"v":7,"text":"要將他極豐富的恩典，就是他在基督耶穌裡向我們所施的恩慈，顯明給後來的世代看。"},{"v":8,"text":"你們得救是本乎恩，也因著信；這並不是出於自己，乃是神所賜的；"},{"v":9,"text":"也不是出於行為，免得有人自誇。"}],"after":[{"v":11,"text":"所以你們應當記念：你們從前按肉體是外邦人，是稱為沒受割禮的；這名原是那些憑人手在肉身上稱為受割禮之人所起的。"},{"v":12,"text":"那時，你們與基督無關，在以色列國民以外，在所應許的諸約上是局外人，並且活在世上沒有指望，沒有神。"},{"v":13,"text":"你們從前遠離神的人，如今卻在基督耶穌裡，靠著他的血，已經得親近了。"},{"v":14,"text":"因他使我們和睦（原文是因他是我們的和睦），將兩下合而為一，拆毀了中間隔斷的牆；"},{"v":15,"text":"而且以自己的身體廢掉冤仇，就是那記在律法上的規條，為要將兩下藉著自己造成一個新人，如此便成就了和睦。"}],"ctx":"保羅剛說明人得救是本乎恩、也因著信，不是出於行為（8–9 節）。","meaning":"我們是神的工作（作品），在基督耶穌裡造成的，為要叫我們行神所預備的善事。","caution":""},"Matt 10:29-31":{"label":{"zh":"馬太福音 10:29–31","en":"MATTHEW 10:29–31","abbr":"太 10:29–31"},"verses":[{"v":29,"text":"兩個麻雀不是賣一分銀子嗎？若是你們的父不許，一個也不能掉在地上；"},{"v":30,"text":"就是你們的頭髮也都被數過了。"},{"v":31,"text":"所以，不要懼怕，你們比許多麻雀還貴重！」"}],"before":[{"v":24,"text":"學生不能高過先生；僕人不能高過主人。"},{"v":25,"text":"學生和先生一樣，僕人和主人一樣，也就罷了。人既罵家主是別西卜（別西卜：是鬼王的名），何況他的家人呢？」"},{"v":26,"text":"「所以，不要怕他們；因為掩蓋的事沒有不露出來的，隱藏的事沒有不被人知道的。"},{"v":27,"text":"我在暗中告訴你們的，你們要在明處說出來；你們耳中所聽的，要在房上宣揚出來。"},{"v":28,"text":"那殺身體、不能殺靈魂的，不要怕他們；惟有能把身體和靈魂都滅在地獄裡的，正要怕他。"}],"after":[{"v":32,"text":"「凡在人面前認我的，我在我天上的父面前也必認他；"},{"v":33,"text":"凡在人面前不認我的，我在我天上的父面前也必不認他。」"},{"v":34,"text":"「你們不要想我來是叫地上太平；我來並不是叫地上太平，乃是叫地上動刀兵。"},{"v":35,"text":"因為我來是叫人與父親生疏，女兒與母親生疏，媳婦與婆婆生疏。"},{"v":36,"text":"人的仇敵就是自己家裡的人。"}],"ctx":"耶穌差派門徒出去，提醒他們會遭遇逼迫，但不要怕（16–28 節）。","meaning":"兩個麻雀神都看顧，連頭髮也都被數過了；人比許多麻雀還貴重。","caution":""},"Prov 16:3":{"label":{"zh":"箴言 16:3","en":"PROVERBS 16:3","abbr":"箴 16:3"},"verses":[{"v":3,"text":"你所做的，要交託耶和華，你所謀的，就必成立。"}],"before":[{"v":1,"text":"心中的謀算在乎人；舌頭的應對由於耶和華。"},{"v":2,"text":"人一切所行的，在自己眼中看為清潔；惟有耶和華衡量人心。"}],"after":[{"v":4,"text":"耶和華所造的，各適其用；就是惡人也為禍患的日子所造。"},{"v":5,"text":"凡心裡驕傲的，為耶和華所憎惡；雖然連手，他必不免受罰。"},{"v":6,"text":"因憐憫誠實，罪孽得贖；敬畏耶和華的，遠離惡事。"},{"v":7,"text":"人所行的，若蒙耶和華喜悅，耶和華也使他的仇敵與他和好。"},{"v":8,"text":"多有財利，行事不義，不如少有財利，行事公義。"}],"ctx":"所羅門的智慧格言，談人的計劃與神的主權（1–9 節）。","meaning":"把所做的交託耶和華，所謀的就必成立。","caution":"箴言是智慧原則，不是保證考試或計劃一定照自己的期待成功。"},"Ps 90:17":{"label":{"zh":"詩篇 90:17","en":"PSALMS 90:17","abbr":"詩 90:17"},"verses":[{"v":17,"text":"願主─我們神的榮美歸於我們身上。願你堅立我們手所做的工；我們手所做的工，願你堅立。"}],"before":[{"v":12,"text":"求你指教我們怎樣數算自己的日子，好叫我們得著智慧的心。"},{"v":13,"text":"耶和華啊，我們要等到幾時呢？求你轉回，為你的僕人後悔。"},{"v":14,"text":"求你使我們早早飽得你的慈愛，好叫我們一生一世歡呼喜樂。"},{"v":15,"text":"求你照著你使我們受苦的日子，和我們遭難的年歲，叫我們喜樂。"},{"v":16,"text":"願你的作為向你僕人顯現；願你的榮耀向他們子孫顯明。"}],"after":[],"ctx":"摩西的禱告，默想人生短暫與神的永恆（1–12 節）。","meaning":"求神的榮美歸於我們，並堅立我們手所做的工。","caution":""},"1Cor 10:13":{"label":{"zh":"哥林多前書 10:13","en":"1 CORINTHIANS 10:13","abbr":"林前 10:13"},"verses":[{"v":13,"text":"你們所遇見的試探，無非是人所能受的。神是信實的，必不叫你們受試探過於所能受的；在受試探的時候，總要給你們開一條出路，叫你們能忍受得住。"}],"before":[{"v":8,"text":"我們也不要行姦淫，像他們有人行的，一天就倒斃了二萬三千人；"},{"v":9,"text":"也不要試探主（有古卷：基督），像他們有人試探的，就被蛇所滅。"},{"v":10,"text":"你們也不要發怨言，像他們有發怨言的，就被滅命的所滅。"},{"v":11,"text":"他們遭遇這些事都要作為鑑戒，並且寫在經上，正是警戒我們這末世的人。"},{"v":12,"text":"所以，自己以為站得穩的，須要謹慎，免得跌倒。"}],"after":[{"v":14,"text":"我所親愛的弟兄啊，你們要逃避拜偶像的事。"},{"v":15,"text":"我好像對明白人說的，你們要審察我的話。"},{"v":16,"text":"我們所祝福的杯，豈不是同領基督的血嗎？我們所擘開的餅，豈不是同領基督的身體嗎？"},{"v":17,"text":"我們雖多，仍是一個餅，一個身體，因為我們都是分受這一個餅。"},{"v":18,"text":"你們看屬肉體的以色列人，那吃祭物的豈不是在祭壇上有分嗎？"}],"ctx":"保羅以以色列人在曠野跌倒的歷史為鑑戒（1–12 節），提醒哥林多信徒。","meaning":"所遇見的試探無非是人所能受的；神是信實的，必開一條出路，叫人能忍受得住。","caution":"這節說的是試探，不是說神不會讓人經歷超過負荷的苦難；遇到難以承受的處境，請尋求幫助。"},"Jas 4:7-8":{"label":{"zh":"雅各書 4:7–8","en":"JAMES 4:7–8","abbr":"雅 4:7–8"},"verses":[{"v":7,"text":"故此，你們要順服神。務要抵擋魔鬼，魔鬼就必離開你們逃跑了。"},{"v":8,"text":"你們親近神，神就必親近你們。有罪的人哪，要潔淨你們的手！心懷二意的人哪，要清潔你們的心！"}],"before":[{"v":2,"text":"你們貪戀，還是得不著；你們殺害嫉妒，又鬥毆爭戰，也不能得。你們得不著，是因為你們不求。"},{"v":3,"text":"你們求也得不著，是因為你們妄求，要浪費在你們的宴樂中。"},{"v":4,"text":"你們這些淫亂的人（原文是淫婦）哪，豈不知與世俗為友就是與神為敵嗎？所以凡想要與世俗為友的，就是與神為敵了。"},{"v":5,"text":"你們想經上所說是徒然的嗎？神所賜、住在我們裡面的靈，是戀愛至於嫉妒嗎？"},{"v":6,"text":"但他賜更多的恩典，所以經上說：神阻擋驕傲的人，賜恩給謙卑的人。"}],"after":[{"v":9,"text":"你們要愁苦、悲哀、哭泣，將喜笑變作悲哀，歡樂變作愁悶。"},{"v":10,"text":"務要在主面前自卑，主就必叫你們升高。"},{"v":11,"text":"弟兄們，你們不可彼此批評。人若批評弟兄，論斷弟兄，就是批評律法，論斷律法。你若論斷律法，就不是遵行律法，乃是判斷人的。"},{"v":12,"text":"設立律法和判斷人的，只有一位，就是那能救人也能滅人的。你是誰，竟敢論斷別人呢？"},{"v":13,"text":"嗐！你們有話說：「今天明天我們要往某城裡去，在那裡住一年，做買賣得利。」"}],"ctx":"雅各責備信徒中的爭戰與貪戀世俗（1–6 節），呼召他們回轉。","meaning":"順服神、抵擋魔鬼；親近神，神就必親近你們。","caution":""},"Ps 37:5-7":{"label":{"zh":"詩篇 37:5–7","en":"PSALMS 37:5–7","abbr":"詩 37:5–7"},"verses":[{"v":5,"text":"當將你的事交託耶和華，並倚靠他，他就必成全。"},{"v":6,"text":"他要使你的公義如光發出，使你的公平明如正午。"},{"v":7,"text":"你當默然倚靠耶和華，耐性等候他；不要因那道路通達的和那惡謀成就的心懷不平。"}],"before":[{"v":1,"text":"（大衛的詩。）不要為作惡的心懷不平，也不要向那行不義的生出嫉妒。"},{"v":2,"text":"因為他們如草快被割下，又如青菜快要枯乾。"},{"v":3,"text":"你當倚靠耶和華而行善，住在地上，以他的信實為糧；"},{"v":4,"text":"又要以耶和華為樂，他就將你心裡所求的賜給你。"}],"after":[{"v":8,"text":"當止住怒氣，離棄忿怒；不要心懷不平，以致作惡。"},{"v":9,"text":"因為作惡的必被剪除；惟有等候耶和華的必承受地土。"},{"v":10,"text":"還有片時，惡人要歸於無有；你就是細察他的住處也要歸於無有。"},{"v":11,"text":"但謙卑人必承受地土，以豐盛的平安為樂。"},{"v":12,"text":"惡人設謀害義人，又向他咬牙。"}],"ctx":"大衛勸人不要因作惡的人心懷不平，要倚靠耶和華而行善（1–4 節）。","meaning":"將道路交託耶和華，在祂面前安靜等候；不要因道路通達的惡人心懷不平。","caution":""},"1Pet 2:21-23":{"label":{"zh":"彼得前書 2:21–23","en":"1 PETER 2:21–23","abbr":"彼前 2:21–23"},"verses":[{"v":21,"text":"你們蒙召原是為此；因基督也為你們受過苦，給你們留下榜樣，叫你們跟隨他的腳蹤行。"},{"v":22,"text":"他並沒有犯罪，口裡也沒有詭詐。"},{"v":23,"text":"他被罵不還口；受害不說威嚇的話，只將自己交託那按公義審判人的主。"}],"before":[{"v":16,"text":"你們雖是自由的，卻不可藉著自由遮蓋惡毒（或譯：陰毒），總要作神的僕人。"},{"v":17,"text":"務要尊敬眾人，親愛教中的弟兄，敬畏神，尊敬君王。"},{"v":18,"text":"你們作僕人的，凡事要存敬畏的心順服主人；不但順服那善良溫和的，就是那乖僻的也要順服。"},{"v":19,"text":"倘若人為叫良心對得住神，就忍受冤屈的苦楚，這是可喜愛的。"},{"v":20,"text":"你們若因犯罪受責打，能忍耐，有甚麼可誇的呢？但你們若因行善受苦，能忍耐，這在神看是可喜愛的。"}],"after":[{"v":24,"text":"他被掛在木頭上，親身擔當了我們的罪，使我們既然在罪上死，就得以在義上活。因他受的鞭傷，你們便得了醫治。"},{"v":25,"text":"你們從前好像迷路的羊，如今卻歸到你們靈魂的牧人監督了。"}],"ctx":"彼得寫給在不公平對待下受苦的信徒，包括當時作僕人的（18–20 節）。","meaning":"基督受苦時不還口、不說威嚇的話，只將自己交託那按公義審判人的神。","caution":"這不是要人留在被欺壓或危險的處境裡；遇到霸凌、職場不當對待或暴力，尋求協助與保護是正當的。"},"Rom 12:19-21":{"label":{"zh":"羅馬書 12:19–21","en":"ROMANS 12:19–21","abbr":"羅 12:19–21"},"verses":[{"v":19,"text":"親愛的弟兄，不要自己伸冤，寧可讓步，聽憑主怒（或譯：讓人發怒）；因為經上記著：「主說：『伸冤在我，我必報應。』」"},{"v":20,"text":"所以，「你的仇敵若餓了，就給他吃，若渴了，就給他喝；因為你這樣行就是把炭火堆在他的頭上。」"},{"v":21,"text":"你不可為惡所勝，反要以善勝惡。"}],"before":[{"v":14,"text":"逼迫你們的，要給他們祝福；只要祝福，不可咒詛。"},{"v":15,"text":"與喜樂的人要同樂；與哀哭的人要同哭。"},{"v":16,"text":"要彼此同心；不要志氣高大，倒要俯就卑微的人（人：或譯事）。不要自以為聰明。"},{"v":17,"text":"不要以惡報惡；眾人以為美的事要留心去做。"},{"v":18,"text":"若是能行，總要盡力與眾人和睦。"}],"after":[],"ctx":"保羅勸羅馬信徒以愛相待，甚至對待逼迫他們的人（14–18 節）。","meaning":"不要自己伸冤，把公義交給神；不可為惡所勝，反要以善勝惡。","caution":"「不要自己伸冤」不是叫人放棄保護自己，或不透過正當管道求助。"},"John 15:4-5":{"label":{"zh":"約翰福音 15:4–5","en":"JOHN 15:4–5","abbr":"約 15:4–5"},"verses":[{"v":4,"text":"你們要常在我裡面，我也常在你們裡面。枝子若不常在葡萄樹上，自己就不能結果子；你們若不常在我裡面，也是這樣。"},{"v":5,"text":"我是葡萄樹，你們是枝子。常在我裡面的，我也常在他裡面，這人就多結果子；因為離了我，你們就不能做甚麼。"}],"before":[{"v":1,"text":"「我是真葡萄樹，我父是栽培的人。"},{"v":2,"text":"凡屬我不結果子的枝子，他就剪去；凡結果子的，他就修理乾淨，使枝子結果子更多。"},{"v":3,"text":"現在你們因我講給你們的道，已經乾淨了。"}],"after":[{"v":6,"text":"人若不常在我裡面，就像枝子丟在外面枯乾，人拾起來，扔在火裡燒了。"},{"v":7,"text":"你們若常在我裡面，我的話也常在你們裡面，凡你們所願意的，祈求，就給你們成就。"},{"v":8,"text":"你們多結果子，我父就因此得榮耀，你們也就是我的門徒了。"},{"v":9,"text":"我愛你們，正如父愛我一樣；你們要常在我的愛裡。"},{"v":10,"text":"你們若遵守我的命令，就常在我的愛裡，正如我遵守了我父的命令，常在他的愛裡。"}],"ctx":"耶穌在最後晚餐後對門徒的臨別教導。","meaning":"枝子常在葡萄樹上才能結果子；門徒常在主裡面，離了主就不能做什麼。","caution":""},"Phil 1:6":{"label":{"zh":"腓立比書 1:6","en":"PHILIPPIANS 1:6","abbr":"腓 1:6"},"verses":[{"v":6,"text":"我深信那在你們心裡動了善工的，必成全這工，直到耶穌基督的日子。"}],"before":[{"v":1,"text":"基督耶穌的僕人保羅和提摩太寫信給凡住腓立比、在基督耶穌裡的眾聖徒，和諸位監督，諸位執事。"},{"v":2,"text":"願恩惠、平安從神我們的父並主耶穌基督歸與你們！"},{"v":3,"text":"我每逢想念你們，就感謝我的神；"},{"v":4,"text":"每逢為你們眾人祈求的時候，常是歡歡喜喜地祈求。"},{"v":5,"text":"因為從頭一天直到如今，你們是同心合意地興旺福音。"}],"after":[{"v":7,"text":"我為你們眾人有這樣的意念，原是應當的；因你們常在我心裡，無論我是在捆鎖之中，是辯明證實福音的時候，你們都與我一同得恩。"},{"v":8,"text":"我體會基督耶穌的心腸，切切地想念你們眾人；這是神可以給我作見證的。"},{"v":9,"text":"我所禱告的，就是要你們的愛心在知識和各樣見識上多而又多，"},{"v":10,"text":"使你們能分別是非（或譯：喜愛那美好的事），作誠實無過的人，直到基督的日子；"},{"v":11,"text":"並靠著耶穌基督結滿了仁義的果子，叫榮耀稱讚歸與神。"}],"ctx":"保羅在獄中為腓立比教會在福音上的同工感謝神（3–5 節）。","meaning":"那在信徒心裡動了善工的神，必成全這工，直到耶穌基督的日子。","caution":""},"2Pet 1:5-8":{"label":{"zh":"彼得後書 1:5–8","en":"2 PETER 1:5–8","abbr":"彼後 1:5–8"},"verses":[{"v":5,"text":"正因這緣故，你們要分外地殷勤；有了信心，又要加上德行；有了德行，又要加上知識；"},{"v":6,"text":"有了知識，又要加上節制；有了節制，又要加上忍耐；有了忍耐，又要加上虔敬；"},{"v":7,"text":"有了虔敬，又要加上愛弟兄的心；有了愛弟兄的心，又要加上愛眾人的心。"},{"v":8,"text":"你們若充充足足地有這幾樣，就必使你們在認識我們的主耶穌基督上不至於閒懶不結果子了。"}],"before":[{"v":1,"text":"作耶穌基督僕人和使徒的西門•彼得寫信給那因我們的神和（有古卷沒有和字）救主耶穌基督之義、與我們同得一樣寶貴信心的人。"},{"v":2,"text":"願恩惠、平安，因你們認識神和我們主耶穌，多多地加給你們。"},{"v":3,"text":"神的神能已將一切關乎生命和虔敬的事賜給我們，皆因我們認識那用自己榮耀和美德召我們的主。"},{"v":4,"text":"因此，他已將又寶貴又極大的應許賜給我們，叫我們既脫離世上從情慾來的敗壞，就得與神的性情有分。"}],"after":[{"v":9,"text":"人若沒有這幾樣，就是眼瞎，只看見近處的，忘了他舊日的罪已經得了潔淨。"},{"v":10,"text":"所以弟兄們，應當更加殷勤，使你們所蒙的恩召和揀選堅定不移。你們若行這幾樣，就永不失腳；"},{"v":11,"text":"這樣，必叫你們豐豐富富地得以進入我們主─救主耶穌基督永遠的國。"},{"v":12,"text":"你們雖然曉得這些事，並且在你們已有的真道上堅固，我卻要將這些事常常提醒你們。"},{"v":13,"text":"我以為應當趁我還在這帳棚的時候提醒你們，激發你們；"}],"ctx":"彼得提醒信徒，神已經賜下一切關乎生命和虔敬的事（3–4 節）。","meaning":"要分外地殷勤，有了信心，又要加上德行、知識、節制、忍耐、虔敬、愛弟兄的心和愛眾人的心。","caution":"這是因著恩典而有的成長，不是靠努力換取神的愛。"},"1Cor 15:58":{"label":{"zh":"哥林多前書 15:58","en":"1 CORINTHIANS 15:58","abbr":"林前 15:58"},"verses":[{"v":58,"text":"所以，我親愛的弟兄們，你們務要堅固，不可搖動，常常竭力多做主工；因為知道，你們的勞苦在主裡面不是徒然的。"}],"before":[{"v":53,"text":"這必朽壞的總要變成（變成：原文是穿；下同）不朽壞的，這必死的總要變成不死的。"},{"v":54,"text":"這必朽壞的既變成不朽壞的，這必死的既變成不死的，那時經上所記「死被得勝吞滅」的話就應驗了。"},{"v":55,"text":"死啊！你得勝的權勢在哪裡？死啊！你的毒鉤在哪裡？"},{"v":56,"text":"死的毒鉤就是罪，罪的權勢就是律法。"},{"v":57,"text":"感謝神，使我們藉著我們的主耶穌基督得勝。"}],"after":[],"ctx":"保羅講完復活的盼望（第 15 章）之後的結論。","meaning":"因為有復活的盼望，在主裡的勞苦不是徒然的。","caution":""},"Gal 6:9-10":{"label":{"zh":"加拉太書 6:9–10","en":"GALATIANS 6:9–10","abbr":"加 6:9–10"},"verses":[{"v":9,"text":"我們行善，不可喪志；若不灰心，到了時候就要收成。"},{"v":10,"text":"所以，有了機會就當向眾人行善，向信徒一家的人更當這樣。"}],"before":[{"v":4,"text":"各人應當察驗自己的行為；這樣，他所誇的就專在自己，不在別人了，"},{"v":5,"text":"因為各人必擔當自己的擔子。"},{"v":6,"text":"在道理上受教的，當把一切需用的供給施教的人。"},{"v":7,"text":"不要自欺，神是輕慢不得的。人種的是甚麼，收的也是甚麼。"},{"v":8,"text":"順著情慾撒種的，必從情慾收敗壞；順著聖靈撒種的，必從聖靈收永生。"}],"after":[{"v":11,"text":"請看我親手寫給你們的字是何等的大呢！"},{"v":12,"text":"凡希圖外貌體面的人都勉強你們受割禮，無非是怕自己為基督的十字架受逼迫。"},{"v":13,"text":"他們那些受割禮的，連自己也不守律法；他們願意你們受割禮，不過要藉著你們的肉體誇口。"},{"v":14,"text":"但我斷不以別的誇口，只誇我們主耶穌基督的十字架；因這十字架，就我而論，世界已經釘在十字架上；就世界而論，我已經釘在十字架上。"},{"v":15,"text":"受割禮不受割禮都無關緊要，要緊的就是作新造的人。"}],"ctx":"保羅勸加拉太信徒順著聖靈撒種、彼此擔當重擔（1–8 節）。","meaning":"行善不可喪志，到了時候就要收成；有了機會就要向眾人行善。","caution":"「收成」在神的時間裡，不一定是看得見的果效。"},"1Pet 4:10-11":{"label":{"zh":"彼得前書 4:10–11","en":"1 PETER 4:10–11","abbr":"彼前 4:10–11"},"verses":[{"v":10,"text":"各人要照所得的恩賜彼此服事，作神百般恩賜的好管家。"},{"v":11,"text":"若有講道的，要按著神的聖言講；若有服事人的，要按著神所賜的力量服事，叫神在凡事上因耶穌基督得榮耀。原來榮耀、權能都是他的，直到永永遠遠。阿們！"}],"before":[{"v":5,"text":"他們必在那將要審判活人死人的主面前交帳。"},{"v":6,"text":"為此，就是死人也曾有福音傳給他們，要叫他們的肉體按著人受審判，他們的靈性卻靠神活著。"},{"v":7,"text":"萬物的結局近了。所以，你們要謹慎自守，警醒禱告。"},{"v":8,"text":"最要緊的是彼此切實相愛，因為愛能遮掩許多的罪。"},{"v":9,"text":"你們要互相款待，不發怨言。"}],"after":[{"v":12,"text":"親愛的弟兄啊，有火煉的試驗臨到你們，不要以為奇怪（似乎是遭遇非常的事），"},{"v":13,"text":"倒要歡喜；因為你們是與基督一同受苦，使你們在他榮耀顯現的時候，也可以歡喜快樂。"},{"v":14,"text":"你們若為基督的名受辱罵，便是有福的；因為神榮耀的靈常住在你們身上。"},{"v":15,"text":"你們中間卻不可有人因為殺人、偷竊、作惡、好管閒事而受苦。"},{"v":16,"text":"若為作基督徒受苦，卻不要羞恥，倒要因這名歸榮耀給神。"}],"ctx":"彼得勸勉末世中的信徒要切實相愛、互相款待（7–9 節）。","meaning":"各人要照所得的恩賜彼此服事，作神百般恩賜的好管家，使神得榮耀。","caution":""},"Phil 2:3-5":{"label":{"zh":"腓立比書 2:3–5","en":"PHILIPPIANS 2:3–5","abbr":"腓 2:3–5"},"verses":[{"v":3,"text":"凡事不可結黨，不可貪圖虛浮的榮耀；只要存心謙卑，各人看別人比自己強。"},{"v":4,"text":"各人不要單顧自己的事，也要顧別人的事。"},{"v":5,"text":"你們當以基督耶穌的心為心："}],"before":[{"v":1,"text":"所以，在基督裡若有甚麼勸勉，愛心有甚麼安慰，聖靈有甚麼交通，心中有甚麼慈悲憐憫，"},{"v":2,"text":"你們就要意念相同，愛心相同，有一樣的心思，有一樣的意念，使我的喜樂可以滿足。"}],"after":[{"v":6,"text":"他本有神的形像，不以自己與神同等為強奪的；"},{"v":7,"text":"反倒虛己，取了奴僕的形像，成為人的樣式；"},{"v":8,"text":"既有人的樣子，就自己卑微，存心順服，以至於死，且死在十字架上。"},{"v":9,"text":"所以，神將他升為至高，又賜給他那超乎萬名之上的名，"},{"v":10,"text":"叫一切在天上的、地上的，和地底下的，因耶穌的名無不屈膝，"}],"ctx":"保羅勸腓立比教會同心合意，接著引出基督虛己的榜樣（6–11 節）。","meaning":"不結黨、不貪圖虛浮的榮耀，只要存心謙卑，看別人比自己強，以基督耶穌的心為心。","caution":""},"Gal 6:4-5":{"label":{"zh":"加拉太書 6:4–5","en":"GALATIANS 6:4–5","abbr":"加 6:4–5"},"verses":[{"v":4,"text":"各人應當察驗自己的行為；這樣，他所誇的就專在自己，不在別人了，"},{"v":5,"text":"因為各人必擔當自己的擔子。"}],"before":[{"v":1,"text":"弟兄們，若有人偶然被過犯所勝，你們屬靈的人就當用溫柔的心把他挽回過來；又當自己小心，恐怕也被引誘。"},{"v":2,"text":"你們各人的重擔要互相擔當，如此，就完全了基督的律法。"},{"v":3,"text":"人若無有，自己還以為有，就是自欺了。"}],"after":[{"v":6,"text":"在道理上受教的，當把一切需用的供給施教的人。"},{"v":7,"text":"不要自欺，神是輕慢不得的。人種的是甚麼，收的也是甚麼。"},{"v":8,"text":"順著情慾撒種的，必從情慾收敗壞；順著聖靈撒種的，必從聖靈收永生。"},{"v":9,"text":"我們行善，不可喪志；若不灰心，到了時候就要收成。"},{"v":10,"text":"所以，有了機會就當向眾人行善，向信徒一家的人更當這樣。"}],"ctx":"保羅勸信徒挽回跌倒的人時要小心自己，不要自以為是（1–3 節）。","meaning":"各人要察驗自己的行為，所誇的就專在自己，不在別人；各人必擔當自己的擔子。","caution":""},"1Pet 5:5-6":{"label":{"zh":"彼得前書 5:5–6","en":"1 PETER 5:5–6","abbr":"彼前 5:5–6"},"verses":[{"v":5,"text":"你們年幼的，也要順服年長的。就是你們眾人也都要以謙卑束腰，彼此順服；因為神阻擋驕傲的人，賜恩給謙卑的人。"},{"v":6,"text":"所以，你們要自卑，服在神大能的手下，到了時候，他必叫你們升高。"}],"before":[{"v":1,"text":"我這作長老、作基督受苦的見證、同享後來所要顯現之榮耀的，勸你們中間與我同作長老的人："},{"v":2,"text":"務要牧養在你們中間神的群羊，按著神旨意照管他們；不是出於勉強，乃是出於甘心；也不是因為貪財，乃是出於樂意；"},{"v":3,"text":"也不是轄制所託付你們的，乃是作群羊的榜樣。"},{"v":4,"text":"到了牧長顯現的時候，你們必得那永不衰殘的榮耀冠冕。"}],"after":[{"v":7,"text":"你們要將一切的憂慮卸給神，因為他顧念你們。"},{"v":8,"text":"務要謹守，警醒。因為你們的仇敵魔鬼，如同吼叫的獅子，遍地遊行，尋找可吞吃的人。"},{"v":9,"text":"你們要用堅固的信心抵擋他，因為知道你們在世上的眾弟兄也是經歷這樣的苦難。"},{"v":10,"text":"那賜諸般恩典的神曾在基督裡召你們，得享他永遠的榮耀，等你們暫受苦難之後，必要親自成全你們，堅固你們，賜力量給你們。"},{"v":11,"text":"願權能歸給他，直到永永遠遠。阿們！"}],"ctx":"彼得勸長老牧養群羊，也勸年幼的順服年長的（1–5 節）。","meaning":"神阻擋驕傲的人，賜恩給謙卑的人；在神大能的手下謙卑，到了時候祂必叫人升高。","caution":""},"Num 6:24-26":{"label":{"zh":"民數記 6:24–26","en":"NUMBERS 6:24–26","abbr":"民 6:24–26"},"verses":[{"v":24,"text":"『願耶和華賜福給你，保護你。"},{"v":25,"text":"願耶和華使他的臉光照你，賜恩給你。"},{"v":26,"text":"願耶和華向你仰臉，賜你平安。』"}],"before":[{"v":19,"text":"他剃了以後，祭司就要取那已煮的公羊一條前腿，又從筐子裡取一個無酵餅和一個無酵薄餅，都放在他手上。"},{"v":20,"text":"祭司要拿這些作為搖祭，在耶和華面前搖一搖；這與所搖的胸、所舉的腿同為聖物，歸給祭司。然後拿細耳人可以喝酒。"},{"v":21,"text":"「許願的拿細耳人為離俗所獻的供物，和他以外所能得的獻給耶和華，就有這條例。他怎樣許願就當照離俗的條例行。」"},{"v":22,"text":"耶和華曉諭摩西說："},{"v":23,"text":"「你告訴亞倫和他兒子說：你們要這樣為以色列人祝福，說："}],"after":[{"v":27,"text":"他們要如此奉我的名為以色列人祝福；我也要賜福給他們。」"}],"ctx":"神吩咐亞倫和他的子孫，用這段話為以色列人祝福（22–27 節）。","meaning":"願耶和華賜福、保護、使臉光照、賜恩、向人仰臉，賜人平安。","caution":"原是祭司為以色列民的祝福，教會歷來也用作祝禱，表達神願意賜福祂子民的心意。"},"Ps 103:1-5":{"label":{"zh":"詩篇 103:1–5","en":"PSALMS 103:1–5","abbr":"詩 103:1–5"},"verses":[{"v":1,"text":"（大衛的詩。）我的心哪，你要稱頌耶和華！凡在我裡面的，也要稱頌他的聖名！"},{"v":2,"text":"我的心哪，你要稱頌耶和華！不可忘記他的一切恩惠！"},{"v":3,"text":"他赦免你的一切罪孽，醫治你的一切疾病。"},{"v":4,"text":"他救贖你的命脫離死亡，以仁愛和慈悲為你的冠冕。"},{"v":5,"text":"他用美物使你所願的得以知足，以致你如鷹返老還童。"}],"before":[],"after":[{"v":6,"text":"耶和華施行公義，為一切受屈的人伸冤。"},{"v":7,"text":"他使摩西知道他的法則，叫以色列人曉得他的作為。"},{"v":8,"text":"耶和華有憐憫，有恩典，不輕易發怒，且有豐盛的慈愛。"},{"v":9,"text":"他不長久責備，也不永遠懷怒。"},{"v":10,"text":"他沒有按我們的罪過待我們，也沒有照我們的罪孽報應我們。"}],"ctx":"大衛呼喚自己的心稱頌耶和華，數算神的恩典。","meaning":"不可忘記神一切的恩惠：赦免、醫治、救贖，以仁愛和慈悲為冠冕。","caution":"「醫治你的一切疾病」是讚美神是醫治者，不是保證每一次疾病都會痊癒。"},"1Thess 5:16-18":{"label":{"zh":"帖撒羅尼迦前書 5:16–18","en":"1 THESSALONIANS 5:16–18","abbr":"帖前 5:16–18"},"verses":[{"v":16,"text":"要常常喜樂，"},{"v":17,"text":"不住地禱告，"},{"v":18,"text":"凡事謝恩；因為這是神在基督耶穌裡向你們所定的旨意。"}],"before":[{"v":11,"text":"所以，你們該彼此勸慰，互相建立，正如你們素常所行的。"},{"v":12,"text":"弟兄們，我們勸你們敬重那在你們中間勞苦的人，就是在主裡面治理你們、勸戒你們的；"},{"v":13,"text":"又因他們所做的工，用愛心格外尊重他們。你們也要彼此和睦。"},{"v":14,"text":"我們又勸弟兄們，要警戒不守規矩的人，勉勵灰心的人，扶助軟弱的人，也要向眾人忍耐。"},{"v":15,"text":"你們要謹慎，無論是誰都不可以惡報惡；或是彼此相待，或是待眾人，常要追求良善。"}],"after":[{"v":19,"text":"不要消滅聖靈的感動；"},{"v":20,"text":"不要藐視先知的講論。"},{"v":21,"text":"但要凡事察驗；善美的要持守，"},{"v":22,"text":"各樣的惡事要禁戒不做。"},{"v":23,"text":"願賜平安的神親自使你們全然成聖！又願你們的靈與魂與身子得蒙保守，在我們主耶穌基督降臨的時候，完全無可指摘！"}],"ctx":"保羅在書信結尾給帖撒羅尼迦教會的一連串簡短勸勉。","meaning":"要常常喜樂、不住地禱告、凡事謝恩，這是神在基督耶穌裡向我們所定的旨意。","caution":"「凡事謝恩」是在凡事中謝恩，不是要為壞事本身感謝。"},"John 14:27":{"label":{"zh":"約翰福音 14:27","en":"JOHN 14:27","abbr":"約 14:27"},"verses":[{"v":27,"text":"我留下平安給你們；我將我的平安賜給你們。我所賜的，不像世人所賜的。你們心裡不要憂愁，也不要膽怯。"}],"before":[{"v":22,"text":"猶大（不是加略人猶大）問耶穌說：「主啊，為甚麼要向我們顯現，不向世人顯現呢？」"},{"v":23,"text":"耶穌回答說：「人若愛我，就必遵守我的道；我父也必愛他，並且我們要到他那裡去，與他同住。"},{"v":24,"text":"不愛我的人就不遵守我的道。你們所聽見的道不是我的，乃是差我來之父的道。"},{"v":25,"text":"「我還與你們同住的時候，已將這些話對你們說了。"},{"v":26,"text":"但保惠師，就是父因我的名所要差來的聖靈，他要將一切的事指教你們，並且要叫你們想起我對你們所說的一切話。"}],"after":[{"v":28,"text":"你們聽見我對你們說了，我去還要到你們這裡來。你們若愛我，因我到父那裡去，就必喜樂，因為父是比我大的。"},{"v":29,"text":"現在事情還沒有成就，我預先告訴你們，叫你們到事情成就的時候就可以信。"},{"v":30,"text":"以後我不再和你們多說話，因為這世界的王將到。他在我裡面是毫無所有；"},{"v":31,"text":"但要叫世人知道我愛父，並且父怎樣吩咐我，我就怎樣行。起來，我們走吧！」"}],"ctx":"耶穌被賣前夕對門徒的臨別話語，並應許聖靈要來（25–26 節）。","meaning":"耶穌留下的平安不像世人所賜的；所以心裡不要憂愁，也不要膽怯。","caution":""},"Isa 26:3-4":{"label":{"zh":"以賽亞書 26:3–4","en":"ISAIAH 26:3–4","abbr":"賽 26:3–4"},"verses":[{"v":3,"text":"堅心倚賴你的，你必保守他十分平安，因為他倚靠你。"},{"v":4,"text":"你們當倚靠耶和華直到永遠，因為耶和華是永久的磐石。"}],"before":[{"v":1,"text":"當那日，在猶大地人必唱這歌說：我們有堅固的城。耶和華要將救恩定為城牆，為外郭。"},{"v":2,"text":"敞開城門，使守信的義民得以進入。"}],"after":[{"v":5,"text":"他使住高處的與高城一併敗落，將城拆毀，拆平，直到塵埃，"},{"v":6,"text":"要被腳踐踏，就是被困苦人的腳和窮乏人的腳踐踏。"},{"v":7,"text":"義人的道是正直的；你為正直的主，必修平義人的路。"},{"v":8,"text":"耶和華啊，我們在你行審判的路上等候你；我們心裡所羨慕的是你的名，就是你那可記念的名。"},{"v":9,"text":"夜間，我心中羨慕你；我裡面的靈切切尋求你。因為你在世上行審判的時候，地上的居民就學習公義。"}],"ctx":"「當那日」猶大地要唱的歌，讚美神是可靠的保障。","meaning":"堅心倚賴神的，神必保守他十分平安，因為主耶和華是永久的磐石。","caution":""},"Ps 4:8":{"label":{"zh":"詩篇 4:8","en":"PSALMS 4:8","abbr":"詩 4:8"},"verses":[{"v":8,"text":"我必安然躺下睡覺，因為獨有你─耶和華使我安然居住。"}],"before":[{"v":3,"text":"你們要知道，耶和華已經分別虔誠人歸他自己；我求告耶和華，他必聽我。"},{"v":4,"text":"你們應當畏懼，不可犯罪；在床上的時候，要心裡思想，並要肅靜。（細拉）"},{"v":5,"text":"當獻上公義的祭，又當倚靠耶和華。"},{"v":6,"text":"有許多人說：誰能指示我們甚麼好處？耶和華啊，求你仰起臉來，光照我們。"},{"v":7,"text":"你使我心裡快樂，勝過那豐收五穀新酒的人。"}],"after":[],"ctx":"大衛在受人羞辱、許多人問「誰能指示我們什麼好處」（2、6 節）時的晚禱。","meaning":"因為獨有耶和華使人安然居住，所以能安然躺下睡覺。","caution":""},"John 3:16-17":{"label":{"zh":"約翰福音 3:16–17","en":"JOHN 3:16–17","abbr":"約 3:16–17"},"verses":[{"v":16,"text":"「神愛世人，甚至將他的獨生子賜給他們，叫一切信他的，不致滅亡，反得永生。"},{"v":17,"text":"因為神差他的兒子降世，不是要定世人的罪（或譯：審判世人；下同），乃是要叫世人因他得救。"}],"before":[{"v":11,"text":"我實實在在地告訴你，我們所說的是我們知道的；我們所見證的是我們見過的；你們卻不領受我們的見證。"},{"v":12,"text":"我對你們說地上的事，你們尚且不信，若說天上的事，如何能信呢？"},{"v":13,"text":"除了從天降下、仍舊在天的人子，沒有人升過天。"},{"v":14,"text":"摩西在曠野怎樣舉蛇，人子也必照樣被舉起來，"},{"v":15,"text":"叫一切信他的都得永生（或譯：叫一切信的人在他裡面得永生）。"}],"after":[{"v":18,"text":"信他的人，不被定罪；不信的人，罪已經定了，因為他不信神獨生子的名。"},{"v":19,"text":"光來到世間，世人因自己的行為是惡的，不愛光，倒愛黑暗，定他們的罪就是在此。"},{"v":20,"text":"凡作惡的便恨光，並不來就光，恐怕他的行為受責備。"},{"v":21,"text":"但行真理的必來就光，要顯明他所行的是靠神而行。」"},{"v":22,"text":"這事以後，耶穌和門徒到了猶太地，在那裡居住，施洗。"}],"ctx":"耶穌與夜裡來見祂的法利賽人尼哥底母談「重生」（1–15 節）。","meaning":"神愛世人，賜下獨生子，叫信祂的人得永生；神差祂來是要拯救，不是要定罪。","caution":""},"Eph 2:8-10":{"label":{"zh":"以弗所書 2:8–10","en":"EPHESIANS 2:8–10","abbr":"弗 2:8–10"},"verses":[{"v":8,"text":"你們得救是本乎恩，也因著信；這並不是出於自己，乃是神所賜的；"},{"v":9,"text":"也不是出於行為，免得有人自誇。"},{"v":10,"text":"我們原是他的工作，在基督耶穌裡造成的，為要叫我們行善，就是神所預備叫我們行的。"}],"before":[{"v":3,"text":"我們從前也都在他們中間，放縱肉體的私慾，隨著肉體和心中所喜好的去行，本為可怒之子，和別人一樣。"},{"v":4,"text":"然而，神既有豐富的憐憫，因他愛我們的大愛，"},{"v":5,"text":"當我們死在過犯中的時候，便叫我們與基督一同活過來。你們得救是本乎恩。"},{"v":6,"text":"他又叫我們與基督耶穌一同復活，一同坐在天上，"},{"v":7,"text":"要將他極豐富的恩典，就是他在基督耶穌裡向我們所施的恩慈，顯明給後來的世代看。"}],"after":[{"v":11,"text":"所以你們應當記念：你們從前按肉體是外邦人，是稱為沒受割禮的；這名原是那些憑人手在肉身上稱為受割禮之人所起的。"},{"v":12,"text":"那時，你們與基督無關，在以色列國民以外，在所應許的諸約上是局外人，並且活在世上沒有指望，沒有神。"},{"v":13,"text":"你們從前遠離神的人，如今卻在基督耶穌裡，靠著他的血，已經得親近了。"},{"v":14,"text":"因他使我們和睦（原文是因他是我們的和睦），將兩下合而為一，拆毀了中間隔斷的牆；"},{"v":15,"text":"而且以自己的身體廢掉冤仇，就是那記在律法上的規條，為要將兩下藉著自己造成一個新人，如此便成就了和睦。"}],"ctx":"保羅說明人原本死在過犯罪惡之中（1–3 節），卻因神豐富的憐憫得以活過來。","meaning":"得救是本乎恩、也因著信，不是出於行為；得救之後要行神所預備的善事。","caution":""},"2Cor 5:17":{"label":{"zh":"哥林多後書 5:17","en":"2 CORINTHIANS 5:17","abbr":"林後 5:17"},"verses":[{"v":17,"text":"若有人在基督裡，他就是新造的人，舊事已過，都變成新的了。"}],"before":[{"v":12,"text":"我們不是向你們再舉薦自己，乃是叫你們因我們有可誇之處，好對那憑外貌不憑內心誇口的人，有言可答。"},{"v":13,"text":"我們若果顛狂，是為神；若果謹守，是為你們。"},{"v":14,"text":"原來基督的愛激勵我們；因我們想，一人既替眾人死，眾人就都死了；"},{"v":15,"text":"並且他替眾人死，是叫那些活著的人不再為自己活，乃為替他們死而復活的主活。"},{"v":16,"text":"所以，我們從今以後，不憑著外貌（原文是肉體；本節同）認人了。雖然憑著外貌認過基督，如今卻不再這樣認他了。"}],"after":[{"v":18,"text":"一切都是出於神；他藉著基督使我們與他和好，又將勸人與他和好的職分賜給我們。"},{"v":19,"text":"這就是神在基督裡，叫世人與自己和好，不將他們的過犯歸到他們身上，並且將這和好的道理託付了我們。"},{"v":20,"text":"所以，我們作基督的使者，就好像神藉我們勸你們一般。我們替基督求你們與神和好。"},{"v":21,"text":"神使那無罪（無罪：原文是不知罪）的，替我們成為罪，好叫我們在他裡面成為神的義。"}],"ctx":"保羅談基督的愛激勵他，基督替眾人死（14–15 節）。","meaning":"若有人在基督裡，他就是新造的人，舊事已過，都變成新的了。","caution":""},"Ps 23:4-6":{"label":{"zh":"詩篇 23:4–6","en":"PSALMS 23:4–6","abbr":"詩 23:4–6"},"verses":[{"v":4,"text":"我雖然行過死蔭的幽谷，也不怕遭害，因為你與我同在；你的杖，你的竿，都安慰我。"},{"v":5,"text":"在我敵人面前，你為我擺設筵席；你用油膏了我的頭，使我的福杯滿溢。"},{"v":6,"text":"我一生一世必有恩惠慈愛隨著我；我且要住在耶和華的殿中，直到永遠。"}],"before":[{"v":1,"text":"（大衛的詩。）耶和華是我的牧者，我必不致缺乏。"},{"v":2,"text":"他使我躺臥在青草地上，領我在可安歇的水邊。"},{"v":3,"text":"他使我的靈魂甦醒，為自己的名引導我走義路。"}],"after":[],"ctx":"大衛以牧羊人的經驗寫下的信靠之詩，從青草地寫到死蔭的幽谷，再到神的筵席與殿中。","meaning":"走過死蔭的幽谷也不怕，因為神同在；一生必有恩惠慈愛隨著，且要住在耶和華的殿中直到永遠。","caution":""},"John 14:1-3":{"label":{"zh":"約翰福音 14:1–3","en":"JOHN 14:1–3","abbr":"約 14:1–3"},"verses":[{"v":1,"text":"「你們心裡不要憂愁；你們信神，也當信我。"},{"v":2,"text":"在我父的家裡有許多住處；若是沒有，我就早已告訴你們了。我去原是為你們預備地方去。"},{"v":3,"text":"我若去為你們預備了地方，就必再來接你們到我那裡去，我在哪裡，叫你們也在那裡。"}],"before":[],"after":[{"v":4,"text":"我往哪裡去，你們知道；那條路，你們也知道（有古卷：我往哪裡去，你們知道那條路）。」"},{"v":5,"text":"多馬對他說：「主啊，我們不知道你往哪裡去，怎麼知道那條路呢？」"},{"v":6,"text":"耶穌說：「我就是道路、真理、生命；若不藉著我，沒有人能到父那裡去。"},{"v":7,"text":"你們若認識我，也就認識我的父。從今以後，你們認識他，並且已經看見他。」"},{"v":8,"text":"腓力對他說：「求主將父顯給我們看，我們就知足了。」"}],"ctx":"最後晚餐中，耶穌預告自己要離開，門徒心裡憂愁（13:33–36）。","meaning":"耶穌去為門徒預備地方，還要再來接他們到祂那裡。","caution":""},"Rom 8:38-39":{"label":{"zh":"羅馬書 8:38–39","en":"ROMANS 8:38–39","abbr":"羅 8:38–39"},"verses":[{"v":38,"text":"因為我深信無論是死，是生，是天使，是掌權的，是有能的，是現在的事，是將來的事，"},{"v":39,"text":"是高處的，是低處的，是別的受造之物，都不能叫我們與神的愛隔絕；這愛是在我們的主基督耶穌裡的。"}],"before":[{"v":33,"text":"誰能控告神所揀選的人呢？有神稱他們為義了（或譯：是稱他們為義的神嗎）。"},{"v":34,"text":"誰能定他們的罪呢？有基督耶穌已經死了，而且從死裡復活，現今在神的右邊，也替我們祈求（有基督....或譯：是已經死了，而且從死裡復活，現今在神的右邊，也替我們祈求的基督耶穌嗎）。"},{"v":35,"text":"誰能使我們與基督的愛隔絕呢？難道是患難嗎？是困苦嗎？是逼迫嗎？是飢餓嗎？是赤身露體嗎？是危險嗎？是刀劍嗎？"},{"v":36,"text":"如經上所記：我們為你的緣故終日被殺；人看我們如將宰的羊。"},{"v":37,"text":"然而，靠著愛我們的主，在這一切的事上已經得勝有餘了。"}],"after":[],"ctx":"保羅論述在基督裡的盼望（第 8 章）的結尾。","meaning":"無論是死、是生，都不能叫我們與神在基督耶穌裡的愛隔絕。","caution":""},"Ps 9:9-10":{"label":{"zh":"詩篇 9:9–10","en":"PSALMS 9:9–10","abbr":"詩 9:9–10"},"verses":[{"v":9,"text":"耶和華又要給受欺壓的人作高臺，在患難的時候作高臺。"},{"v":10,"text":"耶和華啊，認識你名的人要倚靠你，因你沒有離棄尋求你的人。"}],"before":[{"v":4,"text":"因你已經為我伸冤，為我辨屈；你坐在寶座上，按公義審判。"},{"v":5,"text":"你曾斥責外邦，你曾滅絕惡人；你曾塗抹他們的名，直到永永遠遠。"},{"v":6,"text":"仇敵到了盡頭；他們被毀壞，直到永遠。你拆毀他們的城邑，連他們的名號都歸於無有。"},{"v":7,"text":"惟耶和華坐著為王，直到永遠；他已經為審判設擺他的寶座。"},{"v":8,"text":"他要按公義審判世界，按正直判斷萬民。"}],"after":[{"v":11,"text":"應當歌頌居錫安的耶和華，將他所行的傳揚在眾民中。"},{"v":12,"text":"因為那追討流人血之罪的─他記念受屈的人，不忘記困苦人的哀求。"},{"v":13,"text":"耶和華啊，你是從死門把我提拔起來的；求你憐恤我，看那恨我的人所加給我的苦難，"},{"v":14,"text":"好叫我述說你一切的美德；我必在錫安城（原文是女子）的門因你的救恩歡樂。"},{"v":15,"text":"外邦人陷在自己所掘的坑中；他們的腳在自己暗設的網羅裡纏住了。"}],"ctx":"大衛讚美神公義地審判，並不忘記困苦人的哀求（12 節）。","meaning":"耶和華要給受欺壓的人作高臺，在患難的時候作高臺；尋求祂的，祂從未離棄。","caution":""},"Ps 34:17-18":{"label":{"zh":"詩篇 34:17–18","en":"PSALMS 34:17–18","abbr":"詩 34:17–18"},"verses":[{"v":17,"text":"義人呼求，耶和華聽見了，便救他們脫離一切患難。"},{"v":18,"text":"耶和華靠近傷心的人，拯救靈性痛悔的人。"}],"before":[{"v":12,"text":"有何人喜好存活，愛慕長壽，得享美福，"},{"v":13,"text":"就要禁止舌頭不出惡言，嘴唇不說詭詐的話。"},{"v":14,"text":"要離惡行善，尋求和睦，一心追趕。"},{"v":15,"text":"耶和華的眼目看顧義人；他的耳朵聽他們的呼求。"},{"v":16,"text":"耶和華向行惡的人變臉，要從世上除滅他們的名號。"}],"after":[{"v":19,"text":"義人多有苦難，但耶和華救他脫離這一切，"},{"v":20,"text":"又保全他一身的骨頭，連一根也不折斷。"},{"v":21,"text":"惡必害死惡人；恨惡義人的，必被定罪。"},{"v":22,"text":"耶和華救贖他僕人的靈魂；凡投靠他的，必不致定罪。"}],"ctx":"大衛在亞比米勒（迦特王亞吉）面前裝瘋、脫險之後所寫的感恩詩（見詩題）。","meaning":"義人呼求，耶和華聽見，救他們脫離一切患難；耶和華靠近傷心的人。","caution":"「救他們脫離」不一定是立刻；請同時尋求身邊實際的保護與幫助。"},"Ps 62:5-8":{"label":{"zh":"詩篇 62:5–8","en":"PSALMS 62:5–8","abbr":"詩 62:5–8"},"verses":[{"v":5,"text":"我的心哪，你當默默無聲，專等候神，因為我的盼望是從他而來。"},{"v":6,"text":"惟獨他是我的磐石，我的拯救；他是我的高臺，我必不動搖。"},{"v":7,"text":"我的拯救、我的榮耀都在乎神；我力量的磐石、我的避難所都在乎神。"},{"v":8,"text":"你們眾民當時時倚靠他，在他面前傾心吐意；神是我們的避難所。（細拉）"}],"before":[{"v":1,"text":"（大衛的詩，照耶杜頓的作法，交與伶長。）我的心默默無聲，專等候神；我的救恩是從他而來。"},{"v":2,"text":"惟獨他是我的磐石，我的拯救；他是我的高臺，我必不很動搖。"},{"v":3,"text":"你們大家攻擊一人，把他毀壞，如同毀壞歪斜的牆、將倒的壁，要到幾時呢？"},{"v":4,"text":"他們彼此商議，專要從他的尊位上把他推下；他們喜愛謊話，口雖祝福，心卻咒詛。（細拉）"}],"after":[{"v":9,"text":"下流人真是虛空；上流人也是虛假；放在天平裡就必浮起；他們一共比空氣還輕。"},{"v":10,"text":"不要仗勢欺人，也不要因搶奪而驕傲；若財寶加增，不要放在心上。"},{"v":11,"text":"神說了一次、兩次，我都聽見：就是能力都屬乎神。"},{"v":12,"text":"主啊，慈愛也是屬乎你，因為你照著各人所行的報應他。"}],"ctx":"大衛在被人攻擊、口中祝福心裡咒詛的人環繞時（3–4 節）寫的信靠之詩。","meaning":"默默無聲、專等候神，祂是磐石、拯救和高臺；眾民要在祂面前傾心吐意。","caution":""}}};
+const CATEGORIES = { comfort: "安慰", encourage: "鼓勵", edify: "造就", exhort: "勸勉" };
+const HELPLINES = [
+  { name: "安心專線", number: "1925", note: "24 小時，免付費" },
+  { name: "生命線", number: "1995", note: "24 小時" },
+  { name: "張老師專線", number: "1980", note: "" },
+  { name: "保護專線（家暴、性侵）", number: "113", note: "24 小時" },
+  { name: "緊急求助", number: "110 / 119", note: "有立即危險時" },
+];
+const SELF_HARM = /自殺|輕生|尋死|想死|死掉算了|乾脆死|不如死|去死|消失就好|不想活|活不下去|活著沒意思|結束(自己的)?生命|了結|跳樓|跳下去|燒炭|割腕|上吊|吞藥|安眠藥.{0,6}(很多|一堆|全部)|自殘|自傷|傷害自己|割自己|劃自己/;
+const VIOLENCE = /家暴|被打|打我|毆打|施暴|虐待|性侵|強暴|性騷擾|被摸|威脅要殺|想殺/;
+const DEFAULT_NAME = "這位朋友";
+
+const $ = (s) => document.querySelector(s);
+const use = (n) => (window.claude?.use ? window.claude.use(n) : Promise.resolve(null));
+const inArtifact = !!window.claude;
+const TOPICS = DATA.topics, BY_KEY = Object.fromEntries(TOPICS.map((t) => [t.key, t]));
+let current = null;
+
+/* ---------- matching (runs entirely in the browser) ---------- */
+function match(text, cat) {
+  const t = text.replace(/\s+/g, "");
+  const scored = TOPICS.map((tp, i) => {
+    let s = 0;
+    for (const raw of tp.keywords) {
+      const strong = raw[0] === "*", k = strong ? raw.slice(1) : raw;   // * = 很能代表這個主題的詞，加倍計分
+      if (t.includes(k)) s += (k.length === 1 ? 0.6 : k.length) * (strong ? 2 : 1);
+    }
+    if (s > 0 && cat && tp.cat === cat) s += 1.5;
+    return { tp, s, i };
+  }).sort((a, b) => b.s - a.s || a.i - b.i);
+  let crisis = null;
+  if (VIOLENCE.test(t)) crisis = "refuge";
+  else if (SELF_HARM.test(t)) crisis = "hope";
+  if (crisis) {
+    const k = crisis; scored.sort((a, b) => (b.tp.key === k) - (a.tp.key === k) || b.s - a.s);
+  }
+  return { list: scored, crisis: !!crisis, matched: scored[0].s > 0 || !!crisis };
+}
+
+/* ---------- build result ---------- */
+function build(topic, { forWhom = "self", name = "", situation = "", seed } = {}) {
+  const who = forWhom === "other" ? "other" : "self";
+  const nm = (name || "").trim() || DEFAULT_NAME;
+  const fill = (s) => s.replaceAll("{name}", nm);
+  return {
+    topic, situation, forWhom: who, name: (name || "").trim(),
+    category: topic.cat,
+    passages: topic.passages.map(([ref, app]) => ({ ref, app, ...DATA.passages[ref] })),
+    blessing: fill(topic[who].blessing),
+    prayer: fill(topic[who].prayer),
+    motif: topic.motif, seal: topic.seal,
+    seed: seed ?? Math.floor(Math.random() * 1e6),
+  };
+}
+
+/* ---------- render ---------- */
+const escH = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const versesHTML = (vs) => vs.map((v) => `<sup>${v.v}</sup>${escH(v.text)}`).join("");
+
+function renderPrint(res, fresh) {
+  $("#print").innerHTML = renderLinocut({ motif: res.motif, seed: res.seed, seal: res.seal, caption: res.passages[0].label.en });
+  $("#print").classList.toggle("fresh", !!fresh);
+  $("#motifName").textContent = `主題：${MOTIFS[res.motif]?.zh || ""}・${res.passages[0].label.abbr}`;
+}
+
+function passageHTML(p, i) {
+  const notes = [["上下文", p.ctx], ["原意", p.meaning], ["應用", p.app]].filter(([, v]) => v);
+  return `<article class="passage">
+    <div class="num" aria-hidden="true">${i + 1}</div>
+    <div class="body">
+      <div class="ref"><b>${escH(p.label.zh)}</b><span>${escH(p.label.en)}</span><em class="ok">附上下文</em></div>
+      <p class="scripture">${versesHTML(p.verses)}</p>
+      <dl class="notes">${notes.map(([k, v]) => `<dt>${k}</dt><dd>${escH(v)}</dd>`).join("")}</dl>
+      ${p.caution ? `<div class="caution"><b>提醒　</b>${escH(p.caution)}</div>` : ""}
+      <details><summary>看上下文（前後各五節）</summary><div class="ctx">${versesHTML(p.before)}<mark>${versesHTML(p.verses)}</mark>${versesHTML(p.after)}</div></details>
+    </div></article>`;
+}
+
+function render(res, { fresh = false, related = [] } = {}) {
+  current = res;
+  $("#q").textContent = res.situation ? `「${res.situation}」` : (res.forWhom === "other" ? `為${res.name || DEFAULT_NAME}禱告` : "給你的話");
+  $("#cat").textContent = CATEGORIES[res.category];
+  $("#cat").dataset.c = res.category;
+  $("#topicTag").textContent = res.topic.name;
+  $("#texts").innerHTML = res.passages.map(passageHTML).join("");
+  $("#blessing").textContent = res.blessing;
+  $("#prayer").textContent = res.prayer;
+  renderPrint(res, fresh);
+  document.querySelectorAll("#cols button").forEach((b) => b.setAttribute("aria-current", String(b.dataset.k === res.topic.key)));
+  const rel = $("#related");
+  rel.hidden = !related.length;
+  rel.innerHTML = related.length ? `<b>其他可能相關</b>` + related.map((t) => `<button type="button" class="chip" data-k="${t.key}">${escH(t.name)}</button>`).join("") : "";
+  rel.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => showTopic(b.dataset.k, { keepText: true })));
+}
+
+function showCrisis(on) {
+  $("#help").hidden = !on;
+  if (on && !$("#lines").childElementCount)
+    $("#lines").innerHTML = HELPLINES.map((h) => `<div><small>${escH(h.name)}</small><b>${escH(h.number)}</b><small>${escH(h.note)}</small></div>`).join("");
+}
+function say(text, err) { const m = $("#msg"); m.hidden = !text; m.textContent = text || ""; m.classList.toggle("err", !!err); }
+const scrollToResult = () => $("#result").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+const formState = () => ({
+  forWhom: $("#whoOther").checked ? "other" : "self",
+  name: $("#name").value.trim(),
+  cat: document.querySelector('input[name=cat]:checked').value,
+});
+
+function showTopic(key, { keepText = false } = {}) {
+  const t = BY_KEY[key]; if (!t) return;
+  const f = formState();
+  const situation = keepText ? $("#situation").value.trim() : "";
+  if (!keepText) showCrisis(false);
+  say("");
+  render(build(t, { ...f, situation }), { fresh: true });
+  scrollToResult();
+}
+
+/* ---------- share card ---------- */
+async function svgToImage(svg) {
+  const url = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
+  try { const img = new Image(); img.src = url; await img.decode(); return img; } finally { setTimeout(() => URL.revokeObjectURL(url), 2000); }
+}
+function wrapText(ctx, text, maxW) {
+  const lines = []; let line = "";
+  for (const ch of text) { if (ctx.measureText(line + ch).width > maxW && line) { lines.push(line); line = ch; } else line += ch; }
+  if (line) lines.push(line); return lines;
+}
+async function makeCard(res) {
+  await document.fonts.load('500 40px "Noto Serif TC"').catch(() => {});
+  await document.fonts.load('900 40px "Noto Sans TC"').catch(() => {});
+  const c = document.createElement("canvas"); c.width = 1080; c.height = 1350;
+  const x = c.getContext("2d");
+  const INK = "#1F2A36";
+  x.fillStyle = "#FFFBF1"; x.fillRect(0, 0, 1080, 1350);
+  x.lineWidth = 8; x.strokeStyle = INK; x.strokeRect(36, 36, 1008, 1278);
+  const p0 = res.passages[0];
+  const img = await svgToImage(renderLinocut({ motif: res.motif, seed: res.seed, seal: res.seal, caption: p0.label.en, uid: "card" }));
+  x.drawImage(img, 60, 60, 480, 600);
+  x.fillStyle = "#A9DFC0"; x.fillRect(560, 60, 460, 74);
+  x.fillStyle = INK; x.font = '900 36px "Noto Sans TC", sans-serif'; x.fillText("God's word for you", 584, 110);
+  x.fillStyle = "#FFD25A"; x.fillRect(560, 160, 460, 60);
+  x.fillStyle = INK; x.font = '900 30px "Noto Sans TC", sans-serif'; x.fillText(p0.label.zh, 580, 201);
+  x.font = '500 30px "Noto Serif TC", serif';
+  let y = 272; for (const l of wrapText(x, p0.verses.map((v) => v.text).join(""), 440).slice(0, 12)) { x.fillText(l, 570, y); y += 50; }
+  x.fillRect(60, 690, 960, 6);
+  x.font = '800 18px "JetBrains Mono", monospace'; x.fillText("BLESSING  祝福", 60, 740);
+  x.font = '500 30px "Noto Sans TC", sans-serif';
+  y = 795; for (const l of wrapText(x, res.blessing, 940).slice(0, 9)) { x.fillText(l, 60, y); y += 52; }
+  x.font = '700 16px "JetBrains Mono", monospace'; x.fillStyle = "#4D5A66";
+  x.fillText("經文：和合本（公有領域）", 60, 1290);
+  return new Promise((r) => c.toBlob(r, "image/png"));
+}
+
+/* ---------- text / links ---------- */
+function fullText(res) {
+  const ps = res.passages.map((p) => `${p.label.zh}\n${p.verses.map((v) => v.text).join("")}`).join("\n\n");
+  return `${ps}\n\n【祝福】\n${res.blessing}\n\n【禱告】\n${res.prayer}\n\n（經文：和合本）`;
+}
+function shareURL(res) {
+  const u = new URL(location.href); u.search = ""; u.hash = "";
+  u.searchParams.set("t", res.topic.key);
+  if (res.forWhom === "other") { u.searchParams.set("w", "o"); if (res.name) u.searchParams.set("n", res.name); }
+  u.searchParams.set("s", res.seed);
+  return u.toString();
+}
+async function copy(text, btn) {
+  const old = btn.textContent;
+  try { await navigator.clipboard.writeText(text); btn.textContent = "已複製"; }
+  catch { btn.textContent = "請手動選取"; }
+  setTimeout(() => (btn.textContent = old), 1600);
+}
+
+/* ---------- wiring ---------- */
+$("#nTopics").textContent = TOPICS.length;
+$("#cols").innerHTML = Object.entries(CATEGORIES).map(([c, zh]) => `<div class="col" data-c="${c}"><h3>${zh}</h3><ul>${
+  TOPICS.filter((t) => t.cat === c).map((t) => `<li><button type="button" data-k="${t.key}"><span>${escH(t.name)}</span><small>${escH(DATA.passages[t.passages[0][0]].label.abbr)}</small></button></li>`).join("")
+}</ul></div>`).join("");
+document.querySelectorAll("#cols button").forEach((b) => b.addEventListener("click", () => showTopic(b.dataset.k)));
+
+const ta = $("#situation");
+const updateCount = () => ($("#count").textContent = `${ta.value.length} / 300`);
+ta.addEventListener("input", updateCount);
+document.querySelectorAll(".examples .chip").forEach((b) => b.addEventListener("click", () => { ta.value = b.textContent; updateCount(); ta.focus(); }));
+document.querySelectorAll("input[name=who]").forEach((r) => r.addEventListener("change", () => {
+  $("#name").hidden = $("#whoSelf").checked;
+  if (current) render(build(current.topic, { ...formState(), situation: current.situation, seed: current.seed }));
+}));
+$("#name").addEventListener("input", () => { if (current?.forWhom === "other") render(build(current.topic, { ...formState(), situation: current.situation, seed: current.seed })); });
+
+$("#form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const situation = ta.value.trim();
+  const f = formState();
+  if (situation.length < 2) {
+    if (f.cat) { const t = TOPICS.find((x) => x.cat === f.cat); render(build(t, f), { fresh: true }); say(`沒有輸入狀況，先顯示「${CATEGORIES[f.cat]}」的第一個主題。也可以從主題索引挑選。`); scrollToResult(); return; }
+    say("請寫下現在的狀況，或從下方主題索引直接挑一個主題。", true); ta.focus(); return;
+  }
+  const m = match(situation, f.cat);
+  showCrisis(m.crisis);
+  if (!m.matched) {
+    say("沒有找到很貼近的主題，先為你顯示「平安」。也可以從下方主題索引挑一個更合適的。");
+    render(build(BY_KEY.peace, { ...f, situation }), { fresh: true });
+  } else {
+    say("");
+    const related = m.list.slice(1).filter((x) => x.s > 0).slice(0, 3).map((x) => x.tp);
+    render(build(m.list[0].tp, { ...f, situation }), { fresh: true, related });
+  }
+  scrollToResult();
+  $("#result").focus({ preventScroll: true });
+});
+
+$("#reroll").addEventListener("click", () => {
+  if (!current) return;
+  current.seed = Math.floor(Math.random() * 1e6);
+  if (Math.random() < 0.35) { const keys = Object.keys(MOTIFS); current.motif = keys[Math.floor(Math.random() * keys.length)]; }
+  renderPrint(current, true);
+});
+$("#copyAll").addEventListener("click", (e) => current && copy(fullText(current), e.currentTarget));
+document.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", () => current && copy(current[b.dataset.copy], b)));
+if (!inArtifact) { $("#shareLink").hidden = false; $("#shareLink").addEventListener("click", (e) => current && copy(shareURL(current), e.currentTarget)); }
+
+$("#download").addEventListener("click", async (e) => {
+  const btn = e.currentTarget, old = btn.textContent;
+  btn.disabled = true; btn.textContent = "製作圖卡中…";
+  const filename = `GodsWordForYou-${current.passages[0].label.abbr.replace(/[\s:–]/g, "_")}.png`;
+  try {
+    const blob = await makeCard(current);
+    const downloads = inArtifact ? await use("downloads").catch(() => null) : null;
+    if (downloads) await downloads.save({ filename, data: blob });
+    else { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = filename; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 3000); }
+    btn.textContent = "已下載";
+  } catch { btn.textContent = "未能下載"; }
+  setTimeout(() => { btn.textContent = old; btn.disabled = false; }, 1800);
+});
+
+/* ---------- first view: shared link, or a sample ---------- */
+(function init() {
+  let q = null; try { q = new URLSearchParams(location.search); } catch {}
+  const t = q && BY_KEY[q.get("t")];
+  if (t) {
+    const other = q.get("w") === "o";
+    if (other) { $("#whoOther").checked = true; $("#name").hidden = false; $("#name").value = q.get("n") || ""; }
+    render(build(t, { forWhom: other ? "other" : "self", name: q.get("n") || "", seed: Number(q.get("s")) || undefined }));
+    return;
+  }
+  const sample = "下週要開刀，很害怕，怕醒不過來。";
+  const m = match(sample, "");
+  render(build(m.list[0].tp, { situation: sample, seed: 23 }), { related: m.list.slice(1).filter((x) => x.s > 0).slice(0, 3).map((x) => x.tp) });
+  $("#q").textContent = `範例：「${sample}」`;
+})();
+</script>
+
+</body>
+</html>

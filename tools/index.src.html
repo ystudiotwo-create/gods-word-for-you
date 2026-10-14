@@ -1,0 +1,416 @@
+<title>God's word for you</title>
+<meta name="description" content="寫下你或朋友的處境，從和合本找到合適的經文，附上下文說明、祝福、禱告與版畫插畫。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Noto+Sans+TC:wght@500;900&family=Noto+Serif+TC:wght@500;700&display=swap">
+<style>
+/*BASECSS*/
+/* ---- static edition ---- */
+.related { border: var(--rule) solid var(--ink); border-top: 0; padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; background: var(--paper); font-size: 13px; }
+.related b { letter-spacing: .1em; margin-right: 4px; }
+.index { border: var(--rule) solid var(--ink); border-top: 0; }
+.index > h2 { margin: 0; padding: 14px 16px; font-family: var(--display); font-weight: 900; font-size: 22px; border-bottom: var(--rule) solid var(--ink); display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.index > h2 small { font-family: var(--mono); font-size: 12px; font-weight: 400; letter-spacing: .06em; }
+.cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.col { border-right: 2px solid var(--ink); min-width: 0; }
+.col:last-child { border-right: 0; }
+.col h3 { margin: 0; padding: 10px 14px; font-family: var(--display); font-weight: 900; font-size: 18px; border-bottom: 2px solid var(--ink); }
+.col[data-c=comfort] h3 { background: var(--sky); }
+.col[data-c=encourage] h3 { background: var(--sun); }
+.col[data-c=edify] h3 { background: var(--mint); }
+.col[data-c=exhort] h3 { background: var(--peach); }
+.col ul { list-style: none; margin: 0; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+.col button { width: 100%; text-align: left; border: 2px solid var(--ink); background: var(--paper); padding: 7px 10px; font-size: 14px; cursor: pointer; border-radius: 0; display: flex; justify-content: space-between; gap: 8px; }
+.col button:hover, .col button[aria-current=true] { background: var(--ink); color: var(--paper); }
+.col button small { font-family: var(--mono); font-size: 11px; opacity: .75; }
+.match-note { font-size: 12.5px; padding: 10px 16px; border: var(--rule) solid var(--ink); border-top: 0; background: var(--paper-2); }
+@media (max-width: 900px) {
+  .cols { grid-template-columns: 1fr 1fr; }
+  .col:nth-child(2) { border-right: 0; }
+  .col:nth-child(-n+2) { border-bottom: 2px solid var(--ink); }
+}
+@media (max-width: 520px) {
+  .cols { grid-template-columns: minmax(0, 1fr); }
+  .col { border-right: 0; border-bottom: 2px solid var(--ink); }
+  .col:last-child { border-bottom: 0; }
+}
+</style>
+
+<div class="wrap">
+  <header class="bar">
+    <div class="logo"><b>God's word for you</b></div>
+    <nav aria-label="頁面導覽">
+      <a href="#find">找經文</a>
+      <a href="#topics">主題索引</a>
+      <a href="#about">原則</a>
+      <a href="#help" id="helpLink">求助專線</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="find">
+    <div class="hero-l">
+      <div class="kicker">和合本 1919 · <span id="nTopics">29</span> 個主題 · 免費使用</div>
+      <h1><span>神要</span><span><em>對你說</em>：</span></h1>
+      <blockquote class="lede"><p>「神的道是活潑的，是有功效的，比一切兩刃的劍更快，甚至魂與靈，骨節與骨髓，都能刺入、剖開，連心中的思念和主意都能辨明。」</p><cite>希伯來書 4:12</cite></blockquote>
+      <div class="legend" aria-label="四種用途">
+        <div><b>安慰</b><small>悲傷・失落・病痛</small></div>
+        <div><b>鼓勵</b><small>軟弱・懼怕・疲憊</small></div>
+        <div><b>造就</b><small>成長・方向・家庭</small></div>
+        <div><b>勸勉</b><small>調整・悔改・和好</small></div>
+      </div>
+    </div>
+    <div class="hero-r">
+      <form id="form" autocomplete="off">
+        <div class="field">
+          <label class="label" for="situation">現在的狀況 <span id="count">0 / 300</span></label>
+          <textarea id="situation" maxlength="300" placeholder="例：下週要開刀，很害怕，怕醒不過來。"></textarea>
+          <div class="examples" aria-label="範例">
+            <button type="button" class="chip">朋友的爸爸上週過世，她一直自責</button>
+            <button type="button" class="chip">失業三個月，存款快用完了</button>
+            <button type="button" class="chip">和先生一直為小事吵架</button>
+            <button type="button" class="chip">明天國考，緊張到睡不著</button>
+            <button type="button" class="chip">帶小組好累，覺得沒有果效</button>
+          </div>
+        </div>
+        <div class="field">
+          <span class="label" id="whoLabel">為誰禱告</span>
+          <div class="row">
+            <div class="seg" role="radiogroup" aria-labelledby="whoLabel">
+              <label><input type="radio" name="who" id="whoSelf" value="self" checked><span>為自己</span></label>
+              <label><input type="radio" name="who" id="whoOther" value="other"><span>為他人</span></label>
+            </div>
+            <input type="text" id="name" placeholder="稱呼（選填），如：小美" maxlength="12" hidden aria-label="對方的稱呼">
+          </div>
+        </div>
+        <div class="field">
+          <span class="label" id="catLabel">用途 <span>未選則自動判斷</span></span>
+          <div class="seg" role="radiogroup" aria-labelledby="catLabel">
+            <label><input type="radio" name="cat" id="catAuto" value="" checked><span>自動</span></label>
+            <label><input type="radio" name="cat" id="catComfort" value="comfort"><span>安慰</span></label>
+            <label><input type="radio" name="cat" id="catEncourage" value="encourage"><span>鼓勵</span></label>
+            <label><input type="radio" name="cat" id="catEdify" value="edify"><span>造就</span></label>
+            <label><input type="radio" name="cat" id="catExhort" value="exhort"><span>勸勉</span></label>
+          </div>
+        </div>
+        <button class="go" id="go" type="submit"><span>找經文</span><small>立即 →</small></button>
+        <p class="note">輸入的內容只在你的瀏覽器裡比對，不會傳到任何伺服器。也可以直接從下方「主題索引」挑選。</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="crisis" id="help" hidden aria-live="polite">
+    <div>
+      <h2>你不需要獨自撐著。</h2>
+      <p>如果你或對方有傷害自己的念頭、正處在危險中，請先打給下面的專線，或聯絡身邊信任的人、牧者。經文與禱告會陪著你，但不能取代實際的幫助。</p>
+    </div>
+    <div class="lines" id="lines"></div>
+  </section>
+
+  <div class="msg" id="msg" hidden role="status"></div>
+
+  <div id="result" tabindex="-1">
+    <div class="res-head">
+      <h2>領受</h2>
+      <div class="q" id="q"></div>
+      <span class="tag cat" id="cat"></span>
+      <span class="tag demo" id="topicTag"></span>
+    </div>
+    <div class="result">
+      <div class="print-col">
+        <div class="print-sticky">
+          <div class="print" id="print"></div>
+          <div class="print-meta"><span id="motifName"></span><span>麻膠版畫・多色套印</span></div>
+          <div class="tools">
+            <button class="btn" id="reroll" type="button">重新刻一張</button>
+            <button class="btn" id="copyAll" type="button">複製全文</button>
+            <button class="btn wide" id="download" type="button">下載分享圖卡 1080×1350</button>
+            <button class="btn wide" id="shareLink" type="button" hidden>複製分享連結</button>
+          </div>
+        </div>
+      </div>
+      <div class="texts" id="texts"></div>
+    </div>
+    <div class="words">
+      <section class="word blessing"><h3>祝福 <button class="copy" type="button" data-copy="blessing">複製</button></h3><p id="blessing"></p></section>
+      <section class="word prayer"><h3>禱告 <button class="copy" type="button" data-copy="prayer">複製</button></h3><p id="prayer"></p></section>
+    </div>
+  </div>
+  <div class="related" id="related" hidden></div>
+
+  <section class="index" id="topics">
+    <h2>主題索引 <small>點一個主題，直接看經文、祝福與禱告</small></h2>
+    <div class="cols" id="cols"></div>
+  </section>
+
+  <div class="about" id="about">
+    <section>
+      <h4>經文只取自和合本</h4>
+      <p>每一段經文都直接取自和合本（1919，公有領域），不改寫、不摘句。展開「看上下文」可以讀到前後各五節。</p>
+    </section>
+    <section>
+      <h4>先看上下文，再應用</h4>
+      <p>每段經文都附上說話者、對象、原意和應用；容易被誤用的經文另外標出提醒，避免斷章取義。</p>
+    </section>
+    <section>
+      <h4>請一起分辨</h4>
+      <p>這是輔助靈修的工具，內容是依主題預先寫好的，不一定完全貼合你的處境。重要的決定請與牧者、屬靈同伴一起禱告；身心危機請尋求專業協助。</p>
+    </section>
+  </div>
+  <footer><span>經文：和合本（繁體）公有領域・資料來源 scrollmapper/bible_databases</span><span>God's word for you</span></footer>
+</div>
+
+<script>
+/*LINOCUT*/
+const DATA = /*DATA*/;
+const CATEGORIES = { comfort: "安慰", encourage: "鼓勵", edify: "造就", exhort: "勸勉" };
+const HELPLINES = [
+  { name: "安心專線", number: "1925", note: "24 小時，免付費" },
+  { name: "生命線", number: "1995", note: "24 小時" },
+  { name: "張老師專線", number: "1980", note: "" },
+  { name: "保護專線（家暴、性侵）", number: "113", note: "24 小時" },
+  { name: "緊急求助", number: "110 / 119", note: "有立即危險時" },
+];
+const SELF_HARM = /自殺|輕生|尋死|想死|死掉算了|乾脆死|不如死|去死|消失就好|不想活|活不下去|活著沒意思|結束(自己的)?生命|了結|跳樓|跳下去|燒炭|割腕|上吊|吞藥|安眠藥.{0,6}(很多|一堆|全部)|自殘|自傷|傷害自己|割自己|劃自己/;
+const VIOLENCE = /家暴|被打|打我|毆打|施暴|虐待|性侵|強暴|性騷擾|被摸|威脅要殺|想殺/;
+const DEFAULT_NAME = "這位朋友";
+
+const $ = (s) => document.querySelector(s);
+const use = (n) => (window.claude?.use ? window.claude.use(n) : Promise.resolve(null));
+const inArtifact = !!window.claude;
+const TOPICS = DATA.topics, BY_KEY = Object.fromEntries(TOPICS.map((t) => [t.key, t]));
+let current = null;
+
+/* ---------- matching (runs entirely in the browser) ---------- */
+function match(text, cat) {
+  const t = text.replace(/\s+/g, "");
+  const scored = TOPICS.map((tp, i) => {
+    let s = 0;
+    for (const raw of tp.keywords) {
+      const strong = raw[0] === "*", k = strong ? raw.slice(1) : raw;   // * = 很能代表這個主題的詞，加倍計分
+      if (t.includes(k)) s += (k.length === 1 ? 0.6 : k.length) * (strong ? 2 : 1);
+    }
+    if (s > 0 && cat && tp.cat === cat) s += 1.5;
+    return { tp, s, i };
+  }).sort((a, b) => b.s - a.s || a.i - b.i);
+  let crisis = null;
+  if (VIOLENCE.test(t)) crisis = "refuge";
+  else if (SELF_HARM.test(t)) crisis = "hope";
+  if (crisis) {
+    const k = crisis; scored.sort((a, b) => (b.tp.key === k) - (a.tp.key === k) || b.s - a.s);
+  }
+  return { list: scored, crisis: !!crisis, matched: scored[0].s > 0 || !!crisis };
+}
+
+/* ---------- build result ---------- */
+function build(topic, { forWhom = "self", name = "", situation = "", seed } = {}) {
+  const who = forWhom === "other" ? "other" : "self";
+  const nm = (name || "").trim() || DEFAULT_NAME;
+  const fill = (s) => s.replaceAll("{name}", nm);
+  return {
+    topic, situation, forWhom: who, name: (name || "").trim(),
+    category: topic.cat,
+    passages: topic.passages.map(([ref, app]) => ({ ref, app, ...DATA.passages[ref] })),
+    blessing: fill(topic[who].blessing),
+    prayer: fill(topic[who].prayer),
+    motif: topic.motif, seal: topic.seal,
+    seed: seed ?? Math.floor(Math.random() * 1e6),
+  };
+}
+
+/* ---------- render ---------- */
+const escH = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const versesHTML = (vs) => vs.map((v) => `<sup>${v.v}</sup>${escH(v.text)}`).join("");
+
+function renderPrint(res, fresh) {
+  $("#print").innerHTML = renderLinocut({ motif: res.motif, seed: res.seed, seal: res.seal, caption: res.passages[0].label.en });
+  $("#print").classList.toggle("fresh", !!fresh);
+  $("#motifName").textContent = `主題：${MOTIFS[res.motif]?.zh || ""}・${res.passages[0].label.abbr}`;
+}
+
+function passageHTML(p, i) {
+  const notes = [["上下文", p.ctx], ["原意", p.meaning], ["應用", p.app]].filter(([, v]) => v);
+  return `<article class="passage">
+    <div class="num" aria-hidden="true">${i + 1}</div>
+    <div class="body">
+      <div class="ref"><b>${escH(p.label.zh)}</b><span>${escH(p.label.en)}</span><em class="ok">附上下文</em></div>
+      <p class="scripture">${versesHTML(p.verses)}</p>
+      <dl class="notes">${notes.map(([k, v]) => `<dt>${k}</dt><dd>${escH(v)}</dd>`).join("")}</dl>
+      ${p.caution ? `<div class="caution"><b>提醒　</b>${escH(p.caution)}</div>` : ""}
+      <details><summary>看上下文（前後各五節）</summary><div class="ctx">${versesHTML(p.before)}<mark>${versesHTML(p.verses)}</mark>${versesHTML(p.after)}</div></details>
+    </div></article>`;
+}
+
+function render(res, { fresh = false, related = [] } = {}) {
+  current = res;
+  $("#q").textContent = res.situation ? `「${res.situation}」` : (res.forWhom === "other" ? `為${res.name || DEFAULT_NAME}禱告` : "給你的話");
+  $("#cat").textContent = CATEGORIES[res.category];
+  $("#cat").dataset.c = res.category;
+  $("#topicTag").textContent = res.topic.name;
+  $("#texts").innerHTML = res.passages.map(passageHTML).join("");
+  $("#blessing").textContent = res.blessing;
+  $("#prayer").textContent = res.prayer;
+  renderPrint(res, fresh);
+  document.querySelectorAll("#cols button").forEach((b) => b.setAttribute("aria-current", String(b.dataset.k === res.topic.key)));
+  const rel = $("#related");
+  rel.hidden = !related.length;
+  rel.innerHTML = related.length ? `<b>其他可能相關</b>` + related.map((t) => `<button type="button" class="chip" data-k="${t.key}">${escH(t.name)}</button>`).join("") : "";
+  rel.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => showTopic(b.dataset.k, { keepText: true })));
+}
+
+function showCrisis(on) {
+  $("#help").hidden = !on;
+  if (on && !$("#lines").childElementCount)
+    $("#lines").innerHTML = HELPLINES.map((h) => `<div><small>${escH(h.name)}</small><b>${escH(h.number)}</b><small>${escH(h.note)}</small></div>`).join("");
+}
+function say(text, err) { const m = $("#msg"); m.hidden = !text; m.textContent = text || ""; m.classList.toggle("err", !!err); }
+const scrollToResult = () => $("#result").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+const formState = () => ({
+  forWhom: $("#whoOther").checked ? "other" : "self",
+  name: $("#name").value.trim(),
+  cat: document.querySelector('input[name=cat]:checked').value,
+});
+
+function showTopic(key, { keepText = false } = {}) {
+  const t = BY_KEY[key]; if (!t) return;
+  const f = formState();
+  const situation = keepText ? $("#situation").value.trim() : "";
+  if (!keepText) showCrisis(false);
+  say("");
+  render(build(t, { ...f, situation }), { fresh: true });
+  scrollToResult();
+}
+
+/* ---------- share card ---------- */
+async function svgToImage(svg) {
+  const url = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
+  try { const img = new Image(); img.src = url; await img.decode(); return img; } finally { setTimeout(() => URL.revokeObjectURL(url), 2000); }
+}
+function wrapText(ctx, text, maxW) {
+  const lines = []; let line = "";
+  for (const ch of text) { if (ctx.measureText(line + ch).width > maxW && line) { lines.push(line); line = ch; } else line += ch; }
+  if (line) lines.push(line); return lines;
+}
+async function makeCard(res) {
+  await document.fonts.load('500 40px "Noto Serif TC"').catch(() => {});
+  await document.fonts.load('900 40px "Noto Sans TC"').catch(() => {});
+  const c = document.createElement("canvas"); c.width = 1080; c.height = 1350;
+  const x = c.getContext("2d");
+  const INK = "#1F2A36";
+  x.fillStyle = "#FFFBF1"; x.fillRect(0, 0, 1080, 1350);
+  x.lineWidth = 8; x.strokeStyle = INK; x.strokeRect(36, 36, 1008, 1278);
+  const p0 = res.passages[0];
+  const img = await svgToImage(renderLinocut({ motif: res.motif, seed: res.seed, seal: res.seal, caption: p0.label.en, uid: "card" }));
+  x.drawImage(img, 60, 60, 480, 600);
+  x.fillStyle = "#A9DFC0"; x.fillRect(560, 60, 460, 74);
+  x.fillStyle = INK; x.font = '900 36px "Noto Sans TC", sans-serif'; x.fillText("God's word for you", 584, 110);
+  x.fillStyle = "#FFD25A"; x.fillRect(560, 160, 460, 60);
+  x.fillStyle = INK; x.font = '900 30px "Noto Sans TC", sans-serif'; x.fillText(p0.label.zh, 580, 201);
+  x.font = '500 30px "Noto Serif TC", serif';
+  let y = 272; for (const l of wrapText(x, p0.verses.map((v) => v.text).join(""), 440).slice(0, 12)) { x.fillText(l, 570, y); y += 50; }
+  x.fillRect(60, 690, 960, 6);
+  x.font = '800 18px "JetBrains Mono", monospace'; x.fillText("BLESSING  祝福", 60, 740);
+  x.font = '500 30px "Noto Sans TC", sans-serif';
+  y = 795; for (const l of wrapText(x, res.blessing, 940).slice(0, 9)) { x.fillText(l, 60, y); y += 52; }
+  x.font = '700 16px "JetBrains Mono", monospace'; x.fillStyle = "#4D5A66";
+  x.fillText("經文：和合本（公有領域）", 60, 1290);
+  return new Promise((r) => c.toBlob(r, "image/png"));
+}
+
+/* ---------- text / links ---------- */
+function fullText(res) {
+  const ps = res.passages.map((p) => `${p.label.zh}\n${p.verses.map((v) => v.text).join("")}`).join("\n\n");
+  return `${ps}\n\n【祝福】\n${res.blessing}\n\n【禱告】\n${res.prayer}\n\n（經文：和合本）`;
+}
+function shareURL(res) {
+  const u = new URL(location.href); u.search = ""; u.hash = "";
+  u.searchParams.set("t", res.topic.key);
+  if (res.forWhom === "other") { u.searchParams.set("w", "o"); if (res.name) u.searchParams.set("n", res.name); }
+  u.searchParams.set("s", res.seed);
+  return u.toString();
+}
+async function copy(text, btn) {
+  const old = btn.textContent;
+  try { await navigator.clipboard.writeText(text); btn.textContent = "已複製"; }
+  catch { btn.textContent = "請手動選取"; }
+  setTimeout(() => (btn.textContent = old), 1600);
+}
+
+/* ---------- wiring ---------- */
+$("#nTopics").textContent = TOPICS.length;
+$("#cols").innerHTML = Object.entries(CATEGORIES).map(([c, zh]) => `<div class="col" data-c="${c}"><h3>${zh}</h3><ul>${
+  TOPICS.filter((t) => t.cat === c).map((t) => `<li><button type="button" data-k="${t.key}"><span>${escH(t.name)}</span><small>${escH(DATA.passages[t.passages[0][0]].label.abbr)}</small></button></li>`).join("")
+}</ul></div>`).join("");
+document.querySelectorAll("#cols button").forEach((b) => b.addEventListener("click", () => showTopic(b.dataset.k)));
+
+const ta = $("#situation");
+const updateCount = () => ($("#count").textContent = `${ta.value.length} / 300`);
+ta.addEventListener("input", updateCount);
+document.querySelectorAll(".examples .chip").forEach((b) => b.addEventListener("click", () => { ta.value = b.textContent; updateCount(); ta.focus(); }));
+document.querySelectorAll("input[name=who]").forEach((r) => r.addEventListener("change", () => {
+  $("#name").hidden = $("#whoSelf").checked;
+  if (current) render(build(current.topic, { ...formState(), situation: current.situation, seed: current.seed }));
+}));
+$("#name").addEventListener("input", () => { if (current?.forWhom === "other") render(build(current.topic, { ...formState(), situation: current.situation, seed: current.seed })); });
+
+$("#form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const situation = ta.value.trim();
+  const f = formState();
+  if (situation.length < 2) {
+    if (f.cat) { const t = TOPICS.find((x) => x.cat === f.cat); render(build(t, f), { fresh: true }); say(`沒有輸入狀況，先顯示「${CATEGORIES[f.cat]}」的第一個主題。也可以從主題索引挑選。`); scrollToResult(); return; }
+    say("請寫下現在的狀況，或從下方主題索引直接挑一個主題。", true); ta.focus(); return;
+  }
+  const m = match(situation, f.cat);
+  showCrisis(m.crisis);
+  if (!m.matched) {
+    say("沒有找到很貼近的主題，先為你顯示「平安」。也可以從下方主題索引挑一個更合適的。");
+    render(build(BY_KEY.peace, { ...f, situation }), { fresh: true });
+  } else {
+    say("");
+    const related = m.list.slice(1).filter((x) => x.s > 0).slice(0, 3).map((x) => x.tp);
+    render(build(m.list[0].tp, { ...f, situation }), { fresh: true, related });
+  }
+  scrollToResult();
+  $("#result").focus({ preventScroll: true });
+});
+
+$("#reroll").addEventListener("click", () => {
+  if (!current) return;
+  current.seed = Math.floor(Math.random() * 1e6);
+  if (Math.random() < 0.35) { const keys = Object.keys(MOTIFS); current.motif = keys[Math.floor(Math.random() * keys.length)]; }
+  renderPrint(current, true);
+});
+$("#copyAll").addEventListener("click", (e) => current && copy(fullText(current), e.currentTarget));
+document.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", () => current && copy(current[b.dataset.copy], b)));
+if (!inArtifact) { $("#shareLink").hidden = false; $("#shareLink").addEventListener("click", (e) => current && copy(shareURL(current), e.currentTarget)); }
+
+$("#download").addEventListener("click", async (e) => {
+  const btn = e.currentTarget, old = btn.textContent;
+  btn.disabled = true; btn.textContent = "製作圖卡中…";
+  const filename = `GodsWordForYou-${current.passages[0].label.abbr.replace(/[\s:–]/g, "_")}.png`;
+  try {
+    const blob = await makeCard(current);
+    const downloads = inArtifact ? await use("downloads").catch(() => null) : null;
+    if (downloads) await downloads.save({ filename, data: blob });
+    else { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = filename; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 3000); }
+    btn.textContent = "已下載";
+  } catch { btn.textContent = "未能下載"; }
+  setTimeout(() => { btn.textContent = old; btn.disabled = false; }, 1800);
+});
+
+/* ---------- first view: shared link, or a sample ---------- */
+(function init() {
+  let q = null; try { q = new URLSearchParams(location.search); } catch {}
+  const t = q && BY_KEY[q.get("t")];
+  if (t) {
+    const other = q.get("w") === "o";
+    if (other) { $("#whoOther").checked = true; $("#name").hidden = false; $("#name").value = q.get("n") || ""; }
+    render(build(t, { forWhom: other ? "other" : "self", name: q.get("n") || "", seed: Number(q.get("s")) || undefined }));
+    return;
+  }
+  const sample = "下週要開刀，很害怕，怕醒不過來。";
+  const m = match(sample, "");
+  render(build(m.list[0].tp, { situation: sample, seed: 23 }), { related: m.list.slice(1).filter((x) => x.s > 0).slice(0, 3).map((x) => x.tp) });
+  $("#q").textContent = `範例：「${sample}」`;
+})();
+</script>
