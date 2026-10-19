@@ -23,7 +23,7 @@
 
 | 檔案 | 內容 |
 |---|---|
-| `content/topics.json` | 29 個主題：名稱、分類（comfort 安慰／encourage 鼓勵／edify 造就／exhort 勸勉）、關鍵字、3 段經文與「應用」、每段經文各自的祝福與禱告（`blessings`、`prayers`，與 `passages` 順序對應，分為自己／為他人）、版畫主題與印章字 |
+| `content/topics.json` | 34 個主題：名稱、分類（comfort 安慰／encourage 鼓勵／edify 造就／exhort 勸勉）、關鍵字、3 段經文與「應用」、每段經文各自的祝福與禱告（`blessings`、`prayers`，與 `passages` 順序對應，分為自己／為他人）、版畫主題與印章字 |
 | `content/passages.json` | 每段經文的上下文、原意、提醒 |
 
 - 首頁的「最接近的狀況」選項直接列出每個主題的名稱，依需要分類篩選。`keywords` 目前沒有用到（舊版文字比對用），保留以備日後需要。

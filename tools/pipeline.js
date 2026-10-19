@@ -15,7 +15,7 @@ export const CATEGORIES = {
   exhort: "勸勉",
 };
 
-export const MOTIF_KEYS = ["lamp", "sheep", "dove", "tree", "eagle", "rock", "boat", "sprout", "path", "vine", "hands", "lily", "anchor", "cross"];
+export const MOTIF_KEYS = ["lamp", "sheep", "dove", "tree", "eagle", "rock", "boat", "sprout", "path", "vine", "hands", "lily", "anchor", "cross", "birds", "nest", "house", "rainbow", "moon", "book"];
 
 const MAX_VERSES = 8;          // 一段經文最多幾節（以完整意思單元為準，但不要整章）
 const CONTEXT_RADIUS = 5;      // 「看上下文」前後各幾節

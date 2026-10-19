@@ -23,6 +23,12 @@ export const MOTIFS = {
   lily:   { zh: "野地的百合與飛鳥", hint: "provision, not worrying (Matt 6:25-34)" },
   anchor: { zh: "錨",         hint: "hope, steadfastness (Heb 6:19)" },
   cross:  { zh: "山上的十字架", hint: "salvation, forgiveness, grace (Rom 5:8, 1 John 1:9)" },
+  birds:  { zh: "枝頭的一對鳥", hint: "companionship, love, waiting together (Eccl 4:9, Song 2)" },
+  nest:   { zh: "巢中的雛鳥", hint: "parenting, care, being sheltered (Isa 40:11, Ps 91:4)" },
+  house:  { zh: "亮著燈的家", hint: "home, family, coming back, the Father's house (Luke 15, John 14:2)" },
+  rainbow:{ zh: "雨後的彩虹", hint: "covenant love, healing after tears (Gen 9, Isa 54:9-10)" },
+  moon:   { zh: "夜裡的月亮與小屋", hint: "night, rest, God who never sleeps (Ps 121, Ps 4:8)" },
+  book:   { zh: "打開的書", hint: "study, wisdom, the word as light (Ps 119:105)" },
 };
 
 const W = 600, H = 750, M = 34;           // canvas, paper margin
@@ -153,6 +159,8 @@ function mountains(r, base) {
   lines += stroke(ridge, C, 4.5);
   return { ground: path(edge, K), lines };
 }
+
+const zoom = (k, cx, cy) => (g) => g && `<g transform="translate(${cx} ${cy}) scale(${k}) translate(${-cx} ${-cy})">${g}</g>`;
 
 /* ---------- motifs ----------
  * each returns { sky, sun, ground, carve, ink, red, horizon }
@@ -344,6 +352,124 @@ const motifs = {
     let ink = "";
     for (let i = 0; i < 12; i++) ink += stroke(`M${292 + (i % 3) * 6} ${340 + i * 18}L${294 + (i % 3) * 6} ${352 + i * 18}`, K, 1.4);
     return { horizon: 560, ground: "hills", hillAmp: 22, sky: "rays", sunAt: [300, 316, 120], carve, ink, red: "" };
+  },
+  birds(r) {
+    // 一對面對面停在枝頭的鳥，中間一顆紅心
+    let one = ellipse(225, 448, 48, 32, -12, C) + circle(262, 412, 22, C) + path("M281 405L304 412L281 419Z", C);
+    one += path("M184 458L118 488L128 470L114 460L182 438Z", C) + stroke("M218 476L214 500M236 474L234 498", C, 4.5);
+    let oneInk = circle(268, 407, 3.2, K) + stroke("M196 446C214 430 242 432 258 450C240 466 212 468 194 458", K, 2.2);
+    for (let i = 0; i < 4; i++) oneInk += stroke(`M${204 + i * 12} ${452 + (i % 2) * 2}L${214 + i * 12} ${462}`, K, 1.6);
+    oneInk += stroke("M128 476L176 456M132 466L178 448", K, 1.6);
+    const mirror = (g) => `<g transform="translate(600 0) scale(-1 1)">${g}</g>`;
+    const heart = "M300 384C268 362 258 334 278 326C290 322 298 330 300 340C302 330 310 322 322 326C342 334 332 362 300 384Z";
+    let carve = stroke("M34 520C150 500 250 500 330 496C420 492 500 472 566 432", C, 16);
+    carve += stroke("M120 508C110 480 90 470 70 470M470 480C480 450 500 440 524 438", C, 6);
+    for (const [x, y, a] of [[70, 470, -20], [524, 438, 20], [150, 520, 40], [420, 500, -40], [96, 488, 60], [500, 452, -60]]) carve += ellipse(x, y, 22, 8, a, C);
+    carve += one + mirror(one) + path(heart, C);
+    let ink = oneInk + mirror(oneInk);
+    for (let i = 0; i < 10; i++) { const x = 60 + i * 50 + r() * 10; ink += gouge(x, 516 - i * 2, x + 26, 512 - i * 2.4, 1.4, K); }
+    for (const [x, y, a] of [[70, 470, -20], [524, 438, 20], [150, 520, 40], [420, 500, -40], [96, 488, 60], [500, 452, -60]])
+      ink += `<g transform="translate(${x} ${y}) rotate(${a})">${stroke("M-18 0L18 0", K, 1.4)}</g>`;
+    const z = zoom(1.22, 300, 520);
+    return { horizon: 600, ground: "hills", sky: "rays", sunAt: [300, 290, 92], carve: z(carve), ink: z(ink),
+      red: z(path(heart, K) + path("M281 405L304 412L281 419Z", K) + mirror(path("M281 405L304 412L281 419Z", K))) };
+  },
+  nest(r) {
+    // 母鳥張開翅膀護著巢裡張嘴的雛鳥
+    const lw = "M292 270C252 228 196 208 126 216C146 240 172 260 204 276C232 288 262 294 290 300Z";
+    let carve = stroke("M34 560C140 540 240 556 330 540C420 524 490 506 566 470", C, 18);
+    carve += stroke("M450 516C470 490 500 480 530 482M140 548C130 520 110 506 84 504", C, 6);
+    for (const [x, y, a] of [[530, 482, 10], [84, 504, -10], [500, 498, -50], [112, 520, 50]]) carve += ellipse(x, y, 22, 8, a, C);
+    carve += path(lw, C) + `<g transform="translate(600 0) scale(-1 1)">${path(lw, C)}</g>`;
+    carve += ellipse(300, 290, 20, 34, 0, C) + circle(300, 250, 17, C) + path("M292 262L300 278L308 262Z", C) + path("M286 318L314 318L326 352L300 342L274 352Z", C);
+    const chicks = [[250, 476], [300, 462], [350, 476]];
+    const beak = (x, y) => `M${x - 9} ${y - 14}L${x} ${y - 40}L${x + 9} ${y - 14}Z`;
+    for (const [x, y] of chicks) carve += circle(x, y, 21, C) + path(beak(x, y), C);
+    const nestD = "M200 480C204 538 246 566 300 566C354 566 396 538 400 480Z";
+    carve += path(nestD, C);
+    let ink = circle(294, 248, 2.4, K) + circle(306, 248, 2.4, K);
+    for (let i = 0; i < 6; i++) {
+      const x = 150 + i * 24;
+      ink += stroke(`M${x + 18} ${232 + i * 6}L${x + 4} ${252 + i * 6}`, K, 2) + stroke(`M${600 - x - 18} ${232 + i * 6}L${600 - x - 4} ${252 + i * 6}`, K, 2);
+    }
+    ink += stroke("M288 330L300 344L312 330", K, 1.8);
+    for (const [x, y] of chicks) ink += circle(x - 7, y - 4, 2.8, K) + circle(x + 7, y - 4, 2.8, K);
+    for (let i = 0; i < 16; i++) {
+      const y = 490 + r() * 66, w = 96 - Math.abs(y - 500) * 0.6, x = 300 - w + r() * w * 1.4;
+      ink += gouge(x, y, x + 30 + r() * 30, y + (r() - 0.5) * 12, 1.6, K);
+    }
+    ink += stroke("M204 492C240 500 360 500 396 492", K, 2.4);
+    const z = zoom(1.12, 300, 430);
+    return { horizon: 640, ground: "hills", hillAmp: 8, sky: "streaks", sunAt: [470, 130, 44], carve: z(carve), ink: z(ink),
+      red: z(chicks.map(([x, y]) => path(beak(x, y), K)).join("")) };
+  },
+  house(r) {
+    // 山坡上亮著燈的家，一條小路通到門口
+    const roof = "M150 436L300 300L450 436Z";
+    let carve = path("M354 318L390 318L390 400L354 380Z", C) + path(roof, C) + path("M184 430L416 430L416 606L184 606Z", C);
+    carve += path("M282 606L318 606C334 646 382 690 408 716L192 716C218 690 266 646 282 606Z", C);
+    carve += stroke("M372 306C360 286 388 276 376 254C366 236 390 226 382 204", C, 8);
+    const door = "M276 606L276 538C276 520 324 520 324 538L324 606Z";
+    const win = (x) => `M${x} 470L${x + 48} 470L${x + 48} 516L${x} 516Z`;
+    let ink = "";
+    for (let y = 340; y < 432; y += 14) { const hw = (y - 300) / 136 * 150 - 10; ink += stroke(`M${f(300 - hw)} ${y}L${f(300 + hw)} ${y}`, K, 1.8, `stroke-dasharray="${f(20 + r() * 30)} ${f(6 + r() * 8)}"`); }
+    ink += stroke("M150 436L450 436", K, 3);
+    for (let i = 0; i < 7; i++) { const y = 452 + i * 22; ink += gouge(196 + r() * 20, y, 236 + r() * 20, y, 1.2, K); ink += gouge(366 + r() * 10, y, 404, y, 1.2, K); }
+    for (const x of [206, 346]) ink += stroke(`M${x + 24} 470L${x + 24} 516M${x} 493L${x + 48} 493`, K, 2.4) + stroke(`M${x - 4} 520L${x + 52} 520`, K, 3);
+    ink += circle(314, 572, 3, K);
+    for (let i = 0; i < 6; i++) { const t = i / 6, y = 700 - t * 86; ink += gouge(296 - (1 - t) * 30, y, 304 + (1 - t) * 30, y - 2, 1.6 - t, K); }
+    return { horizon: 600, ground: "hills", hillAmp: 8, sky: "rays", sunAt: [470, 150, 44], carve, ink,
+      red: path(door, K) + path(win(206), K) + path(win(346), K) };
+  },
+  rainbow(r) {
+    // 雨雲在左上，雨停後彩虹跨過山丘
+    const cx = 300, cy = 612, band = (R2, R1) => `M${cx - R2} ${cy}A${R2} ${R2} 0 0 1 ${cx + R2} ${cy}L${cx + R1} ${cy}A${R1} ${R1} 0 0 0 ${cx - R1} ${cy}Z`;
+    const radii = [262, 238, 214, 190, 166];
+    let carve = "", red = "", ink = "";
+    for (let i = 0; i < radii.length - 1; i++) { carve += path(band(radii[i], radii[i + 1]), C); if (i % 2 === 0) red += path(band(radii[i], radii[i + 1]), K); }
+    for (const R of radii) ink += `<path d="M${cx - R} ${cy}A${R} ${R} 0 0 1 ${cx + R} ${cy}" fill="none" stroke="${K}" stroke-width="2"/>`;
+    for (let i = 0; i < 40; i++) {
+      const a = Math.PI + (i / 40) * Math.PI + r() * 0.03, R = 196 + r() * 12;
+      ink += gouge(cx + Math.cos(a) * R, cy + Math.sin(a) * R, cx + Math.cos(a + 0.05) * R, cy + Math.sin(a + 0.05) * R, 1.2, K);
+    }
+    const cloud = (pts) => pts.map(([x, y, rr]) => circle(x, y, rr, C)).join("");
+    carve += cloud([[70, 600, 34], [112, 584, 42], [156, 604, 30], [36, 618, 26]]) + cloud([[530, 600, 34], [488, 584, 42], [444, 604, 30], [564, 618, 26]]);
+    carve += cloud([[100, 150, 30], [140, 132, 40], [186, 150, 32], [220, 162, 22]]);
+    for (let i = 0; i < 18; i++) { const x = 84 + r() * 140, y = 190 + r() * 120; carve += gouge(x, y, x - 10, y + 26 + r() * 14, 2, C); }
+    for (const [x, y] of [[112, 600], [488, 600], [140, 150]]) ink += stroke(`M${x - 30} ${y + 12}C${x - 10} ${y + 20} ${x + 10} ${y + 20} ${x + 30} ${y + 12}`, K, 1.8);
+    return { horizon: 600, ground: "hills", hillAmp: 8, sky: "streaks", sunAt: [470, 160, 44], carve, ink, red };
+  },
+  moon(r) {
+    // 夜空裡的彎月，小屋窗口還亮著燈，旁邊一棵柏樹
+    const [mx, my, mR] = [410, 176, 66];
+    let carve = path("M120 520L250 520L250 610L120 610Z", C) + path("M104 524L185 452L266 524Z", C) + path("M222 474L240 474L240 500L222 488Z", C);
+    carve += ellipse(330, 520, 30, 82, 0, C) + path("M324 596L336 596L336 616L324 616Z", C);
+    const win = "M146 548L178 548L178 578L146 578Z", door = "M200 610L200 566C200 556 226 556 226 566L226 610Z";
+    let ink = stroke("M104 524L266 524", K, 2.6) + stroke("M162 548L162 578M146 563L178 563", K, 2);
+    for (let i = 0; i < 6; i++) ink += stroke(`M${f(150 + i * 6)} ${494 + i * 4}L${f(220 - i * 6)} ${494 + i * 4}`, K, 1.4);
+    for (let i = 0; i < 12; i++) { const y = 452 + i * 12, w = Math.sin((i + 1) / 13 * Math.PI) * 22; ink += stroke(`M${f(330 - w)} ${y + 8}L330 ${y}L${f(330 + w)} ${y + 8}`, K, 1.6); }
+    // Zz：輕輕的睡意
+    ink += stroke("M206 420L222 420L206 436L222 436M232 392L244 392L232 404L244 404", K, 2.4);
+    const z = zoom(1.38, 230, 614);
+    return { horizon: 600, ground: "hills", hillAmp: 10, sky: "night", sunAt: [mx, my, mR],
+      inkOver: circle(mx + 30, my - 22, mR * 0.9, K), carve: z(carve), ink: z(ink), red: z(path(win, K) + path(door, K)) };
+  },
+  book(r) {
+    // 攤開的書，光從書頁後方照出來
+    const left = "M300 522C250 494 170 488 100 502L100 628C170 616 250 622 300 648Z";
+    let carve = path("M84 512L84 646C170 632 250 642 300 666C350 642 430 632 516 646L516 512Z", C);
+    carve += path(left, C) + `<g transform="translate(600 0) scale(-1 1)">${path(left, C)}</g>`;
+    const ribbon = "M316 650L330 650L330 704L323 694L316 704Z";
+    carve += path(ribbon, C);
+    let ink = stroke("M300 522L300 664", K, 2.6) + stroke("M100 628C170 616 250 622 300 648C350 622 430 616 500 628", K, 2.2);
+    ink += stroke("M84 646C170 632 250 642 300 666C350 642 430 632 516 646", K, 2.6);
+    for (let i = 0; i < 7; i++) {
+      const y = 526 + i * 14, dash = `${f(14 + r() * 26)} ${f(5 + r() * 6)} ${f(8 + r() * 18)} ${f(4 + r() * 5)}`;
+      const L = `M${118} ${y}C${170} ${y - 10} ${240} ${y - 6} ${282} ${y + 12}`;
+      ink += stroke(L, K, 1.6, `stroke-dasharray="${dash}"`) + `<g transform="translate(600 0) scale(-1 1)">${stroke(L, K, 1.6, `stroke-dasharray="${dash}"`)}</g>`;
+    }
+    for (let i = 0; i < 3; i++) ink += stroke(`M${96 - i * 4} ${632 + i * 4}C${170} ${620 + i * 4} ${250} ${628 + i * 4} ${300} ${654 + i * 4}`, K, 1);
+    return { horizon: 670, flatGround: true, sky: "rays", sunAt: [300, 432, 70], carve, ink, red: path(ribbon, K) };
   },
 };
 
