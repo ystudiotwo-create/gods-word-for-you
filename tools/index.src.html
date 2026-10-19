@@ -40,6 +40,10 @@
 .card-pick .label { font-size: 12px; }
 #cardPick { width: 100%; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
 #cardPick span { text-align: center; white-space: nowrap; padding: 7px 4px; font-size: 13px; overflow: hidden; text-overflow: ellipsis; }
+.texts { border: var(--rule) solid var(--ink); border-top: 0; }
+.texts .passage:last-child { border-bottom: 0; }
+.card-side { padding: 20px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.card-side h3 { margin: 0; font-family: var(--display); font-weight: 900; font-size: 22px; }
 .match-note { font-size: 12.5px; padding: 10px 16px; border: var(--rule) solid var(--ink); border-top: 0; background: var(--paper-2); }
 @media (max-width: 900px) {
   .cols { grid-template-columns: 1fr 1fr; }
@@ -60,7 +64,6 @@
       <a href="#find">找經文</a>
       <a href="#topics">主題索引</a>
       <a href="#about">原則</a>
-      <a href="#help" id="helpLink">求助專線</a>
     </nav>
   </header>
 
@@ -108,14 +111,6 @@
     </div>
   </section>
 
-  <section class="crisis" id="help" hidden aria-live="polite">
-    <div>
-      <h2>你不需要獨自撐著。</h2>
-      <p>如果你或對方有傷害自己的念頭、正處在危險中，請先打給下面的專線，或聯絡身邊信任的人、牧者。經文與禱告會陪著你，但不能取代實際的幫助。</p>
-    </div>
-    <div class="lines" id="lines"></div>
-  </section>
-
   <div class="msg" id="msg" hidden role="status"></div>
 
   <div id="result" tabindex="-1">
@@ -125,25 +120,27 @@
       <span class="tag cat" id="cat"></span>
       <span class="tag demo" id="topicTag"></span>
     </div>
-    <div class="result">
-      <div class="print-col">
-        <div class="print-sticky">
-          <div class="print" id="print"></div>
-          <div class="print-meta"><span id="motifName"></span><span>麻膠版畫・多色套印</span></div>
-          <div class="tools">
-            <button class="btn" id="reroll" type="button">重新刻一張</button>
-            <button class="btn" id="copyAll" type="button">複製全文</button>
-            <div class="card-pick"><span class="label" id="cardLabel">選一處經文 <span>祝福、禱告與圖卡都會跟著換</span></span><div class="seg" id="cardPick" role="radiogroup" aria-labelledby="cardLabel"></div></div>
-            <button class="btn wide" id="download" type="button">下載分享圖卡 1080×1350</button>
-            <button class="btn wide" id="shareLink" type="button" hidden>複製分享連結</button>
-          </div>
-        </div>
-      </div>
-      <div class="texts" id="texts"></div>
-    </div>
+    <!-- 順序：三處經文 → 祝福、禱告 → 圖卡 -->
+    <div class="texts" id="texts"></div>
     <div class="words">
       <section class="word blessing"><h3><span>祝福 <small class="wref"></small></span> <button class="copy" type="button" data-copy="blessing">複製</button></h3><p id="blessing"></p></section>
       <section class="word prayer"><h3><span>禱告 <small class="wref"></small></span> <button class="copy" type="button" data-copy="prayer">複製</button></h3><p id="prayer"></p></section>
+    </div>
+    <div class="result">
+      <div class="print-col">
+        <div class="print" id="print"></div>
+        <div class="print-meta"><span id="motifName"></span><span>麻膠版畫・多色套印</span></div>
+      </div>
+      <div class="card-side">
+        <h3>分享圖卡</h3>
+        <div class="tools">
+          <div class="card-pick"><span class="label" id="cardLabel">選一處經文 <span>祝福、禱告與圖卡都會跟著換</span></span><div class="seg" id="cardPick" role="radiogroup" aria-labelledby="cardLabel"></div></div>
+          <button class="btn" id="reroll" type="button">重新刻一張</button>
+          <button class="btn" id="copyAll" type="button">複製全文</button>
+          <button class="btn wide" id="download" type="button">下載分享圖卡 1080×1350</button>
+          <button class="btn wide" id="shareLink" type="button" hidden>複製分享連結</button>
+        </div>
+      </div>
     </div>
   </div>
   <div class="related" id="related" hidden></div>
@@ -174,14 +171,6 @@
 /*LINOCUT*/
 const DATA = /*DATA*/;
 const CATEGORIES = { comfort: "安慰", encourage: "鼓勵", edify: "造就", exhort: "勸勉" };
-const HELPLINES = [
-  { name: "安心專線", number: "1925", note: "24 小時，免付費" },
-  { name: "生命線", number: "1995", note: "24 小時" },
-  { name: "張老師專線", number: "1980", note: "" },
-  { name: "保護專線（家暴、性侵）", number: "113", note: "24 小時" },
-  { name: "緊急求助", number: "110 / 119", note: "有立即危險時" },
-];
-const CRISIS_TOPICS = new Set(["hope", "refuge"]);   // 低潮與盼望、危險中的投靠：一併顯示求助專線
 const DEFAULT_NAME = "這位朋友";
 
 const $ = (s) => document.querySelector(s);
@@ -272,11 +261,6 @@ function render(res, { fresh = false, related = [] } = {}) {
   rel.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => showTopic(b.dataset.k)));
 }
 
-function showCrisis(on) {
-  $("#help").hidden = !on;
-  if (on && !$("#lines").childElementCount)
-    $("#lines").innerHTML = HELPLINES.map((h) => `<div><small>${escH(h.name)}</small><b>${escH(h.number)}</b><small>${escH(h.note)}</small></div>`).join("");
-}
 function say(text, err) { const m = $("#msg"); m.hidden = !text; m.textContent = text || ""; m.classList.toggle("err", !!err); }
 const scrollToResult = () => $("#result").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
 const formState = () => ({
@@ -287,7 +271,6 @@ const formState = () => ({
 function showTopic(key) {
   const t = BY_KEY[key]; if (!t) return;
   pick(key);
-  showCrisis(CRISIS_TOPICS.has(key));
   say("");
   render(build(t, formState()), { fresh: true, related: relatedOf(t) });
   scrollToResult();
@@ -491,7 +474,7 @@ $("#download").addEventListener("click", async (e) => {
   if (t) {
     const other = q.get("w") === "o";
     if (other) { $("#whoOther").checked = true; $("#name").hidden = false; $("#name").value = q.get("n") || ""; }
-    pick(t.key); showCrisis(CRISIS_TOPICS.has(t.key));
+    pick(t.key);
     render(build(t, { forWhom: other ? "other" : "self", name: q.get("n") || "", seed: Number(q.get("s")) || undefined, cardIdx: Number(q.get("c")) || 0 }));
     return;
   }
