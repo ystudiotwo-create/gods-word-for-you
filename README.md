@@ -31,25 +31,40 @@
 - 為他人的祝福與禱告用 `{name}` 代表對方的稱呼，沒填稱呼時會顯示「這位朋友」。
 - 經文出處用英文代號，例如 `Ps 23:1-4`、`1John 1:9`、`Phil 4:6-7`。
 
-改完後執行（需要 Node.js 18 以上）：
+### 英文版（`en/`）
+
+英文版網址是 `.../gods-word-for-you/en/`，兩個版本右上角都有切換語言的連結，切換時會保留目前看的主題。
+
+| 檔案 | 內容 |
+|---|---|
+| `content/en/topics.json` | 34 個主題的英文名稱、應用、祝福與禱告（分類、版畫主題、印章沿用中文版） |
+| `content/en/passages.json` | 經文說明的英文版 |
+| `data/web.json` | World English Bible（公有領域），由 `tools/web_from_ebible.py` 從 eBible.org 的檔案轉出 |
+| `tools/strings.json` | 兩種語言的介面文字 |
+
+改中文主題的經文出處時，英文版也要一起改，建置時會檢查兩邊是否一致。英文禱告要以「In Jesus’ name, Amen.」結尾。
+
+改完後執行（需要 Node.js 20 以上）：
 
 ```bash
-node tools/build.mjs
+node --experimental-detect-module tools/build.mjs
 ```
 
-它會檢查每個出處都存在於和合本、每段禱告都以「奉主耶穌的名求，阿們。」結尾，然後重新產生 `index.html`。再把 `index.html` 和 `content/` 一起上傳即可。
+它會檢查每個出處都存在於聖經資料、每段禱告的結尾正確，然後重新產生 `index.html` 和 `en/index.html`。再把這兩個檔案和 `content/` 一起上傳即可。
 
 ## 上線前
 
-內容是依主題預先寫好的草稿，**請熟悉聖經的牧者或同工逐一讀過** `content/` 裡的經文說明、祝福與禱告，確認沒有斷章取義、語氣合適。
+內容是依主題預先寫好的草稿，**請熟悉聖經的牧者或同工逐一讀過** `content/` 裡的經文說明、祝福與禱告，確認沒有斷章取義、語氣合適。英文版是從中文版翻譯的，也請懂英文的同工讀過一次。
 
 ## 檔案
 
 ```
 index.html            網站本身（由 build 產生，GitHub Pages 直接使用）
-content/              可編輯的內容
+en/index.html         英文版（由 build 產生）
+content/              可編輯的內容（content/en/ 是英文版）
 data/cuv.json         和合本全本（建置時使用）
+data/web.json         World English Bible 全本（英文版建置時使用）
 tools/                建置腳本、版面與版畫產生器
 ```
 
-經文：和合本（繁體）公有領域，資料來源 [scrollmapper/bible_databases](https://github.com/scrollmapper/bible_databases)。
+經文：和合本（繁體）公有領域，資料來源 [scrollmapper/bible_databases](https://github.com/scrollmapper/bible_databases)。英文經文：World English Bible，公有領域，資料來源 [eBible.org](https://ebible.org/)（“World English Bible” 是 eBible.org 的商標，經文不可改動）。
