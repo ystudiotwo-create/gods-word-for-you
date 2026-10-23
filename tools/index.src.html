@@ -137,7 +137,7 @@
           <div class="card-pick"><span class="label" id="cardLabel">選一處經文 <span>祝福、禱告與圖卡都會跟著換</span></span><div class="seg" id="cardPick" role="radiogroup" aria-labelledby="cardLabel"></div></div>
           <button class="btn" id="reroll" type="button">重新刻一張</button>
           <button class="btn" id="copyAll" type="button">複製全文</button>
-          <button class="btn wide" id="download" type="button">下載分享圖卡 1080×1350</button>
+          <button class="btn wide" id="download" type="button">下載分享圖卡 1080×1920</button>
           <button class="btn wide" id="shareLink" type="button" hidden>複製分享連結</button>
         </div>
       </div>
@@ -268,11 +268,15 @@ const formState = () => ({
   name: $("#name").value.trim(),
 });
 
+// GoatCounter event; a blocked or missing counter never breaks the page
+const track = (path, title) => { try { window.goatcounter?.count({ path, title, event: true }); } catch {} };
+
 function showTopic(key) {
   const t = BY_KEY[key]; if (!t) return;
   pick(key);
   say("");
   render(build(t, formState()), { fresh: true, related: relatedOf(t) });
+  track(`topic-${t.key}`, t.name);
   scrollToResult();
 }
 
@@ -317,50 +321,50 @@ function fitBlocks(ctx, blocks, { font, maxW, maxH, max, min, extra = 0 }) {
 async function makeCard(res) {
   await document.fonts.load('500 40px "Noto Serif TC"').catch(() => {});
   await document.fonts.load('900 40px "Noto Sans TC"').catch(() => {});
-  const c = document.createElement("canvas"); c.width = 1080; c.height = 1350;
+  // 9:16 — the size phones show full screen (Stories, LINE, photo viewer)
+  const CW = 1080, CH = 1920;
+  const c = document.createElement("canvas"); c.width = CW; c.height = CH;
   const x = c.getContext("2d");
   const INK = "#1F2A36";
-  x.fillStyle = "#FFFBF1"; x.fillRect(0, 0, 1080, 1350);
-  x.lineWidth = 8; x.strokeStyle = INK; x.strokeRect(36, 36, 1008, 1278);
+  x.fillStyle = "#FFFBF1"; x.fillRect(0, 0, CW, CH);
+  x.lineWidth = 8; x.strokeStyle = INK; x.strokeRect(36, 36, CW - 72, CH - 72);
   const p0 = res.passages[res.cardIdx || 0];
-  const img = await svgToImage(renderLinocut({ motif: res.motif, seed: res.seed, seal: res.seal, caption: p0.label.en, uid: "card" }));
-  x.drawImage(img, 60, 60, 380, 475);
-  x.fillStyle = "#A9DFC0"; x.fillRect(470, 60, 550, 74);
-  x.fillStyle = INK; x.font = '900 36px "Noto Sans TC", sans-serif'; x.fillText("God's word for you", 494, 110);
-  x.fillStyle = "#FFD25A"; x.fillRect(470, 158, 550, 66);
-  x.fillStyle = INK; x.font = '900 34px "Noto Sans TC", sans-serif'; x.fillText(p0.label.zh, 490, 204);
-  // Scripture starts beside the print and, if long, continues full width beneath it; the blessing and
-  // prayer take what is left. Try the largest scripture size first and step down until the blessing and
-  // prayer can stay at a readable size (or the scripture reaches its floor).
+  // Everything stacks in one column: title, print, reference, scripture, blessing, prayer. Try the largest
+  // print and scripture first and step down until the blessing and prayer stay at a readable size.
   const SERIF = (n) => `500 ${n}px "Noto Serif TC", serif`, SANS = (n) => `500 ${n}px "Noto Sans TC", sans-serif`;
   const verse = p0.verses.map((v) => v.text).join("");
-  const LABEL = 50, GAP = 32, BOTTOM = 1262, COL_TOP = 246, COL_BOTTOM = 540;
+  const L = 60, TW = 960, LABEL = 50, GAP = 32, BOTTOM = CH - 92;
   let plan;
-  for (let vs = 34; vs >= 24; vs--) {
-    x.font = SERIF(vs);
-    const lh = Math.round(vs * 1.62), fit = Math.max(1, Math.floor((COL_BOTTOM - COL_TOP) / lh));
-    const col = wrapText(x, verse, 538), side = col.slice(0, fit);
-    const below = col.length > fit ? wrapText(x, col.slice(fit).join(""), 960) : [];
-    const end = below.length ? Math.max(COL_TOP + fit * lh, 548) + below.length * lh : COL_TOP + side.length * lh;
-    const rule = Math.max(565, end + 22);
-    const bf = fitBlocks(x, [res.blessing, res.prayer], { font: SANS, maxW: 960, maxH: BOTTOM - (rule + 28), max: 38, min: 22, extra: LABEL * 2 + GAP });
-    plan = { vs, lh, side, below, rule, bf };
-    if (bf.size >= 28) break;
+  search: for (const pw of [640, 576, 512]) {
+    const ph = pw * 5 / 4, refTop = 158 + ph + 24, verseTop = refTop + 66 + 24;
+    for (let vs = 40; vs >= 30; vs--) {
+      x.font = SERIF(vs);
+      const lh = Math.round(vs * 1.62), lines = wrapText(x, verse, TW);
+      const rule = verseTop + lines.length * lh + 22;
+      const bf = fitBlocks(x, [res.blessing, res.prayer], { font: SANS, maxW: TW, maxH: BOTTOM - (rule + 34), max: 40, min: 24, extra: LABEL * 2 + GAP });
+      plan = { pw, ph, refTop, verseTop, vs, lh, lines, rule, bf };
+      if (bf.size >= 30) break search;
+    }
   }
-  const { vs, lh, side, below, rule, bf } = plan;
+  const { pw, ph, refTop, verseTop, vs, lh, lines, rule, bf } = plan;
+  x.fillStyle = "#A9DFC0"; x.fillRect(L, 60, TW, 74);
+  x.fillStyle = INK; x.font = '900 38px "Noto Sans TC", sans-serif'; x.fillText("God's word for you", L + 24, 111);
+  const img = await svgToImage(renderLinocut({ motif: res.motif, seed: res.seed, seal: res.seal, caption: p0.label.en, width: pw * 2, uid: "card" }));
+  x.drawImage(img, (CW - pw) / 2, 158, pw, ph);
+  x.fillStyle = "#FFD25A"; x.fillRect(L, refTop, TW, 66);
+  x.fillStyle = INK; x.font = '900 36px "Noto Sans TC", sans-serif'; x.fillText(p0.label.zh, L + 20, refTop + 47);
   x.font = SERIF(vs);
-  let y = COL_TOP + vs; for (const l of side) { x.fillText(l, 476, y); y += lh; }
-  if (below.length) { y = Math.max(y - vs, 548) + vs; for (const l of below) { x.fillText(l, 60, y); y += lh; } }
-  x.fillRect(60, rule, 960, 6);
-  y = rule + 28;
-  [["BLESSING  祝福", bf.wrapped[0]], ["PRAYER  禱告", bf.wrapped[1]]].forEach(([label, lines], i) => {
+  let y = verseTop + vs; for (const l of lines) { x.fillText(l, L, y); y += lh; }
+  x.fillRect(L, rule, TW, 6);
+  y = rule + 34;
+  [["BLESSING  祝福", bf.wrapped[0]], ["PRAYER  禱告", bf.wrapped[1]]].forEach(([label, ls], i) => {
     if (i) y += GAP;
-    x.font = '800 20px "JetBrains Mono", monospace'; x.fillText(label, 60, y + 26); y += LABEL;
+    x.font = '800 22px "JetBrains Mono", monospace'; x.fillText(label, L, y + 26); y += LABEL;
     x.font = SANS(bf.size);
-    for (const l of lines) { x.fillText(l, 60, y + bf.size); y += bf.lh; }
+    for (const l of ls) { x.fillText(l, L, y + bf.size); y += bf.lh; }
   });
-  x.font = '700 16px "JetBrains Mono", monospace'; x.fillStyle = "#4D5A66";
-  x.fillText("經文：和合本（公有領域）", 60, 1290);
+  x.font = '700 18px "JetBrains Mono", monospace'; x.fillStyle = "#4D5A66";
+  x.fillText("經文：和合本（公有領域）", L, CH - 58);
   return new Promise((r) => c.toBlob(r, "image/png"));
 }
 
@@ -424,7 +428,7 @@ $("#reroll").addEventListener("click", () => {
 });
 $("#copyAll").addEventListener("click", (e) => current && copy(fullText(current), e.currentTarget));
 document.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", () => current && copy(current[b.dataset.copy], b)));
-if (!inArtifact) { $("#shareLink").hidden = false; $("#shareLink").addEventListener("click", (e) => current && copy(shareURL(current), e.currentTarget)); }
+if (!inArtifact) { $("#shareLink").hidden = false; $("#shareLink").addEventListener("click", (e) => { if (!current) return; copy(shareURL(current), e.currentTarget); track("share-link", "複製分享連結"); }); }
 
 /* iPhone / iPad: a plain download lands in the Files app, so hand the image to the share sheet,
    whose 「儲存影像」 saves it to Photos. Elsewhere, download the file. */
@@ -439,7 +443,7 @@ function prepareCard(res) {   // build ahead of the tap: the share sheet must op
   return c.job;
 }
 const canShareImage = (file) => IOS && !inArtifact && navigator.canShare?.({ files: [file] });
-const DL_LABEL = IOS ? "存到相簿・分享圖卡 1080×1350" : "下載分享圖卡 1080×1350";
+const DL_LABEL = IOS ? "存到相簿・分享圖卡 1080×1920" : "下載分享圖卡 1080×1920";
 $("#download").textContent = DL_LABEL;
 $("#download").addEventListener("click", async (e) => {
   const btn = e.currentTarget;
@@ -452,7 +456,7 @@ $("#download").addEventListener("click", async (e) => {
     const filename = cardName(current);
     const file = new File([blob], filename, { type: "image/png" });
     if (canShareImage(file)) {
-      try { await navigator.share({ files: [file] }); return done("在選單裡點「儲存影像」"); }
+      try { await navigator.share({ files: [file] }); track("download", "下載分享圖卡"); return done("在選單裡點「儲存影像」"); }
       catch (err) {
         if (err.name === "AbortError") return done(DL_LABEL);
         // the tap expired while the card was being drawn: the card is ready now, a second tap opens the sheet
@@ -463,6 +467,7 @@ $("#download").addEventListener("click", async (e) => {
     const downloads = inArtifact ? await use("downloads").catch(() => null) : null;
     if (downloads) await downloads.save({ filename, data: blob });
     else { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = filename; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 3000); }
+    track("download", "下載分享圖卡");
     done("已下載");
   } catch { done("未能下載"); }
 });
@@ -483,3 +488,6 @@ $("#download").addEventListener("click", async (e) => {
   $("#q").textContent = `範例：「${sample.name}」`;
 })();
 </script>
+
+<script data-goatcounter="https://danile730.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
