@@ -214,10 +214,14 @@ footer { padding: 14px 0; font-size: 11.5px; letter-spacing: .06em; display: fle
 :root { --display: "Noto Sans", "Noto Sans TC", sans-serif; --serif: "Noto Serif", "Noto Serif TC", serif; }
 .notes dt { letter-spacing: .02em; }
 @media (min-width: 521px) { .notes { grid-template-columns: max-content minmax(0, 1fr); } }
-/* English category names are long: let the buttons wrap into full rows, with 2px ink lines between them at any width */
-.seg[aria-labelledby=catLabel] { display: flex; flex-wrap: wrap; gap: 2px; width: 100%; background: var(--ink); }
-.seg[aria-labelledby=catLabel] label { flex: 1 1 auto; }
-.seg[aria-labelledby=catLabel] span { border-right: 0; text-align: center; background: var(--paper); }
+/* English category names are long. The four categories stay together and "All" comes last:
+   five in a row when they fit, else four plus a full-width "All", else two by two plus "All" (2px ink lines between) */
+.field:has(> .seg[aria-labelledby=catLabel]) { container-type: inline-size; }
+.seg[aria-labelledby=catLabel] { display: grid; grid-auto-flow: row; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px; width: 100%; background: var(--ink); }
+.seg[aria-labelledby=catLabel] label:first-child { order: 1; grid-column: 1 / -1; }
+.seg[aria-labelledby=catLabel] span { border-right: 0; text-align: center; background: var(--paper); padding-left: 4px; padding-right: 4px; white-space: nowrap; }
+@container (min-width: 350px) { .seg[aria-labelledby=catLabel] { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@container (min-width: 450px) { .seg[aria-labelledby=catLabel] { grid-template-columns: repeat(5, minmax(0, 1fr)); } .seg[aria-labelledby=catLabel] label:first-child { grid-column: auto; } }
 /* size the purpose names to the legend box so "Encourage" always fits its quarter */
 .legend { container-type: inline-size; }
 .legend b { font-size: clamp(14px, 3.6cqi, 20px); }
