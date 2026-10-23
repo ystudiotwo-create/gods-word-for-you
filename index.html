@@ -1047,6 +1047,7 @@ function showTopic(key) {
   pick(key);
   say("");
   render(build(t, formState()), { fresh: true, related: relatedOf(t) });
+  try { window.goatcounter?.count({ path: `topic-${t.key}`, title: t.name, event: true }); } catch {}
   scrollToResult();
 }
 
@@ -1258,5 +1259,7 @@ $("#download").addEventListener("click", async (e) => {
 })();
 </script>
 
+<script data-goatcounter="https://danile730.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
