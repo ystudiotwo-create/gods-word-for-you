@@ -1042,12 +1042,15 @@ const formState = () => ({
   name: $("#name").value.trim(),
 });
 
+// GoatCounter event; a blocked or missing counter never breaks the page
+const track = (path, title) => { try { window.goatcounter?.count({ path, title, event: true }); } catch {} };
+
 function showTopic(key) {
   const t = BY_KEY[key]; if (!t) return;
   pick(key);
   say("");
   render(build(t, formState()), { fresh: true, related: relatedOf(t) });
-  try { window.goatcounter?.count({ path: `topic-${t.key}`, title: t.name, event: true }); } catch {}
+  track(`topic-${t.key}`, t.name);
   scrollToResult();
 }
 
@@ -1199,7 +1202,7 @@ $("#reroll").addEventListener("click", () => {
 });
 $("#copyAll").addEventListener("click", (e) => current && copy(fullText(current), e.currentTarget));
 document.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", () => current && copy(current[b.dataset.copy], b)));
-if (!inArtifact) { $("#shareLink").hidden = false; $("#shareLink").addEventListener("click", (e) => current && copy(shareURL(current), e.currentTarget)); }
+if (!inArtifact) { $("#shareLink").hidden = false; $("#shareLink").addEventListener("click", (e) => { if (!current) return; copy(shareURL(current), e.currentTarget); track("share-link", "複製分享連結"); }); }
 
 /* iPhone / iPad: a plain download lands in the Files app, so hand the image to the share sheet,
    whose 「儲存影像」 saves it to Photos. Elsewhere, download the file. */
@@ -1227,7 +1230,7 @@ $("#download").addEventListener("click", async (e) => {
     const filename = cardName(current);
     const file = new File([blob], filename, { type: "image/png" });
     if (canShareImage(file)) {
-      try { await navigator.share({ files: [file] }); return done("在選單裡點「儲存影像」"); }
+      try { await navigator.share({ files: [file] }); track("download", "下載分享圖卡"); return done("在選單裡點「儲存影像」"); }
       catch (err) {
         if (err.name === "AbortError") return done(DL_LABEL);
         // the tap expired while the card was being drawn: the card is ready now, a second tap opens the sheet
@@ -1238,6 +1241,7 @@ $("#download").addEventListener("click", async (e) => {
     const downloads = inArtifact ? await use("downloads").catch(() => null) : null;
     if (downloads) await downloads.save({ filename, data: blob });
     else { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = filename; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 3000); }
+    track("download", "下載分享圖卡");
     done("已下載");
   } catch { done("未能下載"); }
 });
